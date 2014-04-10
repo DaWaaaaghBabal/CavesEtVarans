@@ -1,0 +1,53 @@
+package basicUI;
+
+import java.awt.Dimension;
+import java.awt.Image;
+import java.io.IOException;
+import java.net.URL;
+import java.util.Observable;
+import java.util.Observer;
+
+import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.border.BevelBorder;
+
+import skills.Skill;
+
+public class TestSingleSkillDisplay extends JPanel implements Observer {
+
+	private JButton button;
+	private static final Dimension DEFAULT_SIZE = new Dimension(75, 75);
+
+	public TestSingleSkillDisplay(Skill skill) {
+		super();
+
+		setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
+		setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+		setSize(DEFAULT_SIZE);
+		setPreferredSize(DEFAULT_SIZE);
+
+		button = new JButton();
+		try {
+			URL resource = URL.class.getResource("/images/skills/" + skill.getIconName());
+			System.out.println(resource);
+			Image img = ImageIO.read(resource);
+			button.setIcon(new ImageIcon(img));
+		} catch (IOException ex) {
+			
+		}
+		add(button);
+		
+		skill.addObserver(this);
+	}
+
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

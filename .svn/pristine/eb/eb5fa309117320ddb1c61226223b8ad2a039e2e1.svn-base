@@ -1,0 +1,10 @@
+package sprite;
+
+
+public class StaticImageSpriteLayer extends ImageSpriteLayer {
+
+	public StaticImageSpriteLayer(String imageFolder) {
+		super(imageFolder);
+	}
+	
+}

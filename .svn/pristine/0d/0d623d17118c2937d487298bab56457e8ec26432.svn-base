@@ -1,0 +1,100 @@
+package sprite;
+
+import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
+
+public class SpriteManager implements MouseListener {
+
+	private static SpriteManager instance;
+	public static SpriteManager getInstance(){
+		if(instance == null)
+			instance = new SpriteManager();
+		return instance;
+	}	
+
+	private Map<Integer,List<Sprite>> spriteList;
+	private List<Integer> layerList;
+
+	private SpriteManager(){
+		spriteList = new HashMap<Integer, List<Sprite>>();
+		layerList=new ArrayList<Integer>();
+	}
+
+	public void add(Sprite sp, int Zindex){
+		if(spriteList.get(Zindex)==null){
+			spriteList.put(Zindex, new ArrayList<Sprite>());
+			layerList.add(Zindex);
+			Collections.sort(layerList);
+		}
+		spriteList.get(Zindex).add(sp);
+	}
+
+	public void updateZindex(Sprite sp,int oldZindex, int newZindex){
+		if(spriteList.get(newZindex)==null)
+			spriteList.put(newZindex, new ArrayList<Sprite>());
+		if(spriteList.get(newZindex)!=null){
+			spriteList.get(oldZindex).remove(sp);
+			if (spriteList.get(oldZindex).isEmpty()) {
+				layerList.remove(oldZindex);
+				Collections.sort(layerList);
+			}
+		}
+		spriteList.get(newZindex).add(sp);
+	}
+
+	public void paint(Graphics g){
+		for(int i : layerList)
+			if(spriteList.keySet().contains(i))
+				for(Sprite sp : spriteList.get(i))
+					sp.paint(g);
+	}
+
+	private Sprite clickedSprite(MouseEvent event){
+		ListIterator<Integer> iter = layerList.listIterator(layerList.size());
+		while(iter.hasPrevious())
+			for(Sprite sp : spriteList.get(iter.previous()))
+				if(sp.isInside(event.getPoint())){
+					return sp;
+				}
+		return null;
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		Sprite sp = clickedSprite(arg0);
+		if(sp!=null){
+			sp.handleClick(arg0);
+		}
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+}

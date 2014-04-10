@@ -1,0 +1,48 @@
+package board;
+
+import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+
+import pathfinding.PathFinder;
+import pathfinding.PathNode;
+import sprite.Sprite;
+import sprite.SpriteLayer;
+import sprite.StaticImageSpriteLayer;
+import battlefield.CharacterManager;
+
+public class TileSprite extends Sprite{
+
+	public String name;
+
+	private PathNode node;
+
+	public void setNode(PathNode newNode){
+		node=newNode;
+		node.setTile(this);
+	}
+
+	public PathNode getNode() {
+		return node;
+	}
+
+	public TileSprite(float x, float y, int i, int j) {
+		super(x,y);
+		addLayer(new StaticImageSpriteLayer("Tile"));
+		setLocation(x,y);
+		setAction("Idle");
+		int[] orientation = {1,1};
+		setOrientation(orientation);
+		setNode(PathFinder.getInstance().getNodes()[i][j]);
+	}	
+
+	public void handleClick(MouseEvent event){
+		CharacterManager.getInstance().moveActiveToTile(this);
+	}
+	
+	public void paint(Graphics g){
+		for (SpriteLayer sl : getLayers()){
+			sl.paint(g);
+		}
+	}
+
+}

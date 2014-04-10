@@ -1,0 +1,23 @@
+package skills.announcements;
+
+import skills.Skill;
+import character.GameCharacter;
+
+public class Announcement_SkillHit extends Announcement {
+
+	public void dispatch(AnnouncementListener listener){
+		listener.handle(this);
+	}
+	
+	public Skill skillUsed;
+	public GameCharacter target, source;
+	public Announcement_SkillHit(Skill skillUsed, GameCharacter source,
+			GameCharacter target) {
+		super();
+		this.skillUsed = skillUsed;
+		this.target = target;
+		this.source = source;
+	}
+	
+
+}

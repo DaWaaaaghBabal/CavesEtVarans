@@ -1,0 +1,44 @@
+package sprite;
+
+import java.awt.event.MouseEvent;
+
+import settings.ViewSettings;
+
+public class CharacterSprite extends Sprite {
+
+	public static final String WALKCYCLE_RIGHT= "Walkcycle - right";
+	public static final String WALKCYCLE_LEFT= "Walkcycle - left";
+	public static final String WALKCYCLE_FIRST = "Walkcycle - first";
+	public static final String WALKCYCLE_LAST = "Walkcycle - last";
+
+	public CharacterSprite(float x, float y) {
+		super(x, y);
+	}
+
+	public void handleClick(MouseEvent event){
+		addAnimationToQueue(WALKCYCLE_FIRST, new int[]{1,1});
+		addAnimationToQueue(WALKCYCLE_RIGHT, new int[]{1,1});
+		addAnimationToQueue(WALKCYCLE_LAST, new int[]{1,1});
+	}
+	
+	public void stepForward(){
+		super.stepForward();
+		
+		if(
+				getAction()==CharacterSprite.WALKCYCLE_LEFT ||
+				getAction()==CharacterSprite.WALKCYCLE_RIGHT
+		){
+			float deltaX = getOrientation()[0] * ViewSettings.TILE_WIDTH/38.0F;
+			float deltaY = getOrientation()[1] * ViewSettings.TILE_HEIGHT/38.0F;
+			move(deltaX, deltaY);
+		}else if(
+				getAction()==CharacterSprite.WALKCYCLE_FIRST ||
+				getAction()==CharacterSprite.WALKCYCLE_LAST
+		){
+			float deltaX = getOrientation()[0] * ViewSettings.TILE_WIDTH/72.0F;
+			float deltaY = getOrientation()[1] * ViewSettings.TILE_HEIGHT/72.0F;
+			move(deltaX, deltaY);
+		}
+	}
+
+}

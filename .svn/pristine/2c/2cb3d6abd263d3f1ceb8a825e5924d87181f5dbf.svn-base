@@ -1,0 +1,6 @@
+package sprite.framework;
+
+
+public abstract class SpriteLayer extends GraphicsElement {
+
+}

@@ -1,0 +1,17 @@
+package skills.effects;
+
+import skills.values.MultiplierValueCalculator;
+import skills.values.StatReader;
+import skills.values.ValueCalculator;
+import character.statistics.Statistic;
+
+public class Effect_CriticalDamage extends Effect_Damage{
+
+	public Effect_CriticalDamage(ValueCalculator value, String type) {
+		super(value, type);
+		ValueCalculator criticalMultiplier = new StatReader("source", Statistic.CRIT_MULTIPLIER);
+		ValueCalculator compositeValue = new MultiplierValueCalculator(value, criticalMultiplier);
+		this.value=compositeValue;
+	}
+
+}

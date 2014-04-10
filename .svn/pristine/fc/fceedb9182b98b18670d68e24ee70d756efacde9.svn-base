@@ -1,0 +1,24 @@
+package skills.announcements;
+
+import java.util.Set;
+
+import skills.Skill;
+
+import character.GameCharacter;
+
+
+public class Announcement_SkillInitiated extends Announcement {
+	public void dispatch(AnnouncementListener listener){
+		listener.handle(this);
+	}
+	
+	public Skill skillUsed;
+	public Set<GameCharacter> targets;
+	public GameCharacter source;
+	public Announcement_SkillInitiated(Skill skillUsed,GameCharacter source, Set<GameCharacter> targets) {
+		super();
+		this.skillUsed = skillUsed;
+		this.targets = targets;
+		this.source = source;
+	}
+}

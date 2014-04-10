@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xs:schemaLocation="http://www.w3.org/2001/xml.xsd"
+	elementFormDefault="qualified" targetNamespace="http://caves.dwb.com/XSD/Skills">
+	<xs:element name="root">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="skills" type="skills"/>
+				<xs:element name="talents" type="talents" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="skills">
+		<xs:sequence>
+			<xs:element name="skill" type="skill"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="skill">
+		<xs:sequence>
+			<xs:element name="cost" minOccurs="2">
+				<xs:complexType>
+					<xs:choice>
+						<xs:element ref="ResourceCost" />
+						<xs:element ref="BuffCost" />
+					</xs:choice>
+				</xs:complexType>				
+			</xs:element>	
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="talents">
+		<xs:sequence>
+			<xs:element name="talent" type="talent">	
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="talent">
+		<xs:restriction base="xs:string">
+			<maxLength value="10" />
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

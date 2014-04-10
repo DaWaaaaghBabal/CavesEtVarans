@@ -1,0 +1,138 @@
+package window;
+
+import generalTools.game.Dice;
+
+import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.image.BufferStrategy;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
+import pathfinding.PathFinder;
+import settings.ViewSettings;
+import sprite.ImageSpriteLayer;
+import sprite.Sprite;
+import sprite.SpriteManager;
+import sprite.TextSpriteLayer;
+import board.TileSprite;
+import character.GameCharacter;
+
+@SuppressWarnings("serial")
+public class AppWindow extends Canvas implements Runnable{
+
+	public static BufferStrategy strategy;
+
+	public static void main (String[] arg){
+		new Thread(new AppWindow()).start();
+	}
+
+	public AppWindow(){
+		JFrame container = new JFrame("Caves et Varans");
+
+		JPanel panel = (JPanel) container.getContentPane();
+		panel.setPreferredSize(new Dimension(ViewSettings.WINDOW_WIDTH-10,ViewSettings.WINDOW_HEIGHT-10));
+		panel.setLayout(null);
+
+		setBounds(0,0,ViewSettings.WINDOW_WIDTH,ViewSettings.WINDOW_HEIGHT);
+		panel.add(this);
+		setIgnoreRepaint(true);
+		container.pack();
+		container.setLocation(ViewSettings.WINDOW_X, ViewSettings.WINDOW_Y);
+		container.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		container.setResizable(false);
+
+
+		createBufferStrategy(2);
+		strategy = getBufferStrategy();
+		
+		addMouseListener(SpriteManager.getInstance());
+
+		for(int i = 0; i<10; i++){
+			for(int j = 0; j<10; j++){
+				TileSprite tile = new TileSprite(
+						ViewSettings.WINDOW_WIDTH/2.0F+ViewSettings.TILE_WIDTH*(i-j-1)/2.0F,
+						ViewSettings.TILE_HEIGHT*(i+j+6)/2.0F,
+						i,
+						j
+						);
+				SpriteManager.getInstance().add(tile,i+j+1);
+				tile.name=i+" "+j;
+
+				if (Dice.roll(1, 20) > 15){
+					tile.setAction("Blocked");
+					tile.move(0, -10);
+					PathFinder.getInstance().getNodes()[i][j].setHeight(10);
+				}
+				
+			}
+		}
+		
+		GameCharacter.createGameCharacter();
+		
+		Sprite spr = new Sprite(400, 180);
+		spr.addLayer(new ImageSpriteLayer("Blood"));
+		Font font = new Font("Cloister Black", Font.PLAIN, 32);
+		spr.addLayer(new TextSpriteLayer("26 !", font, Color.white));
+		spr.setAction(Sprite.IDLE);
+		spr.setOrientation(Sprite.LOWER_RIGHT);
+		SpriteManager.getInstance().add(spr, 21);
+
+		spr = new Sprite(500, 220);
+		spr.addLayer(new ImageSpriteLayer("Cold"));
+		font = new Font("Old London", Font.PLAIN, 32);
+		spr.addLayer(new TextSpriteLayer("25 !", font, Color.white));
+		spr.setAction(Sprite.IDLE);
+		spr.setOrientation(Sprite.LOWER_RIGHT);
+		SpriteManager.getInstance().add(spr, 21);
+		
+		spr = new Sprite(600, 250);
+		spr.addLayer(new ImageSpriteLayer("Fire"));
+		font = new Font("Neverwinter", Font.PLAIN, 32);
+		spr.addLayer(new TextSpriteLayer("43 !", font, Color.white));
+		spr.setAction(Sprite.IDLE);
+		spr.setOrientation(Sprite.LOWER_RIGHT);
+		SpriteManager.getInstance().add(spr, 21);
+		
+		SpriteManager.getInstance().add(new Background(), 0);
+		container.setVisible(true);
+	}
+	
+	public void run() {
+		try{
+			long lastLoopTime=System.currentTimeMillis();
+			Graphics2D g = (Graphics2D) strategy.getDrawGraphics();
+			g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_GASP);
+			while (true) {
+				lastLoopTime=System.currentTimeMillis();
+				SpriteManager.getInstance().paint(g);
+				g.dispose();
+				strategy.show();
+				long delay=Math.max(0, ViewSettings.FRAME_INTERVAL-(System.currentTimeMillis()-lastLoopTime));
+				//System.out.println(System.currentTimeMillis()-lastLoopTime);
+				try {
+					Thread.sleep(delay);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}catch(Exception e){
+			displayException(e);
+		}
+	}
+
+	public static void displayException(Exception e) {
+		String str="Exception :" + e.toString()+"\n";
+		for(StackTraceElement element : e.getStackTrace()){
+			str += element.toString();
+			str +="\n";
+		}
+		JOptionPane.showMessageDialog(null, str);
+	}
+
+}

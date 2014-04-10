@@ -1,0 +1,83 @@
+package sprite;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.geom.Rectangle2D;
+
+public class TextSpriteLayer extends SpriteLayer {
+	
+	private Font font;
+	public Font getFont() {
+		return font;
+	}
+	public void setFont(Font font) {
+		this.font = font;
+	}
+
+	private String text;
+	public String getText(){
+		return text;
+	}
+	public void setText(String text) {
+		this.text = text;
+		// Rest metrics ;
+		width = height = -1;
+	}
+	
+	private Color color;
+	public Color getColor() {
+		return color;
+	}
+	public void setColor(Color color) {
+		this.color = color;
+	}
+	
+	protected double width, height;
+	
+	public TextSpriteLayer(String text, Font font, Color color) {
+		super();
+		setText(text);
+		setFont(font);
+		setColor(color);
+		width = height = -1;
+	}
+	public void paint(Graphics g) {
+		Graphics2D g2 = (Graphics2D) g;
+		g2.setColor(Color.BLACK);
+		g2.setFont(getFont());
+		// String width and height are cached, so we check if we already have a result before calculating them.
+		if (width < 0){
+			FontMetrics fm = g2.getFontMetrics();
+			Rectangle2D rect =fm.getStringBounds(getText(), g2);
+			height = rect.getHeight();
+			width = rect.getWidth();
+		}
+		int X = 0;
+		int Y = 0;
+		g2.drawString(getText(), X+1, Y+1);
+		g2.drawString(getText(), X+1, Y);
+		g2.drawString(getText(), X+1, Y-1);
+		g2.drawString(getText(), X, Y+1);
+		g2.drawString(getText(), X, Y-1);
+		g2.drawString(getText(), X-1, Y+1);
+		g2.drawString(getText(), X-1, Y);
+		g2.drawString(getText(), X-1, Y-1);
+		g2.setColor(getColor());
+		g2.drawString(getText(), X, Y);
+	}
+	public boolean isInside(Point point) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	protected void restart() {
+	}
+	public void stepForward() {
+	}
+	
+	
+
+}

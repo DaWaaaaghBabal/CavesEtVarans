@@ -1,0 +1,27 @@
+package sprite;
+
+import java.awt.Graphics;
+import java.awt.Point;
+
+
+public abstract class SpriteLayer{
+
+	protected Sprite container;
+	public void setContainer(Sprite spriteContainer) {
+		container = spriteContainer;
+	}
+
+	public abstract void paint(Graphics g);
+
+	public abstract boolean isInside(Point point);
+	
+	boolean animationTerminated;
+	protected boolean animationIsTerminated() {
+		return animationTerminated;
+	}
+
+	protected abstract void restart();
+
+	public abstract void stepForward();
+
+}

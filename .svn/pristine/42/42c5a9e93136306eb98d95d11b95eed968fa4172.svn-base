@@ -1,0 +1,9 @@
+package skills;
+
+
+
+public abstract class SkillHitCondition {
+	
+	public abstract void test(SkillContext context);
+
+}

@@ -1,0 +1,97 @@
+package sprite.framework;
+
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class Sprite extends GraphicsElement {
+
+	/* A sprite is made of one or more layers. Each layer is an image.
+	 * Sprites are animated in two ways : 
+	 * - Permanent cycling through the different frames of each layer.
+	 * - Moving along a path formed by a List of tiles.
+	 * Best used for representing in-game objects.
+	 */
+	
+	private List<SpriteLayer> layers;
+	public void addLayer(SpriteLayer layer){
+		layers.add(layer);
+	}
+	public void removeLayer(SpriteLayer layer){
+		layers.remove(layer);
+	}
+	
+	// Number of frames required to move from one tile to the next in line.
+	private int stepTime;
+	public int getStepTime() {
+		return stepTime;
+	}
+	public void setStepTime(int stepTime) {
+		this.stepTime = stepTime;
+	}
+	
+	// The path the sprite is currently following. A sprite is always going towards the first sprite in the path.
+	private List<Sprite> path;
+	public void addToPath(List<Sprite> path){
+		path.addAll(path);
+	}
+	private Point speed;
+	
+	public Sprite() {
+		layers = new ArrayList<SpriteLayer>();
+		path = new ArrayList<Sprite>();
+		speed = new Point();
+	}
+
+	public void paint(Graphics2D g) {
+		for(SpriteLayer layer : layers){
+			layer.paint(g);
+		}
+	}
+
+	public void animationStep() {
+		moveStep();
+		for(SpriteLayer layer : layers){
+			layer.animationStep();
+		}
+	}
+
+	private void moveStep() {
+		if (getPosition()==path.get(0).getPosition()){
+			// We reached our target. Go to next target.
+			path.remove(0);
+			if (!path.isEmpty()) {
+				firstStep();
+				// As a security, we go back to the beginning : if the same sprite
+				// is in the path several times and we're on it, we remove all its instances from the list
+				// before actually moving ; this prevents the sprite from stopping one frame on the tile.
+				moveStep();
+			}else{
+				speed.x = speed.y = 0;
+			}
+		}else{
+			move(speed.x, speed.y);
+		}
+	}
+	private void firstStep() {
+		// This is the first step towards a sprite. We need to calculate the speed
+		// to which this on will move to reach it in [stepTime] frames.
+		int distX = getPosition().x-path.get(0).getPosition().x;
+		int distY = getPosition().y-path.get(0).getPosition().y;
+		int speedX = distX/stepTime;
+		int roundX = distX%stepTime;
+		int speedY = distY/stepTime;
+		int roundY = distY%stepTime;
+		move(roundX, roundY);
+		speed.x = speedX;
+		speed.y = speedY;
+		
+	}
+	protected boolean isInside(Point point) {
+		for(SpriteLayer layer : layers)
+			if (layer.isInside(point)) return true;
+		return false;
+	}
+}

@@ -1,0 +1,40 @@
+package animation.queue;
+
+import sprite.Sprite;
+
+public class AnimationQueue{
+
+	private AnimationQueueElement currentElement;
+	private Sprite spr;
+	
+	public AnimationQueue(Sprite sprite){
+		spr = sprite;
+		currentElement = new AnimationQueueElement(Sprite.IDLE, spr.getOrientation());
+	}
+	
+	public void launchNextAnimation() {
+		if (currentElement.getNext()!=null) {
+			currentElement = currentElement.getNext();
+			System.out.println(currentElement);
+		}else{
+			currentElement = new AnimationQueueElement(Sprite.IDLE, spr.getOrientation());
+		}
+		spr.setAction(currentElement.getAction());
+		spr.setOrientation(currentElement.getOrientation());
+	}
+	
+	private AnimationQueueElement getLastElement(){
+		return getLastElement(currentElement);
+	}
+
+	private AnimationQueueElement getLastElement(AnimationQueueElement startElement) {
+		if (startElement.getNext()==null)
+			return startElement;
+		return getLastElement(startElement.getNext());
+	}
+	
+	public void addQueueElement(AnimationQueueElement element){
+		getLastElement().setNext(element);
+	}
+
+}

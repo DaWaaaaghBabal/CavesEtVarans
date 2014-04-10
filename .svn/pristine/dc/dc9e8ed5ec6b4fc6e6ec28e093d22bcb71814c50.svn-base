@@ -1,0 +1,43 @@
+package sprite.framework;
+
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.image.BufferedImage;
+import java.util.List;
+
+public class ImageSpriteLayer extends SpriteLayer {
+
+	private List<BufferedImage> images;
+	private int currentFrame;
+	
+	public ImageSpriteLayer() {
+		super();
+	}
+	
+	private BufferedImage currentImage(){
+		return images.get(currentFrame);
+	}
+	public void paint(Graphics2D g) {
+		g.drawImage(currentImage(), getX(), getY(), null);
+	}
+
+	public void animationStep() {
+	
+	}
+
+	protected boolean isInside(Point point) {
+		if(point.x >= getX()
+			&& point.y >= getY()
+			&& point.x >= getX()+currentImage().getWidth()
+			&& point.y >= getY()+currentImage().getHeight())
+		{
+			// We are inside the frame, now we need to look at the pixel that was clicked.
+			// If it is transparent, the user actually clicked through this layer, not on it, so we return false.
+			int relX = point.x-getX();
+			int relY = point.y-getY();
+			return ((currentImage().getRGB(relX, relY)>>24) & 0xFF) > 0x80; // ARGB >> 24 & 0xFF = alpha value. If alpha is greater than 128 (50%), the pixel is opaque.
+		}
+		return false;
+	}
+
+}
