@@ -1,8 +1,0 @@
-package skills.values;
-
-import skills.SkillContext;
-
-public abstract class ValueCalculator {
-
-	public abstract float value(SkillContext context);
-}

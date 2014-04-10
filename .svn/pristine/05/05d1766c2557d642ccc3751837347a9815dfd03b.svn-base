@@ -1,8 +1,0 @@
-package skills;
-
-
-public abstract class SkillEffect {
-
-	public abstract void apply(SkillContext context);
-
-}
