@@ -1,11 +1,21 @@
-.settings
-
-.svn
-target
-
-.classpath
-
-.project
-
-CavesEtVarans/*
-!*.cs
+#Ignore everything :
+CavesEtVarans/
+#Except C# files in the CavesEtVarans project and its subfolders.
+!CavesEtVarans/CavesEtVarans/
+!CavesEtVarans/CavesEtVarans/*.cs
+!CavesEtVarans/CavesEtVarans/*/
+!CavesEtVarans/CavesEtVarans/*/*.cs
+!CavesEtVarans/CavesEtVarans/*/*/
+!CavesEtVarans/CavesEtVarans/*/*/*.cs
+!CavesEtVarans/CavesEtVarans/*/*/*/
+!CavesEtVarans/CavesEtVarans/*/*/*/*.cs
+!CavesEtVarans/CavesEtVarans/*/*/*/*/
+!CavesEtVarans/CavesEtVarans/*/*/*/*/*.cs
+!CavesEtVarans/CavesEtVarans/*/*/*/*/*/
+!CavesEtVarans/CavesEtVarans/*/*/*/*/*/*.cs
+!CavesEtVarans/CavesEtVarans/*/*/*/*/*/*/
+!CavesEtVarans/CavesEtVarans/*/*/*/*/*/*/*.cs
+!CavesEtVarans/CavesEtVarans/*/*/*/*/*/*/*/
+!CavesEtVarans/CavesEtVarans/*/*/*/*/*/*/*/*.cs
+!CavesEtVarans/CavesEtVarans/*/*/*/*/*/*/*/*/
+!CavesEtVarans/CavesEtVarans/*/*/*/*/*/*/*/*/*.cs
