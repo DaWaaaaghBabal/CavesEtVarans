@@ -19,3 +19,7 @@ CavesEtVarans/
 !CavesEtVarans/CavesEtVarans/*/*/*/*/*/*/*/*.cs
 !CavesEtVarans/CavesEtVarans/*/*/*/*/*/*/*/*/
 !CavesEtVarans/CavesEtVarans/*/*/*/*/*/*/*/*/*.cs
+/bin
+/obj
+/Properties
+/CavesEtVarans.csproj
