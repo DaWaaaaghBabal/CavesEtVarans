@@ -1,29 +1,3 @@
-#Ignore everything :
-CavesEtVarans/
-#Except C# files in the CavesEtVarans project and its subfolders.
-!CavesEtVarans/CavesEtVarans/
-!CavesEtVarans/CavesEtVarans/*.cs
-!CavesEtVarans/CavesEtVarans/*/
-!CavesEtVarans/CavesEtVarans/*/*.cs
-!CavesEtVarans/CavesEtVarans/*/*/
-!CavesEtVarans/CavesEtVarans/*/*/*.cs
-!CavesEtVarans/CavesEtVarans/*/*/*/
-!CavesEtVarans/CavesEtVarans/*/*/*/*.cs
-!CavesEtVarans/CavesEtVarans/*/*/*/*/
-!CavesEtVarans/CavesEtVarans/*/*/*/*/*.cs
-!CavesEtVarans/CavesEtVarans/*/*/*/*/*/
-!CavesEtVarans/CavesEtVarans/*/*/*/*/*/*.cs
-!CavesEtVarans/CavesEtVarans/*/*/*/*/*/*/
-!CavesEtVarans/CavesEtVarans/*/*/*/*/*/*/*.cs
-!CavesEtVarans/CavesEtVarans/*/*/*/*/*/*/*/
-!CavesEtVarans/CavesEtVarans/*/*/*/*/*/*/*/*.cs
-!CavesEtVarans/CavesEtVarans/*/*/*/*/*/*/*/*/
-!CavesEtVarans/CavesEtVarans/*/*/*/*/*/*/*/*/*.cs
-/bin
-/obj
-/Properties
-/CavesEtVarans.csproj
-*.meta
 /Library
 /CavesEtVarans-csharp.sln
 /Assembly-CSharp.csproj
@@ -32,3 +6,5 @@ CavesEtVarans/
 /CavesEtVarans.sln
 /CavesEtVarans.userprefs
 /Temp
+#Un-ignore these specific files
+!**.*.meta
