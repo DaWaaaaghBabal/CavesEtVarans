@@ -24,3 +24,11 @@ CavesEtVarans/
 /Properties
 /CavesEtVarans.csproj
 *.meta
+/Library
+/CavesEtVarans-csharp.sln
+/Assembly-CSharp.csproj
+/Assembly-CSharp.pidb
+/Assembly-CSharp-vs.csproj
+/CavesEtVarans.sln
+/CavesEtVarans.userprefs
+/Temp
