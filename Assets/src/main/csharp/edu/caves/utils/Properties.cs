@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-namespace CavesEtVarans.utils
+
+namespace CavesEtVarans
 {
 	public class Properties {
 		private Dictionary<string, string> props;

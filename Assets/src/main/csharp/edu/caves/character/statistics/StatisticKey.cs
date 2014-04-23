@@ -1,5 +1,6 @@
 using System;
-namespace src.main.csharp.edu.caves.character.statistics
+
+namespace CavesEtVarans
 {
 	public class StatisticKeys {
 		

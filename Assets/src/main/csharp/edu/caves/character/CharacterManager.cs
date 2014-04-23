@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using CavesEtVarans.Character;
 
 namespace CavesEtVarans
 {
@@ -44,6 +43,7 @@ namespace CavesEtVarans
 		public void ActivateNext() {
 			activeCharacterNode.Value.Activate();
 			activeCharacterNode = activeCharacterNode.Next;
+            // TODO vérification de bouclage
 		}
 		
 	}
