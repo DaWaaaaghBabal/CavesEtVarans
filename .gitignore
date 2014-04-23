@@ -8,3 +8,13 @@
 /Temp
 #Un-ignore these specific files
 !**.*.meta
+
+#ignore eclipse scrap
+.project
+.settings
+*.build
+
+#ignore visual studio scrap
+/obj
+*.suo
+
