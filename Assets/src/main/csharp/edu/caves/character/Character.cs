@@ -13,7 +13,7 @@ namespace CavesEtVarans
 		}
 		
 		public void Activate() {
-		
+            SetAP(GetAP() / 2);
 		}
 
         public int GetAP() {

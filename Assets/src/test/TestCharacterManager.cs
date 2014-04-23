@@ -16,30 +16,32 @@ namespace TestCavesEtVarans
         [TestInitialize]
         public void setUp()
         {
-            cm = CavesEtVarans.CharacterManager.get();
+            cm = CavesEtVarans.CharacterManager.Get();
             c1 = new Character();
+            c1.SetAP(100);
             c2 = new Character();
-            cm.add(c1);
-            cm.add(c2);
+            c2.SetAP(90);
+            cm.Add(c1);
+            cm.Add(c2);
         }
 
         [TestCleanup]
         public void tearDown()
         {
-
+            cm.Clear();
         }
 
         [TestMethod]
         public void TestActive()
         {
-            Assert.Equals(cm.getActiveCharacter(), c1);
+            Assert.AreEqual(cm.getActiveCharacter(), c1);
         }
 
         [TestMethod]
         public void TestActiveNext()
         {
             cm.activateNext();
-            Assert.Equals(cm.getActiveCharacter(), c2);
+            Assert.AreEqual(cm.getActiveCharacter(), c2);
         }
 
         [TestMethod]
@@ -47,7 +49,7 @@ namespace TestCavesEtVarans
         {
             cm.activateNext();
             cm.activateNext();
-            Assert.Equals(cm.getActiveCharacter(), c1);
+            Assert.AreEqual(cm.getActiveCharacter(), c1);
         }
 
     }

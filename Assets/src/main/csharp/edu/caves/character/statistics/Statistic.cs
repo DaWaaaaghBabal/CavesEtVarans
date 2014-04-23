@@ -41,7 +41,7 @@ namespace CavesEtVarans
 
         /* Returns the modified value of the statistic. It takes into account all effects that modify
          this statistic in the current context. Effects that increase the value by a percentage are applied first,
-         then effects that add a fixed value, then effects that replace the value by another.*/
+         then effects that Add a fixed value, then effects that replace the value by another.*/
 		public int GetValue () {
 			double val = value;
 			foreach (StatModifier mod in statMultipliers) {
@@ -64,7 +64,7 @@ namespace CavesEtVarans
 		}
 
         // Each modifier is either a multiplier (stat +X%), an incrementer (stat +X) or an overrider (stat =X).
-        // To add a new modifier, it must be dispatched to the right list.
+        // To Add a new modifier, it must be dispatched to the right list.
 		public void addModifier (StatModifier mod) {
 			mod.dispatch (this);
 		}
