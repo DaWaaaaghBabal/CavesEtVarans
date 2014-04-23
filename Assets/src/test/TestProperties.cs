@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using CavesEtVarans.utils;
+using CavesEtVarans;
 
 public class TestProperties : MonoBehaviour {
 	public GUIText text;

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using src.main.csharp.edu.caves.character.statistics;
+using CavesEtVarans;
 
 namespace CavesEtVarans
 {

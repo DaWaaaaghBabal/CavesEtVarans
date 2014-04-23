@@ -1,8 +1,10 @@
 using System;
-namespace src.main.csharp.edu.caves.character.statistics
+namespace CavesEtVarans
 {
 	public abstract class StatModifier {
 		public abstract double getValue (double originalValue);
+
+		public abstract void dispatch (Statistic stat);
 	}
 }
 

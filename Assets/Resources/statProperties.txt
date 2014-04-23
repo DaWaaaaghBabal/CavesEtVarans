@@ -1,0 +1,1 @@
+# Each statistic in the game is referenced by a key. Keys are stored in the StatisticKey enum.
