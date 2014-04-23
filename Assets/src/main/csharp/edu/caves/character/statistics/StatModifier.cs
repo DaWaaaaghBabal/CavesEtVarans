@@ -7,6 +7,10 @@ namespace CavesEtVarans
 
 		public abstract void dispatch (Statistic stat);
 
+
+        public StatModifier() {
+            
+        }
     }
 }
 

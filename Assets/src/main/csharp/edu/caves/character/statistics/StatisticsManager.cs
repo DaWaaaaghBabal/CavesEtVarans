@@ -32,13 +32,13 @@ namespace CavesEtVarans
         }
 
         // Returns the value of the statistic referenced by the string given as a key.
-        public int getValue(string key) {
+        public int GetValue(string key) {
             return statistics[key].GetValue();
         }
 
         // Adds a modifier to the statistic referenced by the string given as a key.
         public void AddModifier(string key, StatModifier modifier) {
-            statistics[key].addModifier(modifier);
+            statistics[key].AddModifier(modifier);
         }
         // Removes a modifier from the statistic referenced by the string given as a key.
         public void RemoveModifier(string key, StatModifier modifier) {

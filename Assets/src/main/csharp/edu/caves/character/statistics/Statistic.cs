@@ -65,19 +65,20 @@ namespace CavesEtVarans
 
         // Each modifier is either a multiplier (stat +X%), an incrementer (stat +X) or an overrider (stat =X).
         // To add a new modifier, it must be dispatched to the right list.
-		public void addModifier (StatModifier mod) {
+		public void AddModifier (StatModifier mod) {
 			mod.dispatch (this);
 		}
 		
-		public void addOverrider (StatModifier mod) {
+		public void AddOverrider (StatModifier mod) {
 			statOverriders.Add (mod);
 		}
-		public void addMultiplier (StatModifier mod) {
+		public void AddMultiplier (StatModifier mod) {
 			statMultipliers.Add (mod);
 		}
-		public void addIncrementer (StatModifier mod) {
+		public void AddIncrementer (StatModifier mod) {
 			statIncrementers.Add (mod);
 		}
-	}
+
+    }
 }
 
