@@ -8,14 +8,14 @@ namespace CavesEtVarans
 	{
 		private static CharacterManager instance;
 		
-		public static CharacterManager Get() {
+		public static CharacterManager get() {
 			if(instance == null) {
 				instance = new CharacterManager();
 			}
 			return instance;
 		}
 		
-		public CharacterManager ()
+		private CharacterManager ()
 		{
 			
 		}
@@ -29,23 +29,28 @@ namespace CavesEtVarans
 			return characters;
 		}
 		
-		public void Add(Character character) {
+		public void add(Character character) {
 			GetCharacters().AddLast(character);
 		}
 		
-		public void Remove(Character character) {
+		public void remove(Character character) {
 			GetCharacters().Remove(character);
 		}
 		
 		// TODO instanciation initiale
 		private LinkedListNode<Character> activeCharacterNode = null;
 		
-		public void ActivateNext() {
+		public void activateNext() {
 			activeCharacterNode.Value.Activate();
 			activeCharacterNode = activeCharacterNode.Next;
             // TODO vérification de bouclage
 		}
-		
+
+        public Character getActiveCharacter()
+        {
+            return activeCharacterNode.Value;
+        }
+
 	}
 }
 

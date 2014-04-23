@@ -17,4 +17,5 @@
 #ignore visual studio scrap
 /obj
 *.suo
-
+*.csproj
+*.csproj.user
