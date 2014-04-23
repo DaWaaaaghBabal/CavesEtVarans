@@ -9,7 +9,7 @@ namespace CavesEtVarans
 
 		public Character () {
             statManager = new StatisticsManager();
-            AP = new Gauge(0, statManager.getValue(Statistic.MAX_AP));
+            AP = new Gauge(0, statManager.GetValue(Statistic.MAX_AP));
 		}
 		
 		public void Activate() {
