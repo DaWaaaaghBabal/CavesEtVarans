@@ -45,6 +45,16 @@ namespace CavesEtVarans
 
         public void activateNext()
         {
+            // loop on every characters until one of them hits the upper bar of action
+            Boolean up;
+            do {
+                up = false;
+                foreach(Character c in getCharacters()) 
+                {
+                    up |= c.runAction();
+                }
+            } while(!up);
+            // pick the first character with the upper amount of A.P.
             getActiveCharacter().Activate();
         }
 

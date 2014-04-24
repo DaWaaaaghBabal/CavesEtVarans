@@ -23,7 +23,10 @@ namespace CavesEtVarans
         public static readonly string BASE_HIT_CHANCE = "BHC";
         public static readonly string BONUS_TO_HIT = "BTH";
         public static readonly string BONUS_TO_DEF = "BTD";
+        // the Action Point gauge can't be higher than this value (usually 120)
         public static readonly string MAX_AP = "MAP";
+        // the Action Point gauge must be higher that this value (usually 100) for the character to be activable (not active)
+        public static readonly string ACTION_AP = "AAP";
 
 		private List<StatModifier> statOverriders;
 		private List<StatModifier> statMultipliers;
