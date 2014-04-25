@@ -23,7 +23,10 @@ namespace CavesEtVarans
         public static readonly string BASE_HIT_CHANCE = "BHC";
         public static readonly string BONUS_TO_HIT = "BTH";
         public static readonly string BONUS_TO_DEF = "BTD";
+        // the Action Point gauge can't be higher than this value (usually 120)
         public static readonly string MAX_AP = "MAP";
+        // the Action Point gauge must be higher that this value (usually 100) for the character to be activable (not active)
+        public static readonly string ACTION_AP = "AAP";
 
 		private List<StatModifier> statOverriders;
 		private List<StatModifier> statMultipliers;
@@ -41,7 +44,7 @@ namespace CavesEtVarans
 
         /* Returns the modified value of the statistic. It takes into account all effects that modify
          this statistic in the current context. Effects that increase the value by a percentage are applied first,
-         then effects that add a fixed value, then effects that replace the value by another.*/
+         then effects that Add a fixed value, then effects that replace the value by another.*/
 		public int GetValue () {
 			double val = value;
 			foreach (StatModifier mod in statMultipliers) {

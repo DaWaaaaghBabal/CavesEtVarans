@@ -22,6 +22,7 @@ namespace CavesEtVarans
             statistics.Add(Statistic.ITERATION_MALUS, new Statistic(25.0));
             statistics.Add(Statistic.JUMP, new Statistic(2.0));
             statistics.Add(Statistic.MAX_AP, new Statistic(120.0));
+            statistics.Add(Statistic.ACTION_AP, new Statistic(100.0));
             statistics.Add(Statistic.MELEE_ATTACK, new Statistic(8.0));
             statistics.Add(Statistic.MELEE_DAMAGE, new Statistic(8.0));
             statistics.Add(Statistic.RANGE_ATTACK, new Statistic(8.0));

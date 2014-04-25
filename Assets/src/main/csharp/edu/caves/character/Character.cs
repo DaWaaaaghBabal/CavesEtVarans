@@ -4,6 +4,7 @@ namespace CavesEtVarans
 {
 	public class Character
 	{
+        public Random rand = new Random();
         private Gauge AP;
         private StatisticsManager statManager;
 
@@ -14,8 +15,16 @@ namespace CavesEtVarans
 		}
 		
 		public void Activate() {
+            // TODO do other stuff...
+            SetAP(GetAP() / 2);
             MainGUI.DisplayCharacter(this);
 		}
+
+        internal bool runAction()
+        {
+            IncrementAP(statManager.GetValue(Statistic.INITIATIVE) + Dice.Roll(1,3));
+            return GetAP() >= statManager.GetValue(Statistic.ACTION_AP);
+        }
 
         private string name;
         public string GetName() {
@@ -30,6 +39,7 @@ namespace CavesEtVarans
         }
         public void IncrementAP(int newValue) {
             AP.SetValue(AP.GetValue() + newValue);
+            System.Diagnostics.Debug.WriteLine("incrementing value to " + AP.GetValue());
         }
 
         public int getStatValue(string key) {

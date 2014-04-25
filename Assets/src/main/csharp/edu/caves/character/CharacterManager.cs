@@ -8,8 +8,10 @@ namespace CavesEtVarans
 	{
 		private static CharacterManager instance;
 		
-		public static CharacterManager get() {
-			if(instance == null) {
+		public static CharacterManager Get() 
+        {
+			if(instance == null) 
+            {
 				instance = new CharacterManager();
 			}
 			return instance;
@@ -22,35 +24,58 @@ namespace CavesEtVarans
 		
 		private LinkedList<Character> characters = null;
 		
-		protected LinkedList<Character> GetCharacters() {
-			if(characters == null) {
+		protected LinkedList<Character> getCharacters() 
+        {
+			if(characters == null) 
+            {
 				characters = new LinkedList<Character>();
 			}
 			return characters;
 		}
 		
-		public void add(Character character) {
-			GetCharacters().AddLast(character);
+		public void Add(Character character) 
+        {
+			getCharacters().AddLast(character);
 		}
 		
-		public void remove(Character character) {
-			GetCharacters().Remove(character);
+		public void remove(Character character) 
+        {
+			getCharacters().Remove(character);
 		}
-		
-		// TODO instanciation initiale
-		private LinkedListNode<Character> activeCharacterNode = null;
-		
-		public void activateNext() {
-			activeCharacterNode.Value.Activate();
-			activeCharacterNode = activeCharacterNode.Next;
-            // TODO vérification de bouclage
-		}
+
+        public void activateNext()
+        {
+            // loop on every characters until one of them hits the upper bar of action
+            Boolean up;
+            do {
+                up = false;
+                foreach(Character c in getCharacters()) 
+                {
+                    up |= c.runAction();
+                }
+            } while(!up);
+            // pick the first character with the upper amount of A.P.
+            getActiveCharacter().Activate();
+        }
 
         public Character getActiveCharacter()
         {
-            return activeCharacterNode.Value;
+            Character active = getCharacters().First();
+            foreach (Character c in getCharacters())
+            {
+                if (c.GetAP() > active.GetAP())
+                {
+                    active = c;
+                }
+            }
+            return active;
         }
 
-	}
+        internal void Clear()
+        {
+            getCharacters().Clear();
+        }
+    }
+
 }
 
