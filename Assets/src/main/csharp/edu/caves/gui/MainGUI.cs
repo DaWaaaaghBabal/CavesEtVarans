@@ -13,12 +13,14 @@ namespace CavesEtVarans {
         }
 
         void Start() {
-            MainGUI.DisplayCharacter(new Character("Character1"));
+            CharacterManager.Get().Add(new Character("Character A"));
+            CharacterManager.Get().Add(new Character("Character B"));
+            CharacterManager.Get().ActivateNext();
         }
 
         void OnGUI() {
             if (GUI.Button(new Rect(10, 10, 100, 30), "End turn")) {
-                //CharacterManager.get().activateNext();
+                CharacterManager.Get().ActivateNext();
                 Debug.Log("Activating next character", null);
             }
             if (activeCharacter != null) {

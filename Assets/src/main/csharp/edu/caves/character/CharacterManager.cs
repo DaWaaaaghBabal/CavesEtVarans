@@ -24,7 +24,7 @@ namespace CavesEtVarans
 		
 		private LinkedList<Character> characters = null;
 		
-		protected LinkedList<Character> getCharacters() 
+		protected LinkedList<Character> GetCharacters() 
         {
 			if(characters == null) 
             {
@@ -35,33 +35,33 @@ namespace CavesEtVarans
 		
 		public void Add(Character character) 
         {
-			getCharacters().AddLast(character);
+			GetCharacters().AddLast(character);
 		}
 		
-		public void remove(Character character) 
+		public void Remove(Character character) 
         {
-			getCharacters().Remove(character);
+			GetCharacters().Remove(character);
 		}
 
-        public void activateNext()
+        public void ActivateNext()
         {
             // loop on every characters until one of them hits the upper bar of action
             Boolean up;
             do {
                 up = false;
-                foreach(Character c in getCharacters()) 
+                foreach(Character c in GetCharacters()) 
                 {
                     up |= c.runAction();
                 }
             } while(!up);
             // pick the first character with the upper amount of A.P.
-            getActiveCharacter().Activate();
+            GetActiveCharacter().Activate();
         }
 
-        public Character getActiveCharacter()
+        public Character GetActiveCharacter()
         {
-            Character active = getCharacters().First();
-            foreach (Character c in getCharacters())
+            Character active = GetCharacters().First();
+            foreach (Character c in GetCharacters())
             {
                 if (c.GetAP() > active.GetAP())
                 {
@@ -73,7 +73,7 @@ namespace CavesEtVarans
 
         internal void Clear()
         {
-            getCharacters().Clear();
+            GetCharacters().Clear();
         }
     }
 
