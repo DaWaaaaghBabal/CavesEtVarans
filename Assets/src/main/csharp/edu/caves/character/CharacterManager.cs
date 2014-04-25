@@ -51,7 +51,9 @@ namespace CavesEtVarans
                 up = false;
                 foreach(Character c in GetCharacters()) 
                 {
-                    up |= c.runAction();
+                    c.IncrementAP(c.GetStatValue(Statistic.INITIATIVE) + Dice.Roll(1, 3));
+                    up |= (c.GetAP() >= c.GetStatValue(Statistic.ACTION_AP));
+
                 }
             } while(!up);
             // pick the first character with the upper amount of A.P.
@@ -65,6 +67,8 @@ namespace CavesEtVarans
             {
                 if (c.GetAP() > active.GetAP())
                 {
+                    active = c;
+                } else if (c.GetAP() == active.GetAP() && c.GetStatValue(Statistic.INITIATIVE) > active.GetStatValue(Statistic.INITIATIVE)) {
                     active = c;
                 }
             }
