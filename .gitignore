@@ -19,3 +19,5 @@
 *.suo
 *.csproj
 *.csproj.user
+/TestResults
+/test-results
