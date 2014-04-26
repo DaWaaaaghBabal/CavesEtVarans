@@ -3,38 +3,66 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace CavesEtVarans {
-    class Gauge {
+namespace CavesEtVarans 
+{
+    /**
+     *  A Gauge is a floating value between a min and a max value. Incrementing
+     *  or decrementing this value does not make it to go beyond its limits.
+     */
+    class Gauge 
+    {
         private int min;
         private int max;
         private int value;
 
-        public Gauge(int newMin, int newMax) {
+        public Gauge(int newMin, int newMax) 
+        {
             min = newMin;
             max = newMax;
             value = min;
         }
 
-        public int GetValue() {
+        public int GetValue() 
+        {
             return value;
         }
 
-        public void SetValue(int newValue) {
-            if (newValue < min) {
+        public void Increment(int value)
+        {
+            SetValue(GetValue() + value);
+        }
+
+        public void Decrement(int value)
+        {
+            SetValue(GetValue() - value);
+        }
+
+        public void SetValue(int newValue) 
+        {
+            if (newValue < min) 
+            {
                 value = min;
-            } else if (newValue > max) {
+            } 
+            else if (newValue > max) 
+            {
                 value = max;
-            } else {
+            } 
+            else 
+            {
                 value = newValue;
             }
         }
 
-        public double getPercentage() {
+        public double getPercentage() 
+        {
             return (value - min) / (max - min);
         }
 
-        public string ToString() {
+        override public string ToString() {
             return value + "/" + max;
         }
+
     }
 }
+
+

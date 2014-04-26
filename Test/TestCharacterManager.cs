@@ -8,7 +8,7 @@ namespace TestCavesEtVarans
     public class TestCharacterManager
     {
 
-        private CavesEtVarans.CharacterManager cm = null;
+        private CharacterManager cm = null;
 
         private Character c1 = null;
         private Character c2 = null;
@@ -16,11 +16,11 @@ namespace TestCavesEtVarans
         [TestInitialize]
         public void setUp()
         {
-            cm = CavesEtVarans.CharacterManager.Get();
-            c1 = new Character("Character A");
+            cm = CharacterManager.Get();
+            c1 = new Character("player1");
             c1.SetAP(100);
-            c2 = new Character("Character B");
-            c2.SetAP(90);
+            c2 = new Character("player2");
+            c2.SetAP(80);
             cm.Add(c1);
             cm.Add(c2);
         }
@@ -34,23 +34,25 @@ namespace TestCavesEtVarans
         [TestMethod]
         public void TestActive()
         {
-            Assert.AreEqual(cm.GetActiveCharacter(), c1);
+            Assert.AreEqual(c1, cm.GetActiveCharacter());
+
         }
 
         [TestMethod]
         public void TestActiveNext()
         {
-            c1.SetAP(50);
+            Assert.AreEqual(c1, cm.GetActiveCharacter());
             cm.ActivateNext();
-            Assert.AreEqual(cm.GetActiveCharacter(), c2);
+            Assert.AreEqual(c2, cm.GetActiveCharacter());
         }
 
         [TestMethod]
         public void TestActiveRotate()
         {
+            Assert.AreEqual(c1, cm.GetActiveCharacter());
             cm.ActivateNext();
             cm.ActivateNext();
-            Assert.AreEqual(cm.GetActiveCharacter(), c1);
+            Assert.AreEqual(c1, cm.GetActiveCharacter());
         }
 
     }
