@@ -14,7 +14,7 @@ namespace CavesEtVarans {
      * In fact, all targets and test results will be stored in the Context.
      */ 
 
-    public abstract class Skill {
+    public class Skill {
         private SkillCost cost;
         private List<TargetPicker> targetPickers;
         private List<SkillEffectGroup> effects;
@@ -31,6 +31,7 @@ namespace CavesEtVarans {
         public void InitSkill(Character source) {
             targetPickerIndex = 0;
             Context.InitSkillContext(this, source);
+            NextTargetPicker();
         }
 
         int targetPickerIndex;
@@ -45,7 +46,7 @@ namespace CavesEtVarans {
 
         // Called when all targets have been picked and stored in the Context.
         private void UseSkill() {
-            PayCosts();
+            //PayCosts();
             TestConditions();
             ApplyEffects();
         }

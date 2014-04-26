@@ -9,6 +9,13 @@ namespace CavesEtVarans {
         private List<SkillEffect> missEffects;
         private string targetKey;
 
+        public SkillEffectGroup(string key) {
+            criticalEffects = new List<SkillEffect>();
+            hitEffects = new List<SkillEffect>();
+            missEffects = new List<SkillEffect>();
+            targetKey = key;
+        }
+
         public void Apply() {
             Dictionary<Character, ConditionResult> targetResults = (Dictionary<Character, ConditionResult>)Context.Get(targetKey);
             foreach (KeyValuePair<Character, ConditionResult> entry in targetResults) {
@@ -32,6 +39,16 @@ namespace CavesEtVarans {
             foreach (SkillEffect effect in criticalEffects) {
                 effect.Apply(character);
             }
+        }
+
+        public void AddHit(SkillEffect effect) {
+            hitEffects.Add(effect);
+        }
+        public void AddMiss(SkillEffect effect) {
+            missEffects.Add(effect);
+        }
+        public void AddCritical(SkillEffect effect) {
+            criticalEffects.Add(effect);
         }
     }
 }

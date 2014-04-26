@@ -4,10 +4,16 @@ using System.Linq;
 using System.Text;
 
 namespace CavesEtVarans {
-    class SkillCondition {
+    public abstract class SkillCondition {
 
         private string targetKey;
         private string resultKey;
+
+        public SkillCondition(string target, string result) {
+            targetKey = target;
+            resultKey = result;
+        }
+
         public void Test() {
             HashSet<Character> targets = (HashSet<Character>)Context.Get(targetKey);
             Dictionary<Character, ConditionResult> result = new Dictionary<Character, ConditionResult>();
