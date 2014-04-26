@@ -54,6 +54,16 @@ namespace CavesEtVarans
             return statManager.GetValue(key);
         }
 
+        public Boolean CanBePaid(SkillCost cost)
+        {
+            return ressManager.CanBePaid(cost);
+        }
+
+        public void Pay(SkillCost cost)
+        {
+            ressManager.Pay(cost);
+        }
+
         override public string ToString()
         {
             return base.ToString() + " " + GetName();
