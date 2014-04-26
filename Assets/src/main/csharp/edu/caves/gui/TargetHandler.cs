@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace CavesEtVarans {
     public class TargetHandler {
 
-        public static void HandleClickOnTile(Tile tile) {
+        public static void HandleClickOnTile(SceneTile tile) {
 
         }
 

@@ -46,7 +46,7 @@ namespace CavesEtVarans {
 
         // Called when all targets have been picked and stored in the Context.
         private void UseSkill() {
-            //PayCosts();
+            PayCosts();
             TestConditions();
             ApplyEffects();
         }

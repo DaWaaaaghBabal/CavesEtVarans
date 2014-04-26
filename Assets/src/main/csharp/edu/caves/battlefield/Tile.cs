@@ -1,13 +1,7 @@
 ﻿using System;
-using UnityEngine;
+using System.Collections.Generic;
 
 namespace CavesEtVarans {
-    public class Tile : MonoBehaviour {
-
-
-        void OnClick() {
-            TargetHandler.HandleClickOnTile(this);
-
-        }
+    class Tile {
     }
 }

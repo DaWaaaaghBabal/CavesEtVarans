@@ -45,6 +45,7 @@ namespace CavesEtVarans {
         public void TestSkillUse() {
             skill.InitSkill(character1);
             picker.AddTarget(character2);
+            Assert.AreEqual(character1.GetAP(), 0);
             Assert.AreEqual(character2.GetAP(), 100);
         }
     }
