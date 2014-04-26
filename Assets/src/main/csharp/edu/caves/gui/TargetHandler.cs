@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 namespace CavesEtVarans {
-    class TargetHandler {
+    public class TargetHandler {
 
         public static void HandleClickOnTile(Tile tile) {
 

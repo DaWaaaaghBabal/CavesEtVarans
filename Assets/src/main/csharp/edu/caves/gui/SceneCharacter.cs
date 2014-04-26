@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace CavesEtVarans {
-    class SceneCharacter : MonoBehaviour {
+    public class SceneCharacter : MonoBehaviour {
 
-        // A SceneCharacter is the representation in the Unity world of a Character in the game logic.
+        /* A SceneCharacter is the representation in the Unity world of a Character in the game logic. 
+         * Basically, it's only a visual representation that will manage clicks, animation, position and stuff
+         * but no game logic.
+         */
+        
         private Character character;
         public Character GetCharacter() {
             return character;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace CavesEtVarans
 {
-    class SkillCost
+    public class SkillCost
     {
         private Dictionary<string, int> elements;
 

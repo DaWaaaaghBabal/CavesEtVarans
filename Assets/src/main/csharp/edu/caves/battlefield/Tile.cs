@@ -2,7 +2,7 @@
 using UnityEngine;
 
 namespace CavesEtVarans {
-    class Tile : MonoBehaviour {
+    public class Tile : MonoBehaviour {
 
 
         void OnClick() {

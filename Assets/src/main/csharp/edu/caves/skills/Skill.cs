@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Assets.src.main.csharp.edu.caves.skills;
 
 namespace CavesEtVarans {
     /* About everything in the game, every action and every specificity of a character, is a Skill.
@@ -23,6 +20,16 @@ namespace CavesEtVarans {
         private List<SkillEffect> effects;
         private List<SkillTest> tests;
 
+        public Skill(Dictionary<string, int> newCost,
+        List<TargetPicker> newTargetPickers,
+        List<SkillEffect> newEffects,
+        List<SkillTest> newTests) {
+            targetPickers = newTargetPickers;
+            effects = newEffects;
+            cost = newCost;
+            tests = newTests;
+        }
+
         public void InitSkill(Character source) {
             targetIndex = 0;
             Context.InitSkillContext(this, source);
@@ -30,7 +37,7 @@ namespace CavesEtVarans {
 
         int targetIndex;
         public void NextTargetPicker() {
-            if (targetIndex < targetPickers.Count()) {
+            if (targetIndex < targetPickers.Count) {
                 targetPickers[targetIndex].Activate();
                 targetIndex++;
             } else {

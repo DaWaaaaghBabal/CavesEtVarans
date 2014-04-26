@@ -28,7 +28,7 @@ namespace CavesEtVarans
             return gauge.GetValue() >= qty;
         }
 
-        public Boolean Pay(int qty) 
+        public void Pay(int qty) 
         {
             if(CanBePaid(qty))
             {
@@ -40,14 +40,12 @@ namespace CavesEtVarans
                 throw new Exception("This cost (" + qty + ") couldn't be paid : " + gauge.GetValue() + " in stock.");
             }
             Notify(this);
-            return true;
         }
 
-        public Boolean Give(int qty)
+        public void Give(int qty)
         {   
             gauge.Increment(qty);
             Notify(this);
-            return true;
         }
 
     }

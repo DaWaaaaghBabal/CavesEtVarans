@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 namespace CavesEtVarans {
-    class TargetPicker {
+    public class TargetPicker {
 
         private HashSet<Character> targets;
         private string key;
@@ -22,7 +22,7 @@ namespace CavesEtVarans {
 
         private void EndPicking() {
             Context.Set(key, targets);
-           //((Skill)Context.Get("skill")).NextTargetPicker();
+            ((Skill)Context.Get("skill")).NextTargetPicker();
         }
 
         public void Activate() {
