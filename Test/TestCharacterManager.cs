@@ -35,13 +35,13 @@ namespace TestCavesEtVarans
         public void TestActive()
         {
             Assert.AreEqual(c1, cm.GetActiveCharacter());
-
         }
 
         [TestMethod]
         public void TestActiveNext()
         {
             Assert.AreEqual(c1, cm.GetActiveCharacter());
+            cm.GetActiveCharacter().EndTurn();
             cm.ActivateNext();
             Assert.AreEqual(c2, cm.GetActiveCharacter());
         }
@@ -50,7 +50,9 @@ namespace TestCavesEtVarans
         public void TestActiveRotate()
         {
             Assert.AreEqual(c1, cm.GetActiveCharacter());
+            cm.GetActiveCharacter().EndTurn();
             cm.ActivateNext();
+            cm.GetActiveCharacter().EndTurn();
             cm.ActivateNext();
             Assert.AreEqual(c1, cm.GetActiveCharacter());
         }
