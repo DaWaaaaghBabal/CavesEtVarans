@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace CavesEtVarans
 {
-    class SkillCost
+    public class SkillCost
     {
         private Dictionary<string, int> elements;
 
-        protected Dictionary<string, int> getElements()
+        public Dictionary<string, int> GetElements()
         {
             if (elements == null)
             {
@@ -18,12 +18,12 @@ namespace CavesEtVarans
 
         public void Add(string key, int value) 
         {
-            getElements().Add(key, value);
+            GetElements().Add(key, value);
         }
 
         public int Get(string key)
         {
-            if (getElements().ContainsKey(key))
+            if (GetElements().ContainsKey(key))
             {
                 return elements[key];
             }
