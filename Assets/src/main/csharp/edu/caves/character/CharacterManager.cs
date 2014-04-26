@@ -56,7 +56,6 @@ namespace CavesEtVarans
 
         public void ActivateNext()
         {
-            GetActiveCharacter().EndTurn();
             SearchForNewActiveCharacter();
             GetActiveCharacter().Activate();
 
@@ -93,6 +92,7 @@ namespace CavesEtVarans
         internal void Clear()
         {
             GetCharacters().Clear();
+            activeCharacter = null;
         }
 
     }

@@ -9,11 +9,11 @@ namespace CavesEtVarans
      * A Ressource is something a character has in its intrinsic powers,
      * it judges of its abilities to pay to do an action.
      */
-    class Ressource : Observable<Ressource>
+    class Resource : Observable<Resource>
     {
         private Gauge gauge;
 
-        public Ressource(int min, int max)
+        public Resource(int min, int max)
         {
             gauge = new Gauge(min, max);
         }

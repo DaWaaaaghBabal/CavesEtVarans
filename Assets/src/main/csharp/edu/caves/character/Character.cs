@@ -6,12 +6,12 @@ namespace CavesEtVarans
 	{
         private Gauge AP;
         private StatisticsManager statManager;
-        private RessourceManager ressManager;
+        private ResourceManager ressManager;
 
 		public Character (string newName) 
         {
             statManager = new StatisticsManager();
-            ressManager = new RessourceManager();
+            ressManager = new ResourceManager();
             AP = new Gauge(0, statManager.GetValue(Statistic.MAX_AP));
             name = newName;
 		}

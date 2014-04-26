@@ -9,7 +9,12 @@ namespace CavesEtVarans {
         }
 
         public static void HandleClickOnCharacter(SceneCharacter sceneCharacter) {
+            activePicker.AddTarget(sceneCharacter.GetCharacter());
+        }
 
+        private static TargetPicker activePicker;
+        public static void SetTargetPicker(TargetPicker targetPicker) {
+            activePicker = targetPicker;
         }
     }
 }
