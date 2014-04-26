@@ -45,5 +45,6 @@ namespace CavesEtVarans
         public void RemoveModifier(string key, StatModifier modifier) {
             statistics[key].RemoveModifier(modifier);
         }
-	}
+
+    }
 }

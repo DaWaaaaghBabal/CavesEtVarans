@@ -27,7 +27,8 @@ namespace CavesEtVarans
         public static readonly string MAX_AP = "MAP";
         // the Action Point gauge must be higher that this value (usually 100) for the character to be activable (not active)
         public static readonly string ACTION_AP = "AAP";
-
+        // the Action Point gauge name
+        public static readonly string AP = "AP";
 		private List<StatModifier> statOverriders;
 		private List<StatModifier> statMultipliers;
 		private List<StatModifier> statIncrementers;

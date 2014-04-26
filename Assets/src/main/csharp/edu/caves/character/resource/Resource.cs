@@ -23,6 +23,12 @@ namespace CavesEtVarans
             return gauge.GetValue();
         }
 
+        internal void SetValue(int newValue)
+        {
+            gauge.SetValue(newValue);
+            Notify(this);
+        }
+
         public Boolean CanBePaid(int qty)
         {
             return gauge.CanBeDecreased(qty);
