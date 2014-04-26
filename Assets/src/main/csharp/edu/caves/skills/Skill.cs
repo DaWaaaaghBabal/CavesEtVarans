@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Assets.src.main.csharp.edu.caves.skills;
 
 namespace CavesEtVarans {
     /* About everything in the game, every action and every specificity of a character, is a Skill.

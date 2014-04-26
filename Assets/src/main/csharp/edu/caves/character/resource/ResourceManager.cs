@@ -39,6 +39,29 @@ namespace CavesEtVarans
             GetResources().Add(key, res);
         }
 
+        public Boolean CanBePaid(SkillCost cost)
+        {
+
+            foreach (string name in cost.GetElements().Keys)
+            {
+                if (!GetResources().ContainsKey(name)
+                    || !resources[name].CanBePaid(cost.Get(name))
+                ) 
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public void Pay(SkillCost cost)
+        {
+            foreach (string name in cost.GetElements().Keys)
+            {
+                resources[name].Pay(cost.Get(name));
+            }
+        }
+
     }
 
 }
