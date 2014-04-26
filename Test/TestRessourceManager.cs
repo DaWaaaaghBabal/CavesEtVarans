@@ -8,16 +8,16 @@ using System.Text;
 namespace TestCavesEtVarans
 {
     [TestClass]
-    class TestRessourceManager
+    public class TestResourceManager
     {
-        RessourceManager rm;
-        Ressource r;
+        ResourceManager rm;
+        Resource r;
 
         [TestInitialize]
         public void SetUp()
         {
-            rm = new RessourceManager();
-            r = new Ressource(0, 100);
+            rm = new ResourceManager();
+            r = new Resource(0, 100);
             rm.Add("mana", r);
         }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using CavesEtVarans;
+using System.Diagnostics;
 
 namespace TestCavesEtVarans
 {
@@ -14,8 +15,8 @@ namespace TestCavesEtVarans
         private Character c2 = null;
 
         [TestInitialize]
-        public void setUp()
-        {
+        public void SetUp() {
+            Console.WriteLine("Setting up...");
             cm = CharacterManager.Get();
             c1 = new Character("player1");
             c1.SetAP(100);
@@ -26,8 +27,9 @@ namespace TestCavesEtVarans
         }
 
         [TestCleanup]
-        public void tearDown()
+        public void TearDown()
         {
+            Console.WriteLine("Clearing...");
             cm.Clear();
         }
 
@@ -42,6 +44,7 @@ namespace TestCavesEtVarans
         public void TestActiveNext()
         {
             Assert.AreEqual(c1, cm.GetActiveCharacter());
+            c1.EndTurn();
             cm.ActivateNext();
             Assert.AreEqual(c2, cm.GetActiveCharacter());
         }
