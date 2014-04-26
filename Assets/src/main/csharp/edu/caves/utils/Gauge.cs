@@ -32,5 +32,9 @@ namespace CavesEtVarans {
         public double getPercentage() {
             return (value - min) / (max - min);
         }
+
+        public string ToString() {
+            return value + "/" + max;
+        }
     }
 }
