@@ -18,7 +18,7 @@ namespace CavesEtVarans
 		public void Activate() 
         {
             // TODO do other stuff...
-            MainGUI.DisplayCharacter(this);
+            MainGUI.ActivateCharacter(this);
 		}
 
         public void EndTurn() 

@@ -7,43 +7,54 @@ namespace CavesEtVarans {
     class MainGUI : MonoBehaviour {
 
         private static Character activeCharacter;
-        
-        public static void DisplayCharacter(Character newActive) {
+        private static Character displayedCharacter;
+
+        public static void ActivateCharacter(Character newActive) {
             activeCharacter = newActive;
         }
 
+        public static void DisplayCharacter(Character newDisplay) {
+            displayedCharacter = newDisplay;
+        }
+
         void Start() {
-            CharacterManager.Get().Add(new Character("Character A"));
-            CharacterManager.Get().Add(new Character("Character B"));
-            CharacterManager.Get().ActivateNext();
+
         }
 
         void OnGUI() {
             if (GUI.Button(new Rect(10, 10, 100, 30), "End turn")) {
                 activeCharacter.EndTurn();
-                Debug.Log("Activating next character", null);
+                CharacterManager.Get().ActivateNext();
             }
             if (activeCharacter != null) {
-                GUI.Label(new Rect(10, 45, 100, 20), activeCharacter.GetName());
-                int y = 75;
-                DisplayStat(Statistic.HEALTH, "Max health", 10, y);
-                y += 20;
-                DisplayStat(Statistic.DEFENSE, "Defense", 10, y);
-                y += 20;
-                DisplayStat(Statistic.DODGE, "Dodge", 10, y);
-                y += 20;
-                DisplayStat(Statistic.MELEE_ATTACK, "Melee attack", 10, y);
-                y += 20;
-                DisplayStat(Statistic.MELEE_DAMAGE, "Melee damage", 10, y);
-                y += 30;
-                GUI.Label(new Rect(10, y, 100, 20), "AP");
-                GUI.Label(new Rect(115, y, 80, 20), activeCharacter.GetAP().ToString());
+                DisplayCharacterStats(activeCharacter, 75);
+            }
+            if (displayedCharacter != null) {
+                DisplayCharacterStats(displayedCharacter, 375);
             }
         }
 
-        private void DisplayStat(string key, string label, int X, int Y) {
+        private void DisplayCharacterStats(Character character, int Y) {
+
+            GUI.Label(new Rect(10, Y-30, 100, 20), character.GetName());
+            int y = Y;
+            DisplayStat(character, Statistic.HEALTH, "Max health", 10, y);
+            y += 20;
+            DisplayStat(character, Statistic.DEFENSE, "Defense", 10, y);
+            y += 20;
+            DisplayStat(character, Statistic.DODGE, "Dodge", 10, y);
+            y += 20;
+            DisplayStat(character, Statistic.MELEE_ATTACK, "Melee attack", 10, y);
+            y += 20;
+            DisplayStat(character, Statistic.MELEE_DAMAGE, "Melee damage", 10, y);
+            y += 30;
+            GUI.Label(new Rect(10, y, 100, 20), "AP");
+            GUI.Label(new Rect(115, y, 80, 20), activeCharacter.GetAP().ToString());
+        }
+
+        private void DisplayStat(Character character, string key, string label, int X, int Y) {
             GUI.Label(new Rect(X, Y, 100, 20), label);
-            GUI.Label(new Rect(X + 105, Y, 80, 20), activeCharacter.GetStatValue(key).ToString());
+            GUI.Label(new Rect(X + 105, Y, 80, 20), character.GetStatValue(key).ToString());
         }
     }
 }

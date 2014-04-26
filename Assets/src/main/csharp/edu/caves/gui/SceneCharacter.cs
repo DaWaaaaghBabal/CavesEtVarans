@@ -21,5 +21,13 @@ namespace CavesEtVarans {
         void OnClick() {
             TargetHandler.HandleClickOnCharacter(this);
         }
+
+        void OnMouseEnter() {
+            MainGUI.DisplayCharacter(GetCharacter());
+        }
+
+        void OnMouseExit() {
+            MainGUI.DisplayCharacter(null);
+        }
     }
 }

@@ -7,6 +7,12 @@ namespace CavesEtVarans {
     public class SceneTile : MonoBehaviour {
         
         private Tile tile;
+        public void SetTile(Tile newTile) {
+            tile = newTile;
+        }
+        public Tile GetTile() {
+            return tile;
+        }
        
         void OnClick() {
             TargetHandler.HandleClickOnTile(this);
