@@ -15,15 +15,13 @@ namespace CavesEtVarans {
      */ 
 
     public abstract class Skill {
-        private Dictionary<string, int> cost;
+        private SkillCost cost;
         private List<TargetPicker> targetPickers;
         private List<SkillEffect> effects;
         private List<SkillTest> tests;
 
-        public Skill(Dictionary<string, int> newCost,
-        List<TargetPicker> newTargetPickers,
-        List<SkillEffect> newEffects,
-        List<SkillTest> newTests) {
+        public Skill(SkillCost newCost, List<TargetPicker> newTargetPickers,
+        List<SkillEffect> newEffects, List<SkillTest> newTests) {
             targetPickers = newTargetPickers;
             effects = newEffects;
             cost = newCost;
@@ -31,15 +29,15 @@ namespace CavesEtVarans {
         }
 
         public void InitSkill(Character source) {
-            targetIndex = 0;
+            targetPickerIndex = 0;
             Context.InitSkillContext(this, source);
         }
 
-        int targetIndex;
+        int targetPickerIndex;
         public void NextTargetPicker() {
-            if (targetIndex < targetPickers.Count) {
-                targetPickers[targetIndex].Activate();
-                targetIndex++;
+            if (targetPickerIndex < targetPickers.Count) {
+                targetPickers[targetPickerIndex].Activate();
+                targetPickerIndex++;
             } else {
                 UseSkill();
             }
