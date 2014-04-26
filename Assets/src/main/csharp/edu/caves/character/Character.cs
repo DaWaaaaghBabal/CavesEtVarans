@@ -4,7 +4,6 @@ namespace CavesEtVarans
 {
 	public class Character
 	{
-        private Gauge AP;
         private StatisticsManager statManager;
         private ResourceManager ressManager;
 
@@ -12,7 +11,7 @@ namespace CavesEtVarans
         {
             statManager = new StatisticsManager();
             ressManager = new ResourceManager();
-            AP = new Gauge(0, statManager.GetValue(Statistic.MAX_AP));
+            ressManager.Add(Statistic.AP, new Resource(0, statManager.GetValue(Statistic.MAX_AP)));
             name = newName;
 		}
 		
@@ -36,22 +35,17 @@ namespace CavesEtVarans
 
         public int GetAP() 
         {
-            return AP.GetValue();
+            return ressManager.GetAP();
         }
 
         public void SetAP(int newValue) 
         {
-            AP.SetValue(newValue);
+            ressManager.SetAP(newValue);
         }
 
         public void IncrementAP(int newValue) 
         {
-            AP.SetValue(AP.GetValue() + newValue);
-        }
-
-        public int GetStatValue(string key) 
-        {
-            return statManager.GetValue(key);
+            ressManager.IncrementAP(newValue);
         }
 
         public Boolean CanBePaid(SkillCost cost)
@@ -62,6 +56,11 @@ namespace CavesEtVarans
         public void Pay(SkillCost cost)
         {
             ressManager.Pay(cost);
+        }
+
+        public int GetStatValue(string key)
+        {
+            return statManager.GetValue(key);
         }
 
         override public string ToString()

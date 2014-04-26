@@ -13,19 +13,26 @@ namespace TestCavesEtVarans {
 
         [TestInitialize]
         public void SetUp() {
-
-            picker = new TargetPicker(1, "target");
             characterA = new Character("Character A");
             characterA.SetAP(0);
-
             characterB = new Character("Character B");
             characterB.SetAP(0);
-            Context.InitSkillContext(null, characterB);
+
+            picker = new TargetPicker(1, "target");
+            List<TargetPicker> targetPickers = new List<TargetPicker>();
+            targetPickers.Add(picker);
+
+            SkillCost cost = new SkillCost();
+            List<SkillEffectGroup> effectGroups = new List<SkillEffectGroup>();
+            List<SkillCondition> conditions = new List<SkillCondition>();
+            
+            new Skill(cost, targetPickers, effectGroups, conditions).InitSkill(characterA);
 
         }
 
         [TestMethod]
         public void TestSingleTargetPicking() {
+
             picker.Activate();
             picker.AddTarget(characterA);
             fillAP();
@@ -35,8 +42,11 @@ namespace TestCavesEtVarans {
 
         [TestMethod]
         public void TestMultiTargetPicking() {
+
+            picker = new TargetPicker(2, "target");
             picker.Activate();
             picker.AddTarget(characterA);
+            Assert.AreEqual(characterA.GetAP(), 0);
             picker.AddTarget(characterB);
             fillAP();
             Assert.AreEqual(characterA.GetAP(), 100);

@@ -34,6 +34,32 @@ namespace CavesEtVarans
             return null;
         }
 
+
+        private void Set(string key, int newValue)
+        {
+            if (GetResources().ContainsKey(key))
+            {
+                resources[key].SetValue(newValue);
+            }
+            else
+            {
+                throw new Exception("The wanted ressource (" + key + ") does not exists.");
+            }
+        }
+
+
+        private void Increment(string key, int newValue)
+        {
+            if (GetResources().ContainsKey(key))
+            {
+                resources[key].Give(newValue);
+            }
+            else
+            {
+                throw new Exception("The wanted ressource (" + key + ") does not exists.");
+            }
+        }
+
         public void Add(string key, Resource res)
         {
             GetResources().Add(key, res);
@@ -60,6 +86,22 @@ namespace CavesEtVarans
             {
                 resources[name].Pay(cost.Get(name));
             }
+        }
+
+
+        internal int GetAP()
+        {
+            return Get(Statistic.AP).GetValue();
+        }
+
+        internal void SetAP(int newValue)
+        {
+            Set(Statistic.AP, newValue);
+        }
+
+        internal void IncrementAP(int newValue)
+        {
+            Increment(Statistic.AP, newValue);
         }
 
     }
