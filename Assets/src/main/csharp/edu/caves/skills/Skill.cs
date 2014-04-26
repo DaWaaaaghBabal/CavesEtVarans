@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Assets.src.main.csharp.edu.caves.skills;
 
 namespace CavesEtVarans {
     /* About everything in the game, every action and every specificity of a character, is a Skill.
@@ -17,15 +18,15 @@ namespace CavesEtVarans {
     public abstract class Skill {
         private SkillCost cost;
         private List<TargetPicker> targetPickers;
-        private List<SkillEffect> effects;
-        private List<SkillTest> tests;
+        private List<SkillEffectGroup> effects;
+        private List<SkillCondition> conditions;
 
         public Skill(SkillCost newCost, List<TargetPicker> newTargetPickers,
-        List<SkillEffect> newEffects, List<SkillTest> newTests) {
+        List<SkillEffectGroup> newEffects, List<SkillCondition> newConditions) {
             targetPickers = newTargetPickers;
             effects = newEffects;
             cost = newCost;
-            tests = newTests;
+            conditions = newConditions;
         }
 
         public void InitSkill(Character source) {
@@ -46,15 +47,25 @@ namespace CavesEtVarans {
         // Called when all targets have been picked and stored in the Context.
         private void UseSkill() {
             PayCosts();
+            TestConditions();
             ApplyEffects();
         }
 
-        private void ApplyEffects() {
-            throw new NotImplementedException();
+        private void PayCosts() {
+            ((Character)Context.Get("source")).Pay(cost);
         }
 
-        private void PayCosts() {
-            throw new NotImplementedException();
+        private void TestConditions() {
+            foreach (SkillCondition condition in conditions) {
+                condition.Test();
+            }
         }
+
+        private void ApplyEffects() {
+            foreach (SkillEffectGroup effect in effects) {
+                effect.Apply();
+            }
+        }
+
     }
 }
