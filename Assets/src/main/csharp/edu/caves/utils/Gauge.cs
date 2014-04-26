@@ -27,6 +27,16 @@ namespace CavesEtVarans
             return value;
         }
 
+        internal bool CanBeIncreased(int qty)
+        {
+            return GetValue() + qty <= max; 
+        }
+
+        internal bool CanBeDecreased(int qty)
+        {
+            return GetValue() - qty >= min;
+        }
+
         public void Increment(int value)
         {
             SetValue(GetValue() + value);
@@ -58,7 +68,8 @@ namespace CavesEtVarans
             return (value - min) / (max - min);
         }
 
-        override public string ToString() {
+        override public string ToString()
+        {
             return value + "/" + max;
         }
 

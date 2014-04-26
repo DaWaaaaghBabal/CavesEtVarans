@@ -25,7 +25,7 @@ namespace CavesEtVarans
 
         public Boolean CanBePaid(int qty)
         {
-            return gauge.GetValue() >= qty;
+            return gauge.CanBeDecreased(qty);
         }
 
         public void Pay(int qty) 
