@@ -14,15 +14,15 @@ public class CameraController : MonoBehaviour {
 	void Update () {
         Vector2 mousePos = Input.mousePosition;
         int leftRight = 0, topBottom = 0;
-        if (mousePos.x <= detectionRange) {
+        if (mousePos.x <= detectionRange || Input.GetKeyDown(KeyCode.LeftArrow)) {
             leftRight = -1;
-        } else if (mousePos.x >= Screen.width - detectionRange) {
+        } else if (mousePos.x >= Screen.width - detectionRange || Input.GetKeyDown(KeyCode.RightArrow)) {
             leftRight = 1;
         }
 
-        if (mousePos.y <= detectionRange) {
+        if (mousePos.y <= detectionRange || Input.GetKeyDown(KeyCode.DownArrow)) {
             topBottom = -1;
-        } else if (mousePos.y >= 0.9 * Screen.height - detectionRange) {
+        } else if (mousePos.y >= 0.9 * Screen.height - detectionRange || Input.GetKeyDown(KeyCode.UpArrow)) {
             topBottom = 1;
         }
 
