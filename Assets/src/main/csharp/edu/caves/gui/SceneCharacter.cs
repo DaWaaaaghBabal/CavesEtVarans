@@ -18,16 +18,16 @@ namespace CavesEtVarans {
             character = newCharacter;
         }
 
-        void OnClick() {
-            TargetHandler.HandleClickOnCharacter(this);
+        void OnMouseDown() {
+            GUIEventHandler.HandleClickOnCharacter(this);
         }
 
         void OnMouseEnter() {
-            MainGUI.DisplayCharacter(GetCharacter());
+            GUIEventHandler.HandleMouseEnterCharacter(this);
         }
 
         void OnMouseExit() {
-            MainGUI.DisplayCharacter(null);
+            GUIEventHandler.HandleMouseExitCharacter(this);
         }
     }
 }

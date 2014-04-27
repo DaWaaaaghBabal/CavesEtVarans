@@ -19,7 +19,7 @@ namespace CavesEtVarans {
             SkillCost cost = new SkillCost();
             cost.Add("AP", 25);
 
-            picker = new TargetPicker(1, "target1");
+            picker = new DiscreteTargetPicker(1, "target1");
             List<TargetPicker> targetPickers = new List<TargetPicker>();
             targetPickers.Add(picker);
 

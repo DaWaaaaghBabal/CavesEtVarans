@@ -18,7 +18,7 @@ namespace TestCavesEtVarans {
             characterB = new Character("Character B");
             characterB.SetAP(0);
 
-            picker = new TargetPicker(1, "target");
+            picker = new DiscreteTargetPicker(1, "target");
             List<TargetPicker> targetPickers = new List<TargetPicker>();
             targetPickers.Add(picker);
 
@@ -43,7 +43,7 @@ namespace TestCavesEtVarans {
         [TestMethod]
         public void TestMultiTargetPicking() {
 
-            picker = new TargetPicker(2, "target");
+            picker = new DiscreteTargetPicker(2, "target");
             picker.Activate();
             picker.AddTarget(characterA);
             Assert.AreEqual(characterA.GetAP(), 0);

@@ -49,7 +49,7 @@ namespace CavesEtVarans {
             DisplayStat(character, Statistic.MELEE_DAMAGE, "Melee damage", 10, y);
             y += 30;
             GUI.Label(new Rect(10, y, 100, 20), "AP");
-            GUI.Label(new Rect(115, y, 80, 20), activeCharacter.GetAP().ToString());
+            GUI.Label(new Rect(115, y, 80, 20), character.GetAP().ToString());
         }
 
         private void DisplayStat(Character character, string key, string label, int X, int Y) {

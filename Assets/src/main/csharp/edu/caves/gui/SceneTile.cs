@@ -15,7 +15,7 @@ namespace CavesEtVarans {
         }
        
         void OnClick() {
-            TargetHandler.HandleClickOnTile(this);
+            GUIEventHandler.HandleClickOnTile(this);
 
         }
     }

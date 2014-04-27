@@ -2,32 +2,27 @@
 using System.Collections.Generic;
 
 namespace CavesEtVarans {
-    public class TargetPicker {
+    public abstract class TargetPicker {
 
-        private HashSet<Character> targets;
-        private string key;
-        private int targetNumber;
+        protected HashSet<Character> targets;
+        protected string key;
 
-        public TargetPicker(int numberOfTargets, string targetKey) {
-            targetNumber = numberOfTargets;
+        public TargetPicker(string targetKey) {
             key = targetKey;
         }
 
-        public void AddTarget(Character character) {
-            targets.Add(character);
-            if (targets.Count == targetNumber) {
-                EndPicking();
-            }
-        }
+        public abstract void AddTarget(Character character);
 
-        private void EndPicking() {
+        protected void EndPicking() {
             Context.Set(key, targets);
             ((Skill)Context.Get("skill")).NextTargetPicker();
         }
 
         public void Activate() {
             targets = new HashSet<Character>();
-            TargetHandler.SetTargetPicker(this);
+            GUIEventHandler.SetTargetPicker(this);
         }
+
+        public abstract void MouseOverCharacter(Character character);
     }
 }
