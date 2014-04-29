@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace CavesEtVarans {
+    // This class is responsible with instantiating the playing field (terrain and NPC's).
     class BattleFieldInitializer : MonoBehaviour{
         public GameObject tilePrefab;
         public GameObject characterPrefab;
@@ -12,6 +13,7 @@ namespace CavesEtVarans {
             InitializeCharacters();
         }
 
+        // Places characters on the map. Should, read them from the mission descriptor file.
         private void InitializeCharacters() {
             Character charA = new Character("Character A");
             CharacterManager.Get().Add(charA);
@@ -25,17 +27,18 @@ namespace CavesEtVarans {
             CharacterManager.Get().ActivateNext();
         }
 
+        // Places tiles on the map. Should read them from the mission descriptor file.
         public void InitializeMap() {
             for (int i = 0; i < width; i++) {
                 for (int j = 0; j < height; j++) {
-                    Tile tile = new Tile(i, j);
-                    PlaceTile(tile, i, j);
+                    PlaceTile(i, j, 0);
                 }
             }
         }
 
-        private void PlaceTile(Tile tile, int i, int j) {
-            Vector3 tilePosition = transform.position + new Vector3(2 * i, -0.55f, 2 * j);
+        private void PlaceTile(int i, int j, int h) {
+            Tile tile = new Tile(i, j, h);
+            Vector3 tilePosition = transform.position + new Vector3(2 * i, 0.5f * h - 0.55f, 2 * j);
             GameObject tileObject = (GameObject) Instantiate(tilePrefab, tilePosition, transform.rotation);
             SceneTile tileComponent = tileObject.GetComponent<SceneTile>();
             tileComponent.SetTile(tile);

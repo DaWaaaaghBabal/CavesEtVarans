@@ -29,6 +29,10 @@ namespace CavesEtVarans
         public static readonly string ACTION_AP = "AAP";
         // the Action Point gauge name
         public static readonly string AP = "AP";
+        public static readonly string MAX_ENERGY = "ME";
+        public static readonly string MOVEMENT_COST = "MC";
+
+
 		private List<StatModifier> statOverriders;
 		private List<StatModifier> statMultipliers;
 		private List<StatModifier> statIncrementers;
@@ -49,13 +53,13 @@ namespace CavesEtVarans
 		public int GetValue () {
 			double val = value;
 			foreach (StatModifier mod in statMultipliers) {
-				val = mod.getValue (val);
+				val = mod.GetValue (val);
 			}
 			foreach (StatModifier mod in statIncrementers) {
-                val = mod.getValue(val);
+                val = mod.GetValue(val);
 			}
 			foreach (StatModifier mod in statOverriders) {
-                val = mod.getValue(val);
+                val = mod.GetValue(val);
 			}
             // Rounded down.
 			return (int) val;

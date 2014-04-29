@@ -12,24 +12,37 @@ namespace CavesEtVarans
 
         public StatisticsManager() {
             statistics = new Dictionary<string, Statistic>();
-            statistics.Add(Statistic.BASE_HIT_CHANCE, new Statistic(50.0));
-            statistics.Add(Statistic.BONUS_TO_DEF, new Statistic(0.0));
-            statistics.Add(Statistic.BONUS_TO_HIT, new Statistic(50.0));
-            statistics.Add(Statistic.DEFENSE, new Statistic(8.0));
-            statistics.Add(Statistic.DODGE, new Statistic(8.0));
+
+            InitializeSpecificStats();
+
+            InitializeConstantStats();
+        }
+        // These statistics are specific to each character. Their value should be read in the save file.
+        private void InitializeSpecificStats() {
             statistics.Add(Statistic.HEALTH, new Statistic(24.0));
-            statistics.Add(Statistic.INITIATIVE, new Statistic(8.0));
-            statistics.Add(Statistic.ITERATION_MALUS, new Statistic(25.0));
-            statistics.Add(Statistic.JUMP, new Statistic(2.0));
-            statistics.Add(Statistic.MAX_AP, new Statistic(120.0));
-            statistics.Add(Statistic.ACTION_AP, new Statistic(100.0));
+            statistics.Add(Statistic.DEFENSE, new Statistic(8.0));
             statistics.Add(Statistic.MELEE_ATTACK, new Statistic(8.0));
             statistics.Add(Statistic.MELEE_DAMAGE, new Statistic(8.0));
             statistics.Add(Statistic.RANGE_ATTACK, new Statistic(8.0));
             statistics.Add(Statistic.RANGE_DAMAGE, new Statistic(8.0));
-            statistics.Add(Statistic.SPECIAL, new Statistic(8.0));
             statistics.Add(Statistic.SPELL_POWER, new Statistic(8.0));
             statistics.Add(Statistic.WILLPOWER, new Statistic(8.0));
+            statistics.Add(Statistic.DODGE, new Statistic(8.0));
+            statistics.Add(Statistic.SPECIAL, new Statistic(8.0));
+            statistics.Add(Statistic.INITIATIVE, new Statistic(8.0));
+            statistics.Add(Statistic.ITERATION_MALUS, new Statistic(25.0));
+            statistics.Add(Statistic.JUMP, new Statistic(2.0));
+            statistics.Add(Statistic.MAX_ENERGY, new Statistic(10));
+        }
+
+        // These statistics always have the same value for every character. They are defined in the game rules.
+        private void InitializeConstantStats() {
+            statistics.Add(Statistic.MAX_AP, new Statistic(120.0));
+            statistics.Add(Statistic.ACTION_AP, new Statistic(100.0));
+            statistics.Add(Statistic.BASE_HIT_CHANCE, new Statistic(50.0));
+            statistics.Add(Statistic.BONUS_TO_DEF, new Statistic(0.0));
+            statistics.Add(Statistic.BONUS_TO_HIT, new Statistic(0.0));
+            statistics.Add(Statistic.MOVEMENT_COST, new Statistic(0.0));
         }
 
         // Returns the value of the statistic referenced by the string given as a key.

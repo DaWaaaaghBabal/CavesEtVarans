@@ -9,7 +9,7 @@ namespace CavesEtVarans {
             value = newValue;
         }
 
-        public override double getValue(double originalValue) {
+        public override double GetValue(double originalValue) {
             return value * originalValue;
         }
 
