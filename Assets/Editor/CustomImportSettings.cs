@@ -3,7 +3,7 @@ using UnityEditor;
 using System;
 //Sets our settings for all new Models and Textures upon first import
 public class CustomImportSettings : AssetPostprocessor {
-    public const float importScale = 0.4f;
+    public const float importScale = 0.3f;
     void OnPreprocessModel() {
         ModelImporter importer = assetImporter as ModelImporter;
         importer.globalScale = importScale;

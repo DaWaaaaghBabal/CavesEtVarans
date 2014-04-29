@@ -6,7 +6,7 @@ namespace CavesEtVarans {
     class BattleFieldInitializer : MonoBehaviour{
         public GameObject tilePrefab;
         public GameObject characterPrefab;
-
+        public int width, height;
         void Start() {
             InitializeMap();
             InitializeCharacters();
@@ -26,8 +26,8 @@ namespace CavesEtVarans {
         }
 
         public void InitializeMap() {
-            for (int i = 0; i < 15; i++) {
-                for (int j = 0; j < 15; j++) {
+            for (int i = 0; i < width; i++) {
+                for (int j = 0; j < height; j++) {
                     Tile tile = new Tile(i, j);
                     PlaceTile(tile, i, j);
                 }
@@ -44,7 +44,7 @@ namespace CavesEtVarans {
 
         private void PlaceCharacter(Character character, int i, int j) {
             Vector3 charPosition = transform.position + new Vector3(2 * i, 1, 2 * j);
-            GameObject charObject = (GameObject)Instantiate(characterPrefab, charPosition, transform.rotation);
+            GameObject charObject = (GameObject)Instantiate(characterPrefab, charPosition, Quaternion.Euler(0, 180, 0) * transform.rotation);
             SceneCharacter charComponent = charObject.GetComponent<SceneCharacter>();
             charComponent.SetCharacter(character);
         }
