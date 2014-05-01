@@ -19,7 +19,7 @@ namespace CavesEtVarans {
         }
 
         public static void HandleClickOnTile(SceneTile tile) {
-
+            GetActivePicker().ClickOnTile(tile.GetTile());
         }
 
         public static void HandleClickOnCharacter(SceneCharacter sceneCharacter) {

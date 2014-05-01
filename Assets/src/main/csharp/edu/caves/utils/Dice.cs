@@ -18,14 +18,15 @@ namespace CavesEtVarans
             return r;
         }
 
-        // Roll(2,100) <=> roll 2d100 and sum them up, add offset to the result
+        // Roll(X,Y,Z) = roll XdY+Z
         public static int Roll(int numberOfDices, int numberOfFaces, int offset) {
             int total = offset;
             for (int i = 0; i < numberOfDices; i++) {
-                total += GetRandom().Next(1, numberOfFaces + 1); // +1 because Next returns between minValue (included) and maxValue (excluded).
+                total += GetRandom().Next(1, numberOfFaces + 1); // +1 because Random#Next returns between minValue (included) and maxValue (excluded).
             }
             return total;
         }
+        // Roll(2,100) <=> roll 2d100 and sum them up
         public static int Roll(int numberOfDices, int numberOfFaces) {
             return Roll(numberOfDices, numberOfFaces, 0);
         }

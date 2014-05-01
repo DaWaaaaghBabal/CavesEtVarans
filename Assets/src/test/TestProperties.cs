@@ -8,7 +8,7 @@ public class TestProperties : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		if (needsTesting) {
-			Properties props = new Properties ("testProperties");
+            CavesEtVarans.Properties props = new CavesEtVarans.Properties("testProperties");
 			string str = props.GetInt ("int") + " " + props.GetStr ("string");
 			text.text = str;
 		}

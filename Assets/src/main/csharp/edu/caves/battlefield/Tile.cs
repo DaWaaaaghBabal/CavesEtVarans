@@ -2,16 +2,13 @@
 using System.Collections.Generic;
 
 namespace CavesEtVarans {
-    public class Tile {
+    public class Tile : IDisposable {
+
         // Position in the game grid.
-        private int x, y, h;
         private List<StatModifier> movementCostMultipliers;
         private List<StatModifier> movementCostIncrementers;
         private List<StatModifier> movementCostOverriders;
-        public Tile(int i, int j, int height) {
-            x = i;
-            y = j;
-            h = height;
+        public Tile() {
 
             movementCostOverriders = new List<StatModifier>();
             movementCostMultipliers = new List<StatModifier>();
@@ -30,6 +27,10 @@ namespace CavesEtVarans {
                 value = modifier.GetValue(value);
             }
             return originalValue;
+        }
+
+        public void Dispose() {
+            // Do nothing yet.
         }
     }
 }

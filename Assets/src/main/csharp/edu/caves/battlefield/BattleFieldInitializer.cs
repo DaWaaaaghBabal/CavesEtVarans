@@ -31,14 +31,15 @@ namespace CavesEtVarans {
         public void InitializeMap() {
             for (int i = 0; i < width; i++) {
                 for (int j = 0; j < height; j++) {
-                    PlaceTile(i, j, 0);
+                    PlaceTile(i, j, Dice.Roll(2,2,-2));
                 }
             }
         }
 
         private void PlaceTile(int i, int j, int h) {
-            Tile tile = new Tile(i, j, h);
-            Vector3 tilePosition = transform.position + new Vector3(2 * i, 0.5f * h - 0.55f, 2 * j);
+            Tile tile = new Tile();
+            TileManager.Get().AddTile(tile, i, j, h);
+            Vector3 tilePosition = transform.position + new Vector3(2 * i, h/3f, 2 * j);
             GameObject tileObject = (GameObject) Instantiate(tilePrefab, tilePosition, transform.rotation);
             SceneTile tileComponent = tileObject.GetComponent<SceneTile>();
             tileComponent.SetTile(tile);
@@ -46,7 +47,7 @@ namespace CavesEtVarans {
 
 
         private void PlaceCharacter(Character character, int i, int j) {
-            Vector3 charPosition = transform.position + new Vector3(2 * i, 1, 2 * j);
+            Vector3 charPosition = transform.position + new Vector3(2 * i, 0, 2 * j);
             GameObject charObject = (GameObject)Instantiate(characterPrefab, charPosition, Quaternion.Euler(0, 180, 0) * transform.rotation);
             SceneCharacter charComponent = charObject.GetComponent<SceneCharacter>();
             charComponent.SetCharacter(character);

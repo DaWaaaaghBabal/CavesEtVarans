@@ -24,5 +24,7 @@ namespace CavesEtVarans {
         }
 
         public abstract void MouseOverCharacter(Character character);
+
+        public abstract void ClickOnTile(Tile tile);
     }
 }

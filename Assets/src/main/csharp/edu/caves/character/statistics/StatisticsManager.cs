@@ -37,12 +37,14 @@ namespace CavesEtVarans
 
         // These statistics always have the same value for every character. They are defined in the game rules.
         private void InitializeConstantStats() {
-            statistics.Add(Statistic.MAX_AP, new Statistic(120.0));
-            statistics.Add(Statistic.ACTION_AP, new Statistic(100.0));
-            statistics.Add(Statistic.BASE_HIT_CHANCE, new Statistic(50.0));
-            statistics.Add(Statistic.BONUS_TO_DEF, new Statistic(0.0));
-            statistics.Add(Statistic.BONUS_TO_HIT, new Statistic(0.0));
-            statistics.Add(Statistic.MOVEMENT_COST, new Statistic(0.0));
+            
+            Properties rules = new Properties("gameRules");
+            statistics.Add(Statistic.MAX_AP, new Statistic(rules.GetInt("maxAP")));
+            statistics.Add(Statistic.ACTION_AP, new Statistic(rules.GetInt("actionAP")));
+            statistics.Add(Statistic.BASE_HIT_CHANCE, new Statistic(rules.GetInt("baseHitChance")));
+            statistics.Add(Statistic.BONUS_TO_DEF, new Statistic(0));
+            statistics.Add(Statistic.BONUS_TO_HIT, new Statistic(0));
+            statistics.Add(Statistic.MOVEMENT_COST, new Statistic(rules.GetInt("baseMovementCost")));
         }
 
         // Returns the value of the statistic referenced by the string given as a key.

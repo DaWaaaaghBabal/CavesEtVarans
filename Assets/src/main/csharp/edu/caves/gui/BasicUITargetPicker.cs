@@ -15,5 +15,9 @@ namespace CavesEtVarans {
         public override void MouseOverCharacter(Character character) {
             
         }
+
+        public override void ClickOnTile(Tile tile) {
+            MainGUI.GetInstance().DisplayTileCoordinates(tile);
+        }
     }
 }
