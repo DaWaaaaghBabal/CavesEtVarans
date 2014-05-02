@@ -54,8 +54,8 @@ namespace CavesEtVarans {
             if (x >= length || y >= width || z >= height) {
                 int oldLength = length, oldWidth = width, oldHeight = height;
                 length = Math.Max(x+1, length);
-                height = Math.Max(y+1, width);
-                width = Math.Max(z+1, height);
+                width = Math.Max(y+1, width);
+                height = Math.Max(z + 1, height);
                 T[, ,] oldContent = content;
                 InitCube();
                 CopyContent(oldContent, oldLength, oldWidth, oldHeight);
@@ -111,12 +111,12 @@ namespace CavesEtVarans {
         // Returns a line. The provided Axis is used as the axis of the line:
         // If Axis.X is provided, the plane will be the subset of the cube where y = index1 and z = index2.
         public T[] Get(int index1, int index2, Axis normal) {
-            int[,] planeDimensions = GetPlaneDimensions(normal);
-            int lineLength = planeDimensions[2, 0];
+            int planeDimensions = GetLineLength(normal);
+            int lineLength = planeDimensions;
             int[,] coord;
             T[] result = new T[lineLength];
             for (int i = 0; i < lineLength; i++) {
-                coord = ArrangePlaneCoord(i, index1, index2, normal);
+                coord = ArrangeLineCoord(i, index1, index2, normal);
                 result[i] = content[coord[0, 0], coord[1, 0], coord[2, 0]];
             }
             return result;
@@ -129,9 +129,9 @@ namespace CavesEtVarans {
             int[,] matrix = new int[3, 1] { { i }, { j }, { fixedCoord } };
             return permutationMatrixes[0][normal].MatrixProduct(matrix);
         }
-        private int GetLineLength(Axis normal) {
+        private int GetLineLength(Axis axis) {
             int[,] matrix = new int[3, 1] { { length }, { width }, { height } };
-            return permutationMatrixes[1][normal].MatrixProduct(matrix)[0,0];
+            return permutationMatrixes[1][axis].MatrixProduct(matrix)[0,0];
         }
         private int[,] ArrangeLineCoord(int i, int fixedCoord1, int fixedCoord2, Axis normal) {
             int[,] matrix = new int[3, 1] { { i }, { fixedCoord1 }, { fixedCoord2 } };
@@ -142,14 +142,33 @@ namespace CavesEtVarans {
 
             // Permutation matrixes used to extract a plane.
             permutationMatrixes[0] = new Dictionary<Axis, int[,]>();
-            permutationMatrixes[0].Add(Axis.X, new int[3, 3] { { 0, 1, 0 }, { 0, 0, 1 }, { 1, 0, 0 } });
-            permutationMatrixes[0].Add(Axis.Y, new int[3, 3] { { 1, 0, 0 }, { 0, 0, 1 }, { 0, 1, 0 } });
-            permutationMatrixes[0].Add(Axis.Z, new int[3, 3] { { 1, 0, 0 }, { 0, 1, 0 }, { 0, 0, 1 } });
+            permutationMatrixes[0].Add(Axis.X, new int[3, 3] { 
+                { 0, 0, 1 }, 
+                { 1, 0, 0 }, 
+                { 0, 1, 0 } });
+            permutationMatrixes[0].Add(Axis.Y, new int[3, 3] { 
+                { 1, 0, 0 }, 
+                { 0, 0, 1 }, 
+                { 0, 1, 0 } });
+            permutationMatrixes[0].Add(Axis.Z, new int[3, 3] { 
+                { 1, 0, 0 }, 
+                { 0, 1, 0 }, 
+                { 0, 0, 1 } });
+
             // Permutation matrixes used to extract a line.
             permutationMatrixes[1] = new Dictionary<Axis, int[,]>();
-            permutationMatrixes[1].Add(Axis.X, new int[3, 3] { { 1, 0, 0 }, { 0, 1, 0 }, { 0, 0, 1 } });
-            permutationMatrixes[1].Add(Axis.Y, new int[3, 3] { { 0, 1, 0 }, { 1, 0, 0 }, { 0, 0, 1 } });
-            permutationMatrixes[1].Add(Axis.Z, new int[3, 3] { { 0, 0, 1 }, { 1, 0, 0 }, { 0, 1, 0 } });
+            permutationMatrixes[1].Add(Axis.X, new int[3, 3] { 
+                { 1, 0, 0 }, 
+                { 0, 1, 0 }, 
+                { 0, 0, 1 } });
+            permutationMatrixes[1].Add(Axis.Y, new int[3, 3] { 
+                { 0, 1, 0 }, 
+                { 1, 0, 0 }, 
+                { 0, 0, 1 } });
+            permutationMatrixes[1].Add(Axis.Z, new int[3, 3] { 
+                { 0, 1, 0 }, 
+                { 0, 0, 1 }, 
+                { 1, 0, 0 } });
         }
     }
 }
