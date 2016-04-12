@@ -1,0 +1,584 @@
+fileFormatVersion: 2
+guid: 78d8e4f9d4d37d547a319b748c5bf4d5
+timeCreated: 1460069407
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Armature
+    100002: Base
+    100004: Bielle-L
+    100006: Bielle-L_end
+    100008: Bielle-R
+    100010: Bielle-R_end
+    100012: Bone1
+    100014: Bone2
+    100016: Bone3
+    100018: Carpe-L
+    100020: Carpe-R
+    100022: Doigt-L
+    100024: Doigt-R
+    100026: Main
+    100028: Pince
+    100030: //RootNode
+    100032: "Tige v\xE9rin"
+    100034: "T\xEAte v\xE9rin"
+    100036: "T\xEAte_IK_L"
+    100038: "T\xEAte_IK_L_end"
+    100040: "T\xEAte_IK_R"
+    100042: "T\xEAte_IK_R_end"
+    100044: "T\xEAte_L"
+    100046: "T\xEAte_R"
+    400000: Armature
+    400002: Base
+    400004: Bielle-L
+    400006: Bielle-L_end
+    400008: Bielle-R
+    400010: Bielle-R_end
+    400012: Bone1
+    400014: Bone2
+    400016: Bone3
+    400018: Carpe-L
+    400020: Carpe-R
+    400022: Doigt-L
+    400024: Doigt-R
+    400026: Main
+    400028: Pince
+    400030: //RootNode
+    400032: "Tige v\xE9rin"
+    400034: "T\xEAte v\xE9rin"
+    400036: "T\xEAte_IK_L"
+    400038: "T\xEAte_IK_L_end"
+    400040: "T\xEAte_IK_R"
+    400042: "T\xEAte_IK_R_end"
+    400044: "T\xEAte_L"
+    400046: "T\xEAte_R"
+    4300000: Pince
+    7400000: Attack
+    7400002: Idle
+    7400004: Cast
+    7400006: Walk - start
+    7400008: Walk
+    7400010: Walk - end
+    9500000: //RootNode
+    13700000: Pince
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Attack
+      takeName: Armature|Attack
+      firstFrame: 0
+      lastFrame: 28
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Base
+        weight: 1
+      - path: Armature/Base/Bone1
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main/Carpe-L
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main/Carpe-L/Doigt-L
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main/Carpe-L/Doigt-L/Bielle-L
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main/Carpe-L/Doigt-L/Bielle-L/Bielle-L_end
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main/Carpe-R
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main/Carpe-R/Doigt-R
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main/Carpe-R/Doigt-R/Bielle-R
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main/Carpe-R/Doigt-R/Bielle-R/Bielle-R_end
+        weight: 1
+      - path: "Armature/Base/Bone1/Bone2/Bone3/Main/Tige v\xE9rin"
+        weight: 1
+      - path: "Armature/Base/Bone1/Bone2/Bone3/Main/Tige v\xE9rin/T\xEAte v\xE9rin"
+        weight: 1
+      - path: "Armature/Base/Bone1/Bone2/Bone3/Main/Tige v\xE9rin/T\xEAte v\xE9rin/T\xEAte_L"
+        weight: 1
+      - path: "Armature/Base/Bone1/Bone2/Bone3/Main/Tige v\xE9rin/T\xEAte v\xE9rin/T\xEAte_L/T\xEAte_IK_L"
+        weight: 1
+      - path: "Armature/Base/Bone1/Bone2/Bone3/Main/Tige v\xE9rin/T\xEAte v\xE9rin/T\xEAte_L/T\xEAte_IK_L/T\xEAte_IK_L_end"
+        weight: 1
+      - path: "Armature/Base/Bone1/Bone2/Bone3/Main/Tige v\xE9rin/T\xEAte v\xE9rin/T\xEAte_R"
+        weight: 1
+      - path: "Armature/Base/Bone1/Bone2/Bone3/Main/Tige v\xE9rin/T\xEAte v\xE9rin/T\xEAte_R/T\xEAte_IK_R"
+        weight: 1
+      - path: "Armature/Base/Bone1/Bone2/Bone3/Main/Tige v\xE9rin/T\xEAte v\xE9rin/T\xEAte_R/T\xEAte_IK_R/T\xEAte_IK_R_end"
+        weight: 1
+      - path: Pince
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Idle
+      takeName: Armature|Idle
+      firstFrame: 0
+      lastFrame: 49
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Base
+        weight: 1
+      - path: Armature/Base/Bone1
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main/Carpe-L
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main/Carpe-L/Doigt-L
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main/Carpe-L/Doigt-L/Bielle-L
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main/Carpe-L/Doigt-L/Bielle-L/Bielle-L_end
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main/Carpe-R
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main/Carpe-R/Doigt-R
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main/Carpe-R/Doigt-R/Bielle-R
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main/Carpe-R/Doigt-R/Bielle-R/Bielle-R_end
+        weight: 1
+      - path: "Armature/Base/Bone1/Bone2/Bone3/Main/Tige v\xE9rin"
+        weight: 1
+      - path: "Armature/Base/Bone1/Bone2/Bone3/Main/Tige v\xE9rin/T\xEAte v\xE9rin"
+        weight: 1
+      - path: "Armature/Base/Bone1/Bone2/Bone3/Main/Tige v\xE9rin/T\xEAte v\xE9rin/T\xEAte_L"
+        weight: 1
+      - path: "Armature/Base/Bone1/Bone2/Bone3/Main/Tige v\xE9rin/T\xEAte v\xE9rin/T\xEAte_L/T\xEAte_IK_L"
+        weight: 1
+      - path: "Armature/Base/Bone1/Bone2/Bone3/Main/Tige v\xE9rin/T\xEAte v\xE9rin/T\xEAte_L/T\xEAte_IK_L/T\xEAte_IK_L_end"
+        weight: 1
+      - path: "Armature/Base/Bone1/Bone2/Bone3/Main/Tige v\xE9rin/T\xEAte v\xE9rin/T\xEAte_R"
+        weight: 1
+      - path: "Armature/Base/Bone1/Bone2/Bone3/Main/Tige v\xE9rin/T\xEAte v\xE9rin/T\xEAte_R/T\xEAte_IK_R"
+        weight: 1
+      - path: "Armature/Base/Bone1/Bone2/Bone3/Main/Tige v\xE9rin/T\xEAte v\xE9rin/T\xEAte_R/T\xEAte_IK_R/T\xEAte_IK_R_end"
+        weight: 1
+      - path: Pince
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Cast
+      takeName: Armature|Pain
+      firstFrame: 0
+      lastFrame: 24
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Base
+        weight: 1
+      - path: Armature/Base/Bone1
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main/Carpe-L
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main/Carpe-L/Doigt-L
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main/Carpe-L/Doigt-L/Bielle-L
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main/Carpe-L/Doigt-L/Bielle-L/Bielle-L_end
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main/Carpe-R
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main/Carpe-R/Doigt-R
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main/Carpe-R/Doigt-R/Bielle-R
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main/Carpe-R/Doigt-R/Bielle-R/Bielle-R_end
+        weight: 1
+      - path: "Armature/Base/Bone1/Bone2/Bone3/Main/Tige v\xE9rin"
+        weight: 1
+      - path: "Armature/Base/Bone1/Bone2/Bone3/Main/Tige v\xE9rin/T\xEAte v\xE9rin"
+        weight: 1
+      - path: "Armature/Base/Bone1/Bone2/Bone3/Main/Tige v\xE9rin/T\xEAte v\xE9rin/T\xEAte_L"
+        weight: 1
+      - path: "Armature/Base/Bone1/Bone2/Bone3/Main/Tige v\xE9rin/T\xEAte v\xE9rin/T\xEAte_L/T\xEAte_IK_L"
+        weight: 1
+      - path: "Armature/Base/Bone1/Bone2/Bone3/Main/Tige v\xE9rin/T\xEAte v\xE9rin/T\xEAte_L/T\xEAte_IK_L/T\xEAte_IK_L_end"
+        weight: 1
+      - path: "Armature/Base/Bone1/Bone2/Bone3/Main/Tige v\xE9rin/T\xEAte v\xE9rin/T\xEAte_R"
+        weight: 1
+      - path: "Armature/Base/Bone1/Bone2/Bone3/Main/Tige v\xE9rin/T\xEAte v\xE9rin/T\xEAte_R/T\xEAte_IK_R"
+        weight: 1
+      - path: "Armature/Base/Bone1/Bone2/Bone3/Main/Tige v\xE9rin/T\xEAte v\xE9rin/T\xEAte_R/T\xEAte_IK_R/T\xEAte_IK_R_end"
+        weight: 1
+      - path: Pince
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Walk - start
+      takeName: Armature|Walk
+      firstFrame: 0
+      lastFrame: 2
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Base
+        weight: 1
+      - path: Armature/Base/Bone1
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main/Carpe-L
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main/Carpe-L/Doigt-L
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main/Carpe-L/Doigt-L/Bielle-L
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main/Carpe-L/Doigt-L/Bielle-L/Bielle-L_end
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main/Carpe-R
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main/Carpe-R/Doigt-R
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main/Carpe-R/Doigt-R/Bielle-R
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main/Carpe-R/Doigt-R/Bielle-R/Bielle-R_end
+        weight: 1
+      - path: "Armature/Base/Bone1/Bone2/Bone3/Main/Tige v\xE9rin"
+        weight: 1
+      - path: "Armature/Base/Bone1/Bone2/Bone3/Main/Tige v\xE9rin/T\xEAte v\xE9rin"
+        weight: 1
+      - path: "Armature/Base/Bone1/Bone2/Bone3/Main/Tige v\xE9rin/T\xEAte v\xE9rin/T\xEAte_L"
+        weight: 1
+      - path: "Armature/Base/Bone1/Bone2/Bone3/Main/Tige v\xE9rin/T\xEAte v\xE9rin/T\xEAte_L/T\xEAte_IK_L"
+        weight: 1
+      - path: "Armature/Base/Bone1/Bone2/Bone3/Main/Tige v\xE9rin/T\xEAte v\xE9rin/T\xEAte_L/T\xEAte_IK_L/T\xEAte_IK_L_end"
+        weight: 1
+      - path: "Armature/Base/Bone1/Bone2/Bone3/Main/Tige v\xE9rin/T\xEAte v\xE9rin/T\xEAte_R"
+        weight: 1
+      - path: "Armature/Base/Bone1/Bone2/Bone3/Main/Tige v\xE9rin/T\xEAte v\xE9rin/T\xEAte_R/T\xEAte_IK_R"
+        weight: 1
+      - path: "Armature/Base/Bone1/Bone2/Bone3/Main/Tige v\xE9rin/T\xEAte v\xE9rin/T\xEAte_R/T\xEAte_IK_R/T\xEAte_IK_R_end"
+        weight: 1
+      - path: Pince
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Walk
+      takeName: Armature|Walk
+      firstFrame: 3
+      lastFrame: 14
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Base
+        weight: 1
+      - path: Armature/Base/Bone1
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main/Carpe-L
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main/Carpe-L/Doigt-L
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main/Carpe-L/Doigt-L/Bielle-L
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main/Carpe-L/Doigt-L/Bielle-L/Bielle-L_end
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main/Carpe-R
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main/Carpe-R/Doigt-R
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main/Carpe-R/Doigt-R/Bielle-R
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main/Carpe-R/Doigt-R/Bielle-R/Bielle-R_end
+        weight: 1
+      - path: "Armature/Base/Bone1/Bone2/Bone3/Main/Tige v\xE9rin"
+        weight: 1
+      - path: "Armature/Base/Bone1/Bone2/Bone3/Main/Tige v\xE9rin/T\xEAte v\xE9rin"
+        weight: 1
+      - path: "Armature/Base/Bone1/Bone2/Bone3/Main/Tige v\xE9rin/T\xEAte v\xE9rin/T\xEAte_L"
+        weight: 1
+      - path: "Armature/Base/Bone1/Bone2/Bone3/Main/Tige v\xE9rin/T\xEAte v\xE9rin/T\xEAte_L/T\xEAte_IK_L"
+        weight: 1
+      - path: "Armature/Base/Bone1/Bone2/Bone3/Main/Tige v\xE9rin/T\xEAte v\xE9rin/T\xEAte_L/T\xEAte_IK_L/T\xEAte_IK_L_end"
+        weight: 1
+      - path: "Armature/Base/Bone1/Bone2/Bone3/Main/Tige v\xE9rin/T\xEAte v\xE9rin/T\xEAte_R"
+        weight: 1
+      - path: "Armature/Base/Bone1/Bone2/Bone3/Main/Tige v\xE9rin/T\xEAte v\xE9rin/T\xEAte_R/T\xEAte_IK_R"
+        weight: 1
+      - path: "Armature/Base/Bone1/Bone2/Bone3/Main/Tige v\xE9rin/T\xEAte v\xE9rin/T\xEAte_R/T\xEAte_IK_R/T\xEAte_IK_R_end"
+        weight: 1
+      - path: Pince
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Walk - end
+      takeName: Armature|Walk
+      firstFrame: 15
+      lastFrame: 24
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Base
+        weight: 1
+      - path: Armature/Base/Bone1
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main/Carpe-L
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main/Carpe-L/Doigt-L
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main/Carpe-L/Doigt-L/Bielle-L
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main/Carpe-L/Doigt-L/Bielle-L/Bielle-L_end
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main/Carpe-R
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main/Carpe-R/Doigt-R
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main/Carpe-R/Doigt-R/Bielle-R
+        weight: 1
+      - path: Armature/Base/Bone1/Bone2/Bone3/Main/Carpe-R/Doigt-R/Bielle-R/Bielle-R_end
+        weight: 1
+      - path: "Armature/Base/Bone1/Bone2/Bone3/Main/Tige v\xE9rin"
+        weight: 1
+      - path: "Armature/Base/Bone1/Bone2/Bone3/Main/Tige v\xE9rin/T\xEAte v\xE9rin"
+        weight: 1
+      - path: "Armature/Base/Bone1/Bone2/Bone3/Main/Tige v\xE9rin/T\xEAte v\xE9rin/T\xEAte_L"
+        weight: 1
+      - path: "Armature/Base/Bone1/Bone2/Bone3/Main/Tige v\xE9rin/T\xEAte v\xE9rin/T\xEAte_L/T\xEAte_IK_L"
+        weight: 1
+      - path: "Armature/Base/Bone1/Bone2/Bone3/Main/Tige v\xE9rin/T\xEAte v\xE9rin/T\xEAte_L/T\xEAte_IK_L/T\xEAte_IK_L_end"
+        weight: 1
+      - path: "Armature/Base/Bone1/Bone2/Bone3/Main/Tige v\xE9rin/T\xEAte v\xE9rin/T\xEAte_R"
+        weight: 1
+      - path: "Armature/Base/Bone1/Bone2/Bone3/Main/Tige v\xE9rin/T\xEAte v\xE9rin/T\xEAte_R/T\xEAte_IK_R"
+        weight: 1
+      - path: "Armature/Base/Bone1/Bone2/Bone3/Main/Tige v\xE9rin/T\xEAte v\xE9rin/T\xEAte_R/T\xEAte_IK_R/T\xEAte_IK_R_end"
+        weight: 1
+      - path: Pince
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

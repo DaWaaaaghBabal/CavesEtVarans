@@ -1,23 +1,10 @@
-/Library
-/CavesEtVarans-csharp.sln
 /Assembly-CSharp.csproj
-/Assembly-CSharp.pidb
-/Assembly-CSharp-vs.csproj
-/CavesEtVarans.sln
-/CavesEtVarans.userprefs
-/Temp
-#Un-ignore these specific files
-!**.*.meta
-
-#ignore eclipse scrap
-.project
-.settings
-*.build
-
-#ignore visual studio scrap
+/Assembly-CSharp-Editor.csproj
+/Assembly-CSharp-firstpass.csproj
+/Caves et Varans.CSharp.csproj
+/Caves et Varans.CSharp.Editor.csproj
+/Caves et Varans.CSharp.Plugins.csproj
+/Caves et Varans.sln
+/Library
 /obj
-*.suo
-*.csproj
-*.csproj.user
-/TestResults
-/test-results
+/Build

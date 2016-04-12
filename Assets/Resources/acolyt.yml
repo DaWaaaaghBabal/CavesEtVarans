@@ -1,0 +1,62 @@
+!CavesEtVarans.character.CharacterClass,%20Assembly-CSharp,%20Version=0.0.0.0,%20Culture=neutral,%20PublicKeyToken=null
+Name: Acolyte
+Health: 48
+Defense: 8
+Attack: 8
+Damage: 8
+Willpower: 4
+Dodge: 8
+SpecialName: Enthousiasme
+Special: 8
+Initiative: 8
+Iterative: 20
+Energy: 8
+EnergyName: moral
+Jump: 2
+Skills:
+- Attributes:
+    Name: Attaque de base
+    Icon: basicAttack
+    Animation: attack
+    Description: ATK contre DEF. Inflige [100% DMG] dégâts physiques à une cible au contact.
+  Cost:
+    Elements:
+      AP: 25
+  TargetPickers:
+  - !CavesEtVarans.skills.core.target.RangedDiscreteTargetPicker,%20Assembly-CSharp,%20Version=0.0.0.0,%20Culture=neutral,%20PublicKeyToken=null
+    Range: 1
+    TargetNumber: 1
+    TargetKey: target1
+  Effects:
+  - !CavesEtVarans.skills.effects.DamageEffect,%20Assembly-CSharp,%20Version=0.0.0.0,%20Culture=neutral,%20PublicKeyToken=null
+    Amount: !CavesEtVarans.skills.values.ValueMultiplier,%20Assembly-CSharp,%20Version=0.0.0.0,%20Culture=neutral,%20PublicKeyToken=null
+      Base: !CavesEtVarans.skills.values.StatReader,%20Assembly-CSharp,%20Version=0.0.0.0,%20Culture=neutral,%20PublicKeyToken=null
+        Source: source
+        Stat: DMG
+      Factor: !CavesEtVarans.skills.values.DamageFormula,%20Assembly-CSharp,%20Version=0.0.0.0,%20Culture=neutral,%20PublicKeyToken=null
+        Attack: !CavesEtVarans.skills.values.StatReader,%20Assembly-CSharp,%20Version=0.0.0.0,%20Culture=neutral,%20PublicKeyToken=null
+          Source: source
+          Stat: ATK
+        Defense: !CavesEtVarans.skills.values.StatReader,%20Assembly-CSharp,%20Version=0.0.0.0,%20Culture=neutral,%20PublicKeyToken=null
+          Source: currentTarget
+          Stat: ATK
+    TargetKey: target1
+- Attributes:
+    Name: Soin mineur
+    Icon: heal
+    Animation: cast
+    Description: Soigne deux cibles à moins de 6 cases de [100% VOL].
+  Cost:
+    Elements:
+      AP: 25
+  TargetPickers:
+  - !CavesEtVarans.skills.core.target.RangedDiscreteTargetPicker,%20Assembly-CSharp,%20Version=0.0.0.0,%20Culture=neutral,%20PublicKeyToken=null
+    Range: 6
+    TargetNumber: 2
+    TargetKey: target1
+  Effects:
+  - !CavesEtVarans.skills.effects.HealEffect,%20Assembly-CSharp,%20Version=0.0.0.0,%20Culture=neutral,%20PublicKeyToken=null
+    Amount: !CavesEtVarans.skills.values.StatReader,%20Assembly-CSharp,%20Version=0.0.0.0,%20Culture=neutral,%20PublicKeyToken=null
+      Source: source
+      Stat: WP
+    TargetKey: target1

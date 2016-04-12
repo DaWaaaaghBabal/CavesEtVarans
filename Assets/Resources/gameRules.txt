@@ -1,4 +1,0 @@
-maxAP=120
-actionAP=100
-baseHitChance=50
-baseMovementCost=25
