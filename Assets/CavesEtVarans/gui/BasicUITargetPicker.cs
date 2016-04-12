@@ -30,7 +30,7 @@ namespace CavesEtVarans.gui {
 
 		public void TargetTile(Tile targetTile) {
 			if (targetTile.IsFree) {
-				Character source = CharacterManager.Get().GetActiveCharacter();
+				Character source = CharacterManager.Get().ActiveCharacter;
 				Tile sourceTile = source.Tile;
 				Context context = Context.ProvideMovementContext(source, targetTile);
 				int jump = source.GetStatValue(Statistic.JUMP, context);

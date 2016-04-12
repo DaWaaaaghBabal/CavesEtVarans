@@ -8,3 +8,9 @@
 /Library
 /obj
 /Build
+/.vs
+/Temp
+/CavesEtVarans.sln
+/CavesEtVarans.CSharp.csproj
+/CavesEtVarans.CSharp.Editor.csproj
+/CavesEtVarans.CSharp.Plugins.csproj

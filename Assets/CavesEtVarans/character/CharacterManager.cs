@@ -16,82 +16,77 @@ namespace CavesEtVarans.character
 				instance = new CharacterManager ();
 			}
 			return instance;
+        }
+
+        public List<Character> Characters { private set; get; }
+		private Character activeCharacter;
+        private Context context;
+
+        private CharacterManager ()
+		{
+            Characters = new List<Character>();
+            context = Context.ProvideTurnOrderContext();
+        }
+
+		public Character ActiveCharacter {
+            get {
+                if (activeCharacter == null) {
+                    SearchForNewActiveCharacter();
+                }
+                return activeCharacter;
+            }
+            private set { activeCharacter = value; }
+        }
+
+        public void Add (Character character) {
+            Characters.Add(character);
 		}
 		
-		private CharacterManager ()
-		{
-			
+		public void Remove (Character character) {
+			Characters.Remove(character);
 		}
 
-		private Character activeCharacter = null;
-
-		public Character GetActiveCharacter ()
-		{
-			if (activeCharacter == null) {
-				SearchForNewActiveCharacter ();
-			}
-			return activeCharacter;
+		public void ActivateNext () {
+			SearchForNewActiveCharacter();
+			ActiveCharacter.Activate();
 		}
 
-		private LinkedList<Character> characters = null;
-		
-		protected LinkedList<Character> GetCharacters ()
-		{
-			if (characters == null) {
-				characters = new LinkedList<Character> ();
-			}
-			return characters;
-		}
-		
-		public void Add (Character character)
-		{
-			GetCharacters ().AddLast (character);
-		}
-		
-		public void Remove (Character character)
-		{
-			GetCharacters ().Remove (character);
-		}
-
-		public void ActivateNext ()
-		{
-			SearchForNewActiveCharacter ();
-			GetActiveCharacter ().Activate ();
+		protected void SearchForNewActiveCharacter () {
+            // Search for all characters that areready to act
+            List<Character> ready = new List<Character>();
+            foreach (Character c in Characters) {
+                if (c.AP >= c.GetStatValue(Statistic.ACTION_AP, context)) {
+                    ready.Add(c);
+                }
+            }
+            if (ready.Count > 0) {
+                // Some characters are ready to act : sort them by AP, then by Initiative, and return the first.
+                ready.Sort(Compare);
+                ActiveCharacter = ready[0];
+            } else {
+                Random rand = new Random();
+                // No character was ready to act : fill all AP gauges, then start again.
+                foreach (Character c in Characters) {
+                    // The amount of AP gained by each character is slightly randomised, to mess with the turn order.
+                    c.IncrementAP(c.GetStatValue(Statistic.INITIATIVE, context) + rand.Next(1, 4));
+                }
+                SearchForNewActiveCharacter();
+            }
 		}
 
-		protected void SearchForNewActiveCharacter ()
-		{
-			//@TODO initialize a turn loop context here
-			Context context = Context.Init(null, null);
-			// loop on every characters until one of them hits the upper bar of action
-			Boolean up;
-			do {
-				up = false;
-				foreach (Character c in GetCharacters()) {   
-					// The amount of AP gained by each character is slightly randomised, to mess with the turn order.
-					c.IncrementAP(c.GetStatValue(Statistic.INITIATIVE, context) + new Random().Next(1, 4));
-					up |= (c.AP >= c.GetStatValue(Statistic.ACTION_AP, context));
-				}
-			} while (!up);
-
-			// pick the first character with the higher amount of A.P. and higher Initiative value if both A.P. are eq.
-			Character active = GetCharacters ().First ();
-			foreach (Character c in GetCharacters()) {
-				if (c.AP > active.AP
-					|| (c.AP == active.AP && c.GetStatValue(Statistic.INITIATIVE, context) > active.GetStatValue(Statistic.INITIATIVE, context))
-                ) {
-					active = c;
-				}
-			}
-			activeCharacter = active;
+		public void Clear() {
+			Characters.Clear();
+			ActiveCharacter = null;
 		}
 
-		internal void Clear ()
-		{
-			GetCharacters ().Clear ();
-			activeCharacter = null;
-		}
-
+        private int Compare(Character c1, Character c2) {
+            if (c1.AP > c2.AP) return 1;
+            if (c2.AP > c1.AP) return -1;
+            // Same AP, we break the tie by comparing Initiative
+            int init1 = c1.GetStatValue(Statistic.INITIATIVE, context);
+            int init2 = c2.GetStatValue(Statistic.INITIATIVE, context);
+            return init1 - init2;
+        }
 	}
 
 }

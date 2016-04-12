@@ -15,7 +15,7 @@ namespace CavesEtVarans.skills.core
 		public static readonly string BUFF_TARGET = "buffTarget";
 		public static readonly string SKILL = "skill";
 		public static readonly string TILE = "tile";
-		public static readonly string DAMAGE_TYPE = "damageType";
+        public static readonly string DAMAGE_TYPE = "damageType";
 
 		private Dictionary<string, Object> data;
 
@@ -30,29 +30,6 @@ namespace CavesEtVarans.skills.core
 			context.Set (SOURCE, source);
 			context.Set (SKILL, skill);
 			return context;
-		}
-
-		public static Context ProvidePrivateContext(ContextDependent contextDependent) {
-			return new Context();
-		}
-
-		public static Context ProvideMovementContext(Character character, Tile targetTile) {
-			Context context = new Context();
-			// The character is both the source, as he is using the movement action, 
-			// and the target, as he is the one that is moved.
-			context.Set(SOURCE, character);
-            HashSet<ITargetable> targets = new HashSet<ITargetable>();
-            targets.Add(character);
-            context.Set(TARGETS + MOVEMENT_TARGET, targets);
-
-            targets = new HashSet<ITargetable>();
-            targets.Add(targetTile);
-            context.Set(TARGETS + TILE, targets);
-			return context;
-		}
-
-		public static Context ProvideDisplayContext() {
-			return Init(null, null);
 		}
 
 		public void Set (string key, Object value)
@@ -70,6 +47,30 @@ namespace CavesEtVarans.skills.core
 		public Object Get (string key, Context privateContext) {
 			Object result = privateContext.Get(key);
 			return result != null ? result : Get(key);
-		}
-	}
+        }
+
+        public static Context ProvideTurnOrderContext() {
+            return new Context();
+        }
+        public static Context ProvidePrivateContext(ContextDependent contextDependent) {
+            return new Context();
+        }
+        public static Context ProvideMovementContext(Character character, Tile targetTile) {
+            Context context = new Context();
+            // The character is both the source, as he is using the movement action, 
+            // and the target, as he is the one that is moved.
+            context.Set(SOURCE, character);
+            HashSet<ITargetable> targets = new HashSet<ITargetable>();
+            targets.Add(character);
+            context.Set(TARGETS + MOVEMENT_TARGET, targets);
+
+            targets = new HashSet<ITargetable>();
+            targets.Add(targetTile);
+            context.Set(TARGETS + TILE, targets);
+            return context;
+        }
+        public static Context ProvideDisplayContext() {
+            return Init(null, null);
+        }
+    }
 }

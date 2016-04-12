@@ -14,12 +14,15 @@ namespace CavesEtVarans.gui
 		public int iconSize;
 		public CharacterDisplay activeCharacterDisplay;
 
-		private static Character activeCharacter;
+		private static Character ActiveCharacter {
+            get { return CharacterManager.Get().ActiveCharacter; }
+            set { }
+        }
 		private static Character displayedCharacter;
 		private static Context context = Context.ProvideDisplayContext();
 		public static void ActivateCharacter (Character newActive)
 		{
-			activeCharacter = newActive;
+			// do nothing for now ; building character-specific UI will have to wait
 		}
 
 		public static void DisplayCharacter (Character newDisplay)
@@ -33,23 +36,22 @@ namespace CavesEtVarans.gui
 		}
         void Update() {
             if (Input.GetMouseButton(1)) GUIEventHandler.Get().HandleRightClick();
-        }
+        }/**/
 		void OnGUI ()
 		{
 			if (GUI.Button(new Rect(10, 10, 100, 30), "End turn")) {
-				activeCharacter.EndTurn();
+				ActiveCharacter.EndTurn();
                 GUIEventHandler.Get().Reset();
 				CharacterManager.Get().ActivateNext();
 			}
-			if (activeCharacter != null) 
-				DisplayCharacterStats (activeCharacter, 75);
+			DisplayCharacterStats (ActiveCharacter, 75);
 			if (displayedCharacter != null) 
 				DisplayCharacterStats (displayedCharacter, 375);
 			DisplaySkills();
 		}
 
 		private void DisplaySkills() {
-			List<Skill> skills = activeCharacter.Skills;
+			List<Skill> skills = ActiveCharacter.Skills;
 			int height = Screen.height;
 			int width = Screen.width;
 			int number = skills.Count;
@@ -66,7 +68,7 @@ namespace CavesEtVarans.gui
 			string iconName = skill.Attributes.Icon;
 			Texture2D icon = Resources.Load<Texture2D>(iconName);
 			if (GUI.Button(new Rect(X, Y, iconSize, iconSize), icon)) {
-				skill.InitSkill(activeCharacter);
+				skill.InitSkill(ActiveCharacter);
 			}
 		}
 

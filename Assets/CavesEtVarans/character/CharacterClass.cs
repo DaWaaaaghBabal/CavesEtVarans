@@ -19,5 +19,6 @@ namespace CavesEtVarans.character
 		public string EnergyName { set; get; }
 		public int Jump { set; get; }
 		public List<Skill> Skills { set; get; }
-	}
+        public int MaxEnergy { get; internal set; }
+    }
 }

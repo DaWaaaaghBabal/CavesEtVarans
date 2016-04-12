@@ -9,80 +9,80 @@ using CavesEtVarans.skills.effects.buffs;
 
 namespace CavesEtVarans.character
 {
-	public class Character : ITargetable
-	{
+    public class Character : ITargetable {
 
-		public string Name { get; set; }
-		public int Level { get; set; }
-		public String CharacterClass {
-			get { return clazz.Name; }
-			set {
-				clazz = ClassManager.Instance.ClassByName(value);
-				skillManager.InitClassSkills(clazz);
-			}
-		}
-		public Tile Tile { get; set; }
-		public Orientation Orientation { get; set; }
+        public string Name { get; set; }
+        public int Level { get; set; }
+        public String CharacterClass {
+            get { return clazz.Name; }
+            set {
+                InitClass(value);
+            }
+        }
 
-		private CharacterClass clazz;
-		private StatisticsManager statisticsManager;
-		private ResourceManager resourceManager;
-		private SkillManager skillManager;
-		private BuffManager buffManager;
+        private void InitClass(string value) {
+            clazz = ClassManager.Instance.ClassByName(value);
+            statisticsManager.InitClassStats(clazz);
+            skillManager.InitClassSkills(clazz);
+            int maxHealth = GetStatValue(Statistic.HEALTH, Context.Init(null, this));
+            resourceManager.Add(Resource.HP, new Resource(0, maxHealth));
+            resourceManager.Set(Resource.HP, maxHealth);
+        }
 
-		public Character() {
-			Context context = Context.Init(null, this);
-			statisticsManager = new StatisticsManager();
-			resourceManager = new ResourceManager();
-			skillManager = new SkillManager();
-			buffManager = new BuffManager(this);
-			resourceManager.Add(Resource.AP, new Resource(0, GetStatValue(Statistic.MAX_AP, context)));
+        public Tile Tile { get; set; }
+        public Orientation Orientation { get; set; }
 
-			int maxHealth = GetStatValue(Statistic.HEALTH, context);
-			resourceManager.Add(Resource.HP, new Resource(0, maxHealth));
-			resourceManager.Set(Resource.HP, maxHealth);
+        private CharacterClass clazz;
+        private StatisticsManager statisticsManager;
+        private ResourceManager resourceManager;
+        private SkillManager skillManager;
+        private BuffManager buffManager;
 
-			skillManager.InitCommonSkills();
-		}
-		
-		// Methods
-		public void Activate()
-		{
-			//@TODO do other stuff...
-			MainGUI.ActivateCharacter (this);
-		}
+        public Character() {
+            Context context = Context.Init(null, this);
+            statisticsManager = new StatisticsManager();
+            resourceManager = new ResourceManager();
+            skillManager = new SkillManager();
+            buffManager = new BuffManager(this);
+            resourceManager.Add(Resource.AP, new Resource(0, GetStatValue(Statistic.MAX_AP, context)));
+            
+            skillManager.InitCommonSkills();
+        }
 
-		public void EndTurn()
-		{
-			AP = AP / 2;
-		}
-		
-		public void Pay (Cost cost)
-		{
-			cost.Pay(resourceManager);
-		}
-		
-		public void TakeDamage(int amount) {
-			//@TODO event
-			resourceManager.Decrement(Resource.HP, amount);
-		}
+        // Methods
+        public void Activate() {
+            //@TODO do other stuff...
+            MainGUI.ActivateCharacter(this);
+        }
 
-		public void ApplyBuff(BuffInstance buff, Context context) { 
-			//@TODO event
-			buffManager.ApplyBuff(buff, context);
-		}
+        public void EndTurn() {
+            AP = AP / 2;
+        }
 
-		public void RemoveBuff(BuffInstance buff) {
-			//@TODO event
-			buffManager.RemoveBuff(buff);
-		}
+        public void Pay(Cost cost) {
+            cost.Pay(resourceManager);
+        }
 
-		public int GetResourceAmount(String key)
-		{
-			return resourceManager.GetAmount(key);
-		}
+        public void TakeDamage(int amount) {
+            //@TODO event
+            resourceManager.Decrement(Resource.HP, amount);
+        }
 
-		public int GetStatValue(string key, Context context)
+        public void ApplyBuff(BuffInstance buff, Context context) {
+            //@TODO event
+            buffManager.ApplyBuff(buff, context);
+        }
+
+        public void RemoveBuff(BuffInstance buff) {
+            //@TODO event
+            buffManager.RemoveBuff(buff);
+        }
+
+        public int GetResourceAmount(String key) {
+            return resourceManager.GetAmount(key);
+        }
+
+        public int GetStatValue(string key, Context context)
 		{
 			return statisticsManager.GetValue(key, context);
 		}

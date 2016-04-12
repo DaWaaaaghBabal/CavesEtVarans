@@ -36,7 +36,8 @@ namespace CavesEtVarans.battlefield {
 			PlaceCharacter(10, 16, 8, "Character A");
 			PlaceCharacter(17, 21, 8, "Character B");
 			PlaceCharacter(1, 19, 7, "Character C");
-		}
+            CharacterManager.Get().ActivateNext();
+        }
 		
 		private void CreateTile(int row, int column, int layer, int cost) {
 			Tile tile = new Tile(row, column, layer, cost);
@@ -74,7 +75,6 @@ namespace CavesEtVarans.battlefield {
 			CharacterAnimator anim = charObject.GetComponent<CharacterAnimator>();
 			anim.Character = character;
             GraphicBattlefield.Associate(character, charComponent);
-			CharacterManager.Get().ActivateNext();
 		}
 	}
 }
