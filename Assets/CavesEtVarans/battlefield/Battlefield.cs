@@ -1,13 +1,12 @@
-﻿using CavesEtVarans.gui;
-using System.Collections.Generic;
-using System;
+﻿using System.Collections.Generic;
 using CavesEtVarans.character;
+using CavesEtVarans.skills.target;
 
 namespace CavesEtVarans.battlefield {
 	public class Battlefield {
 
 		private static Battlefield instance;
-		public static Battlefield Instance {
+		private static Battlefield Instance {
 			set { }
 			get {
 				if (instance == null) {
@@ -18,23 +17,25 @@ namespace CavesEtVarans.battlefield {
 		}
 
 		private Grid<Tile> grid;
-		private OrientationStrategy orientationStrategy;
+		private OrientationStrategy orientation;
+        private LineOfSightStrategy lineOfSight;
 
 		public static void Init() {
 			Instance.grid = HexOrSquare.ProvideGrid();
-			Instance.orientationStrategy = HexOrSquare.ProvideOrientation();
+			Instance.orientation = HexOrSquare.ProvideOrientation();
+            Instance.lineOfSight = HexOrSquare.ProvideLineOfSight();
 		}
 
 		public static int GameDistance(Tile t1, Tile t2) {
 			return Instance.grid.GameDistance(t1, t2);
-		}
-
-        public static HashSet<Tile> Line(Tile t1, Tile t2) {
-            return Instance.grid.Line(t1, t2);
         }
 
         public static Orientation Direction(Tile startTile, Tile targetTile) {
-			return Instance.orientationStrategy.CalculateDirection(startTile, targetTile);
+            return Instance.orientation.Direction(startTile, targetTile);
+        }
+
+        public static Flanking Flanking(Character source, Character target) {
+            return Instance.orientation.CalculateFlanking(source.Tile, target.Tile, target.Orientation);
         }
 
         public static void Move(Character target, Tile targetTile)
@@ -45,15 +46,23 @@ namespace CavesEtVarans.battlefield {
         }
 
         public static void AddTile(Tile tile) {
-			Instance.grid.AddTile(tile);
+			Instance.grid.Add(tile);
+            int row = tile.Row;
+            int column = tile.Column;
+            for (int i = 0 ; i < tile.Size ; i++) {
+                int layer = tile.Layer - i;
+                Obstacle obstacle = new Obstacle(row, column, layer, 1);
+                if (layer >= 0)
+                    Instance.lineOfSight.Add(obstacle);
+            }
 		}
 
 		public static Tile Get(int row, int column, int layer) {
 			return Instance.grid.Get(row, column, layer);
 		}
 
-		public static HashSet<Tile> GetArea(Tile tile, int radius) {
-			return Instance.grid.GetArea(tile, radius);
+		public static HashSet<Tile> GetArea(ICoordinates center, int radius) {
+			return Instance.grid.GetArea(center, radius);
 		}
 
 		public static Tile[] GetStack(int row, int column) {
@@ -63,5 +72,23 @@ namespace CavesEtVarans.battlefield {
 		public static bool AreNeighbours(Tile t1, Tile t2) {
 			return Instance.grid.Adjacent(t1, t2);
 		}
+
+        public static Line<ICoordinates> LineOfSight (ICoordinates t1, int h1, ICoordinates t2, int h2) {
+            Line<ICoordinates> LoS = Instance.lineOfSight.LineOfSight(t1, h1, t2, h2);
+            LoS.Compare = CompareObstacles;
+            return LoS;
+        }
+
+        private static int CompareObstacles(ICoordinates c1, ICoordinates c2) {
+            // Returns the most favorable obstacle, i.e. the one with the less coverage.
+            // (100% = full obstruction, 0% = clear line).
+            Obstacle o1 = (Obstacle) c1;
+            Obstacle o2 = (Obstacle) c2;
+            if (o1 == null) return -1;
+            if (o2 == null) return 1;
+            if (o1.Cover < o2.Cover) return 1;
+            if (o1.Cover > o2.Cover) return -1;
+            return 0;
+        }
 	}
 }

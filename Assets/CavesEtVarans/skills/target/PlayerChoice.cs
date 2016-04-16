@@ -9,13 +9,13 @@ namespace CavesEtVarans.skills.target {
 	public class PlayerChoice : PlayerChoiceStrategy {
 		private HashSet<Tile> area;
 		private int radius;
-		public PlayerChoice(TargetPickerCallback callback) : base(callback) {
+		public PlayerChoice(TargetPickerCallback callback, FlagsList<TargetFlag> flags) : base(callback, flags) {
 		}
 
 		public override void Activate(TargetPicker targetPicker, Context context) {
 			Character source = (Character) ReadContext(context, targetPicker.SourceKey);
-			area = Battlefield.GetArea(source.Tile, targetPicker.Range);
 			radius = targetPicker.AoeRadius;
+			area = GetArea(source.Tile, targetPicker.Range);
 			//@TODO decouple from graphics (use events);
 			GraphicBattlefield.HighlightArea(area);
 		}
@@ -31,7 +31,7 @@ namespace CavesEtVarans.skills.target {
 		public override bool TargetTile(Tile tile) {
 			if (area.Contains(tile)) {
 				bool result = false;
-				foreach (Tile t in Battlefield.GetArea(tile, radius))
+				foreach (Tile t in GetArea(tile, radius))
 					result |= Callback(t);
 				return result;
 			}

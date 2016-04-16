@@ -8,22 +8,25 @@ using System.Collections.Generic;
 
 namespace CavesEtVarans.gui
 {
-	class MainGUI : MonoBehaviour
+	public class MainGUI : MonoBehaviour
 	{
 
-		public int iconSize;
-		public CharacterDisplay activeCharacterDisplay;
+		private static MainGUI instance;
+		public static MainGUI GetInstance ()
+		{
+			return instance;
+		}
 
-		private static Character ActiveCharacter {
+		private Character ActiveCharacter {
             get { return CharacterManager.Get().ActiveCharacter; }
             set { }
         }
 		private static Character displayedCharacter;
-		private static Context context = Context.ProvideDisplayContext();
+		private Context context = Context.ProvideDisplayContext();
 		public static void ActivateCharacter (Character newActive)
 		{
-			// do nothing for now ; building character-specific UI will have to wait
-		}
+            instance.GetComponent<SkillBar>().DisplaySkills(CharacterManager.Get().ActiveCharacter);
+        }
 
 		public static void DisplayCharacter (Character newDisplay)
 		{
@@ -36,7 +39,8 @@ namespace CavesEtVarans.gui
 		}
         void Update() {
             if (Input.GetMouseButton(1)) GUIEventHandler.Get().HandleRightClick();
-        }/**/
+        }
+
 		void OnGUI ()
 		{
 			if (GUI.Button(new Rect(10, 10, 100, 30), "End turn")) {
@@ -47,29 +51,6 @@ namespace CavesEtVarans.gui
 			DisplayCharacterStats (ActiveCharacter, 75);
 			if (displayedCharacter != null) 
 				DisplayCharacterStats (displayedCharacter, 375);
-			DisplaySkills();
-		}
-
-		private void DisplaySkills() {
-			List<Skill> skills = ActiveCharacter.Skills;
-			int height = Screen.height;
-			int width = Screen.width;
-			int number = skills.Count;
-			int X = (width - number * iconSize) / 2;
-			int Y = height - iconSize - 10;
-
-			foreach (Skill skill in skills) {
-				DisplaySkill(skill, X, Y);
-				X += iconSize;
-			}
-		}
-
-		private void DisplaySkill(Skill skill, int X, int Y) {
-			string iconName = skill.Attributes.Icon;
-			Texture2D icon = Resources.Load<Texture2D>(iconName);
-			if (GUI.Button(new Rect(X, Y, iconSize, iconSize), icon)) {
-				skill.InitSkill(ActiveCharacter);
-			}
 		}
 
 		private void DisplayCharacterStats (Character character, int Y)
@@ -102,12 +83,6 @@ namespace CavesEtVarans.gui
 			healthText += " / " + character.GetStatValue(Statistic.HEALTH, context);
 
 			GUI.Label(new Rect(X + 105, Y, 80, 20), healthText);
-		}
-
-		private static MainGUI instance;
-		public static MainGUI GetInstance ()
-		{
-			return instance;
 		}
 	}
 }

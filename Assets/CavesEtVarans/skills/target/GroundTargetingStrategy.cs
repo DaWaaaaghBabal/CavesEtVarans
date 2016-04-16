@@ -6,15 +6,15 @@ using System;
 
 namespace CavesEtVarans.skills.target {
 	public abstract class GroundTargetingStrategy {
-		public abstract bool TargetTile(Tile tile, HashSet<ITargetable> targets);
-		public abstract bool TargetCharacter(Character character, HashSet<ITargetable> targets);
+		public abstract bool TargetTile(Tile tile, TargetGroup targets);
+		public abstract bool TargetCharacter(Character character, TargetGroup targets);
 		public abstract bool IsGroundTargeting();
 
 		public GroundTargetingStrategy(TargetFilter filter) { targetFilter = filter; }
 
 		private TargetFilter targetFilter;
 
-		protected bool FilterTarget(ITargetable target, HashSet<ITargetable> targets) {
+		protected bool FilterTarget(ITargetable target, TargetGroup targets) {
 			if (targets.Contains(target))
 				return false;
 			if (targetFilter.Filter(target)) {
@@ -33,11 +33,11 @@ namespace CavesEtVarans.skills.target {
 			return true;
 		}
 
-		public override bool TargetCharacter(Character character, HashSet<ITargetable> targets) {
+		public override bool TargetCharacter(Character character, TargetGroup targets) {
 			return FilterTarget(character.Tile, targets);
         }
 
-		public override bool TargetTile(Tile tile, HashSet<ITargetable> targets) {
+		public override bool TargetTile(Tile tile, TargetGroup targets) {
 			return FilterTarget(tile, targets);
 		}
 	}
@@ -50,11 +50,11 @@ namespace CavesEtVarans.skills.target {
 			return false;
 		}
 
-		public override bool TargetCharacter(Character character, HashSet<ITargetable> targets) {
+		public override bool TargetCharacter(Character character, TargetGroup targets) {
 			return FilterTarget(character, targets);
 		}
 
-		public override bool TargetTile(Tile tile, HashSet<ITargetable> targets) {
+		public override bool TargetTile(Tile tile, TargetGroup targets) {
 			return tile.Character == null ? false : FilterTarget(tile.Character, targets);
 		}
 	}

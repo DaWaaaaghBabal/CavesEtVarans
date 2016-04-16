@@ -1,7 +1,9 @@
 ﻿using System;
 using CavesEtVarans.battlefield;
+using CavesEtVarans.character;
 using CavesEtVarans.graphics;
 using CavesEtVarans.skills.core;
+using UnityEngine;
 
 namespace CavesEtVarans.gui
 {
@@ -24,13 +26,6 @@ namespace CavesEtVarans.gui
 		public void HandleClickOnTile (GraphicTile graphicTile)
 		{
             Tile tile = graphicTile.Tile;
-            /*foreach (Tile t in Battlefield.Line(tile, CharacterManager.Get().GetActiveCharacter().Tile)) {
-                if (t != null)
-                {
-                    GraphicTile gt = GraphicBattlefield.GetSceneTile(t);
-                    gt.GetComponent<Renderer>().material.color = Color.red;
-                }
-            }*/
             ActivePicker.TargetTile (tile);
 		}
 

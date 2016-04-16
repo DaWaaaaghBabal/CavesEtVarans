@@ -8,7 +8,7 @@ namespace CavesEtVarans.skills.effects {
 		public string TargetKey { set; get; }
 
 		public void Apply(Context context) {
-			HashSet<ITargetable> targets = (HashSet<ITargetable>) ReadContext(context, Context.TARGETS + TargetKey);
+			TargetGroup targets = (TargetGroup) ReadContext(context, Context.TARGETS + TargetKey);
             if (targets != null) {
                 foreach (Character target in targets) {
                     context.Set(Context.CURRENT_TARGET, target);

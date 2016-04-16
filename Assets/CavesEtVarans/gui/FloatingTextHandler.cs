@@ -11,7 +11,7 @@ namespace CavesEtVarans.gui
         public GameObject floatingTextPrefab;
         public Color damageColor;
         public Color healColor;
-        public Canvas canvas;
+
         void Start() {
             DamageEvent.Listeners += HandleDamageEvent;
             HealEvent.Listeners += HandleHealEvent;
@@ -34,7 +34,7 @@ namespace CavesEtVarans.gui
             textLocation.z = 0;
             GameObject obj = Instantiate(floatingTextPrefab, textLocation, Quaternion.identity) as GameObject;
             FloatingText floatingText = obj.GetComponent<FloatingText>();
-            floatingText.transform.SetParent(canvas.transform, false);
+            floatingText.transform.SetParent(GetComponent<Canvas>().transform, false);
             return floatingText;
         }
     }

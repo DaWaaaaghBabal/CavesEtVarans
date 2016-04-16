@@ -43,7 +43,7 @@ Classes:
             Stat: ATK
           Defense: !skills.values.StatReader
             Source: currentTarget
-            Stat: ATK
+            Stat: DEF
       TargetKey: 1
     Flags:
     - OrientToTarget
@@ -116,7 +116,7 @@ Classes:
             Stat: ATK
           Defense: !skills.values.StatReader
             Source: currentTarget
-            Stat: ATK
+            Stat: DEF
       TargetKey: 1
     Flags:
     - OrientToTarget

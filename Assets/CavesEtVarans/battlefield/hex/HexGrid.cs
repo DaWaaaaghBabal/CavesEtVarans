@@ -1,24 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using CavesEtVarans.skills.target;
 
 namespace CavesEtVarans.battlefield {
-	public class HexGrid<T> : Grid<T> where T : ICoordinates, utils.IDisposable {
+	public class HexGrid<T> : Grid<T> where T : ICoordinates { 
 
-		public override int GameDistance(T a, T b) {
-			int dC = a.Column - b.Column;
-			int dR = a.Row - b.Row;
-			int absR = Math.Abs(dR);
-			int absC = Math.Abs(dC);
-			int absZ = Math.Abs(dR - dC);
-			int dH = Math.Abs(a.Layer - b.Layer);
+        public override int PlaneDistance(ICoordinates a, ICoordinates b) {
+            int dC = a.Column - b.Column;
+            int dR = a.Row - b.Row;
+            int absR = Math.Abs(dR);
+            int absC = Math.Abs(dC);
+            int absZ = Math.Abs(dR - dC);
 
-			int planeDist = Math.Max(absZ, Math.Max(absR, absC));
-			int heightDist = dH / heightDivisor;
+            return Math.Max(absZ, Math.Max(absR, absC));
+        }
 
-			return planeDist + heightDist;
-		}
-
-		public override HashSet<T> GetArea(T tile, int radius) {
+        public override HashSet<T> GetArea(ICoordinates tile, int radius) {
 			HashSet<T> result = new HashSet<T>();
 			for (int dR = -radius ; dR <= radius ; dR++) {
                 int dCMin = Math.Max(-radius, -radius + dR);
@@ -34,8 +31,8 @@ namespace CavesEtVarans.battlefield {
 						//The height division forces us to do some shenanigans
 						for (int dH = 0 ; dH < heightDivisor ; dH++) {
 							int layerOffset = heightDivisor * dL + dH;
-							SelectTile(result, tile.Row + dR, tile.Column + dC, tile.Layer + layerOffset);
-							SelectTile(result, tile.Row + dR, tile.Column + dC, tile.Layer - layerOffset);
+							Select(result, tile.Row + dR, tile.Column + dC, tile.Layer + layerOffset);
+							Select(result, tile.Row + dR, tile.Column + dC, tile.Layer - layerOffset);
 						}
 					}
 				}
@@ -43,7 +40,7 @@ namespace CavesEtVarans.battlefield {
 			return result;
 		}
 
-		public override bool Adjacent(T a, T b) {
+		public override bool Adjacent(ICoordinates a, ICoordinates b) {
 			int dR = a.Row - b.Row;
 			if (Math.Abs(dR) > 1)
 				return false;
@@ -52,5 +49,6 @@ namespace CavesEtVarans.battlefield {
 				return false;
             return Math.Abs(dC + dR) > 0;
         }
-	}	
+        
+    }	
 }

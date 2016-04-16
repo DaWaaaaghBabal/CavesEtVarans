@@ -93,11 +93,10 @@ namespace CavesEtVarans.skills.core {
         private void OrientSource(Context context)
         {
             // to orient towards the targets, we orient towards the tile that is at the center of the target group.
-            HashSet<ITargetable> targetCharacters = new HashSet<ITargetable>();
-            targetCharacters.Add((Character)ReadContext(context, Context.SOURCE));
+            TargetGroup targetCharacters = new TargetGroup((Character)ReadContext(context, Context.SOURCE));
             context.Set(Context.TARGETS + Context.SOURCE, targetCharacters);
             string key = TargetPickers[0].TargetKey;
-            HashSet<ITargetable> targets = (HashSet <ITargetable>) ReadContext(context, Context.TARGETS + key);
+            TargetGroup targets = (TargetGroup) ReadContext(context, Context.TARGETS + key);
             int row = 0, column = 0, layer = 0, count = targets.Count;
             foreach (ITargetable target in targets)
             {
@@ -106,13 +105,12 @@ namespace CavesEtVarans.skills.core {
                 column += t.Column;
                 layer += t.Layer;
             }
-            HashSet<ITargetable> targetTiles = new HashSet<ITargetable>();
-            targetTiles.Add(Battlefield.Get(row/count, column/count, layer/count));
-            context.Set(Context.TARGETS + Context.TILE, targetTiles);
+            TargetGroup targetTiles = new TargetGroup(new Tile(row/count, column/count, layer/count, 0));
+            context.Set(Context.TARGETS + "bogusTile", targetTiles);
             new OrientationEffect()
             {
                 TargetKey = Context.SOURCE,
-                TileTargetKey = Context.TILE
+                TileTargetKey = "bogusTile"
             }.Apply(context);
         }
 

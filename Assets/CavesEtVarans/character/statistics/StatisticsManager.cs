@@ -2,7 +2,6 @@
 using CavesEtVarans.skills.core;
 using CavesEtVarans.utils;
 using System.Collections.Generic;
-using System;
 
 namespace CavesEtVarans.character.statistics {
 	// The role of the statistics manager is to keep track of all the character's statistics.

@@ -59,7 +59,7 @@ namespace CavesEtVarans.character.statistics
 		{
 			int i = 0;
 			foreach (IStatModifier m in statModifiers) {
-				if (mod.Priority >= m.Priority)
+				if (mod.Type >= m.Type)
 					i++;
 			}
 			statModifiers.Insert(i, mod);

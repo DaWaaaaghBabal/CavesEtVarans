@@ -7,8 +7,7 @@ namespace CavesEtVarans.battlefield {
 	public class Tile : IDisposable, ITargetable, ICoordinates
     {
 
-        Tile ITargetable.Tile
-        {
+        Tile ITargetable.Tile {
             get { return this; }
             set{ }
         }
@@ -25,24 +24,29 @@ namespace CavesEtVarans.battlefield {
 			}
 			private set { }
 		}
+        public int Size { set; get; }
 
-        public Tile(int row, int column, int layer, int baseCost) {
-			Row = row;
-			Column = column;
-			Layer = layer;
-			movementCost = new Statistic(baseCost);
+        public Tile(int row, int column, int layer, int baseCost) : this(row, column, layer, baseCost, 6) {
+            // the default thickness of a tile is 6.
 		}
+        public Tile(int row, int column, int layer, int baseCost, int thickness) {
+            Row = row;
+            Column = column;
+            Layer = layer;
+            movementCost = new Statistic(baseCost);
+            Size = thickness;
+        }
 
 		public int GetMovementCost(Context context) {
 			return movementCost.GetValue(context);
 		}
 
 		public void Dispose() {
-			// Do nothing yet.
+			// @TODO delete the graphic tile via events
 		}
 
 		public override  string ToString () {
-			return "(" + Row + ", " + Column + ", " + Layer + ")";
+			return "Tile (" + Row + ", " + Column + ", " + Layer + ")";
 		}
 	}
 }

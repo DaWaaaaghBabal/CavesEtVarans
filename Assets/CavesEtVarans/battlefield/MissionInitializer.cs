@@ -1,4 +1,5 @@
-﻿using CavesEtVarans.character;
+﻿using System.Collections.Generic;
+using CavesEtVarans.character;
 using CavesEtVarans.graphics;
 using UnityEngine;
 
@@ -33,9 +34,8 @@ namespace CavesEtVarans.battlefield {
 			generationStrategy.GenerateMap(heightMap, CreateTile);
 			ClassManager classMgr = ClassManager.Instance;
             classMgr.ParseTextResource("classes");
-			PlaceCharacter(10, 16, 8, "Character A");
-			PlaceCharacter(17, 21, 8, "Character B");
-			PlaceCharacter(1, 19, 7, "Character C");
+            PlaceCharacter(4, 11, 0, "Character C");
+            PlaceCharacter(1,  2, 0, "Character B");
             CharacterManager.Get().ActivateNext();
         }
 		

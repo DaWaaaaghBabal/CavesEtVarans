@@ -4,6 +4,8 @@ using CavesEtVarans.gui;
 using System.Collections.Generic;
 using CavesEtVarans.skills.target;
 using CavesEtVarans.graphics;
+using CavesEtVarans.rules;
+using System;
 
 namespace CavesEtVarans.skills.core {
 	public class TargetPicker : ContextDependent, ITargetPicker {
@@ -34,14 +36,13 @@ namespace CavesEtVarans.skills.core {
 		public PlayerChoiceType PlayerChoice {
 			get { return playerChoice.ChoiceType(); }
 			set {
-				playerChoice = PlayerChoiceStrategy.GetStrategy(value, TargetCallback);
+				playerChoice = PlayerChoiceStrategy.GetStrategy(value, TargetCallback, Flags);
 			}
 		}
-
         private GroundTargetingStrategy groundTargeting;
         private PlayerChoiceStrategy playerChoice;
         private Context context;
-		private HashSet<ITargetable> targets;
+		private TargetGroup targets;
 		private int targetCount;
 
         public TargetPicker() {
@@ -52,11 +53,16 @@ namespace CavesEtVarans.skills.core {
 		{
 			this.context = context;
 			targetCount = 0;
-			targets = new HashSet<ITargetable>();
+			targets = new TargetGroup();
 			GUIEventHandler.Get().ActivePicker = this;
 			//@TODO decouple from graphics (use events);
 			GraphicBattlefield.ClearHighlightedArea();
-			playerChoice.Activate(this, context);
+            Character source = (Character) ReadContext(context, SourceKey);
+            LineOfSightFilter los = InitLoSFilter();
+            los.Source = source;
+            los.GroundTarget = GroundTarget;
+            playerChoice.LoSFilter = los;
+            playerChoice.Activate(this, context);
 		}
 
 		public void EndPicking ()
@@ -72,7 +78,7 @@ namespace CavesEtVarans.skills.core {
 			if (playerChoice.TargetTile(tile)) CountTargets();
 		}
 
-		public void TargetCharacter (Character character) {
+        public void TargetCharacter (Character character) {
 			if(playerChoice.TargetCharacter(character)) CountTargets();
 		}
 
@@ -90,6 +96,10 @@ namespace CavesEtVarans.skills.core {
                 EndPicking();
             else
                 GUIEventHandler.Get().Reset();
+        }
+
+        private LineOfSightFilter InitLoSFilter() {
+            return LineOfSightFilter.ProvideLoSFilter(Flags[TargetFlag.IgnoreLoS]);
         }
     }
 }

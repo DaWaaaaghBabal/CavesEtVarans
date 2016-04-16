@@ -2,7 +2,6 @@
 using CavesEtVarans.character;
 using CavesEtVarans.skills.core;
 using CavesEtVarans.skills.events;
-using System.Collections.Generic;
 
 namespace CavesEtVarans.skills.effects {
 	public class MovementEffect : TargetedEffect {
@@ -10,7 +9,7 @@ namespace CavesEtVarans.skills.effects {
         public string TileTargetKey { set; get; }
 
 		public override void Apply(Character target, Context context) {
-            HashSet<ITargetable> tiles = (HashSet < ITargetable > )ReadContext(context, Context.TARGETS + TileTargetKey);
+            TargetGroup tiles = (TargetGroup)ReadContext(context, Context.TARGETS + TileTargetKey);
             // There should be only one target tile, but it's still a set, so we take the first element that comes
             Tile[] tileArray = new Tile[tiles.Count];
             tiles.CopyTo(tileArray);

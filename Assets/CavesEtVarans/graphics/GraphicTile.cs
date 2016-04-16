@@ -18,23 +18,11 @@ namespace CavesEtVarans.graphics
         public GameObject edgePrefab;
         public GameObject cornerPrefab;
         public int edgeAngle;
-        //public int edgeNumber;
-
+        
         private HashSet<GameObject> edges;
       
         void Start() {
             edges = new HashSet<GameObject>();
-              /*edges = new TileEdge[edgeNumber];
-            corners = new TileEdge[edgeNumber + 1];
-            int angle = 180; // @TODO fix import so that the half-turn offset isn't needed.
-            for (int i = 0; i < edgeNumber; i++)
-            {
-                Quaternion euler = Quaternion.Euler(0, angle, 0);
-                edges[i] = Create(edgePrefab, euler);
-                corners[i] = Create(cornerPrefab, euler);
-                angle -= edgeAngle;
-            }
-            corners[edgeNumber] = corners[0];*/
         }
 
         private TileEdge Create(GameObject prefab, int angle)
@@ -50,12 +38,6 @@ namespace CavesEtVarans.graphics
             Create(edgePrefab, angle);
             Create(cornerPrefab, angle);
             Create(cornerPrefab, angle - edgeAngle);
-
-            /*
-            // Old system
-            edges[edge].Highlight();
-            corners[edge].Highlight();
-            corners[edge + 1].Highlight();*/
         }
 
         public void ClearEdges()
@@ -64,17 +46,13 @@ namespace CavesEtVarans.graphics
             {
                 Destroy(obj);
             }
-            /*
-            foreach (TileEdge edge in edges) {
-                edge.Clear();
-            }
-            foreach (TileEdge corner in corners) {
-                corner.Clear();
-            }*/
+            edges.Clear();
         }
-
+        
         public void OnPointerClick(PointerEventData eventData) {
-            if (debug) Debug.Log(Tile);
+            if (debug) {
+                Debug.Log(Tile);
+            }
             if (eventData.button == PointerEventData.InputButton.Left)
                 GUIEventHandler.Get().HandleClickOnTile(this);
 		}

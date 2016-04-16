@@ -129,7 +129,7 @@ namespace CavesEtVarans.test {
 					},
 					Defense = new StatReader() {
 						Source = Context.CURRENT_TARGET,
-						Stat = Statistic.ATTACK
+						Stat = Statistic.DEFENSE
 					}
 				}
 			};

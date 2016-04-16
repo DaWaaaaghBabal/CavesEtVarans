@@ -10,5 +10,6 @@ namespace CavesEtVarans.rules
 		public static readonly int ACTION_AP = 100;
 		public static readonly int BASE_MOVEMENT_COST = 12;
 		public static readonly int HEIGHT_DIVISOR = 3;
-	}
+        public static readonly double LOS_THRESHOLD = 0.9;
+    }
 }

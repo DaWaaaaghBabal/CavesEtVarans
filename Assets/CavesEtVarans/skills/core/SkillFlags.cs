@@ -7,6 +7,7 @@ namespace CavesEtVarans.skills.core
     }
 
     public enum TargetFlag {
-        Friend, Foe, Neutral, Optional
+        Friend, Foe, Neutral, Optional,
+        IgnoreLoS
     }
 }

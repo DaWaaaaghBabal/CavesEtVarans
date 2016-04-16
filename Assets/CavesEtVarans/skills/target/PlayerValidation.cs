@@ -9,15 +9,15 @@ namespace CavesEtVarans.skills.target {
 	public class PlayerValidation : PlayerChoiceStrategy {
 		private HashSet<Tile> area;
 
-		public PlayerValidation(TargetPickerCallback callback) : base(callback) { }
+		public PlayerValidation(TargetPickerCallback callback, FlagsList<TargetFlag> flags) : base(callback, flags) { }
         public override void Activate(TargetPicker targetPicker, Context context) {
-			Character source = (Character) ReadContext(context, targetPicker.SourceKey);
-			area = Battlefield.GetArea(source.Tile, targetPicker.AoeRadius);
-			//@TODO decouple from graphics (use events);
-			GraphicBattlefield.HighlightArea(area);
-		}
+            Character source = (Character) ReadContext(context, targetPicker.SourceKey);
+            area = GetArea(source.Tile, targetPicker.AoeRadius);
+            //@TODO decouple from graphics (use events);
+            GraphicBattlefield.HighlightArea(area);
+        }
 
-		public override PlayerChoiceType ChoiceType() {
+        public override PlayerChoiceType ChoiceType() {
 			return PlayerChoiceType.PlayerChoice;
 		}
 

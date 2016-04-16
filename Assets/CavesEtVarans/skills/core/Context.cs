@@ -60,12 +60,10 @@ namespace CavesEtVarans.skills.core
             // The character is both the source, as he is using the movement action, 
             // and the target, as he is the one that is moved.
             context.Set(SOURCE, character);
-            HashSet<ITargetable> targets = new HashSet<ITargetable>();
-            targets.Add(character);
+            TargetGroup targets = new TargetGroup(character);
             context.Set(TARGETS + MOVEMENT_TARGET, targets);
 
-            targets = new HashSet<ITargetable>();
-            targets.Add(targetTile);
+            targets = new TargetGroup(targetTile);
             context.Set(TARGETS + TILE, targets);
             return context;
         }

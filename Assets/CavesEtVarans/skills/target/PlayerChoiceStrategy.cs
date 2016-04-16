@@ -22,23 +22,39 @@ namespace CavesEtVarans.skills.target {
 	public abstract class PlayerChoiceStrategy : ContextDependent {
 
 		protected TargetPickerCallback Callback;
-		protected PlayerChoiceStrategy(TargetPickerCallback callback) {
+        protected FlagsList<TargetFlag> Flags { get; private set; }
+        public LineOfSightFilter LoSFilter { get; set; }
+
+        protected PlayerChoiceStrategy(TargetPickerCallback callback, FlagsList<TargetFlag> flags) {
 			Callback = callback;
+            Flags = flags;
 		}
 
-		public static PlayerChoiceStrategy GetStrategy(PlayerChoiceType value, TargetPickerCallback callback) {
+		public static PlayerChoiceStrategy GetStrategy(PlayerChoiceType value, TargetPickerCallback callback, FlagsList<TargetFlag> flags) {
 			switch (value) {
 				case PlayerChoiceType.NoValidation:
-					return new NoValidation(callback);
+					return new NoValidation(callback, flags);
 				case PlayerChoiceType.PlayerValidation:
-					return new PlayerValidation(callback);
+					return new PlayerValidation(callback, flags);
 				case PlayerChoiceType.PlayerChoice:
-					return new PlayerChoice(callback);
+					return new PlayerChoice(callback, flags);
 			}
 			throw new TargetPickerParameterException("The player choice type is incorrect.");
-		}
+        }
 
-		public abstract PlayerChoiceType ChoiceType();
+        protected HashSet<Tile> GetArea(ICoordinates source, int radius) {
+
+            HashSet<Tile> result = new HashSet<Tile>();
+            HashSet<Tile> area = Battlefield.GetArea(source, radius);
+            foreach (Tile t in area) {
+                if (LoSFilter.LoS(t)) {
+                    result.Add(t);
+                }
+            }
+            return result;
+        }
+
+        public abstract PlayerChoiceType ChoiceType();
 		/// <summary>
 		/// If the character is in range and meets the targeting criteria, targets her or the tile she is standing on (depending on TargetPicker parameters).
 		/// </summary>

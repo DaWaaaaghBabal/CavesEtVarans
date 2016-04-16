@@ -31,6 +31,7 @@ namespace CavesEtVarans.character
 
         public Tile Tile { get; set; }
         public Orientation Orientation { get; set; }
+        public int Size { get; set; }
 
         private CharacterClass clazz;
         private StatisticsManager statisticsManager;
@@ -47,6 +48,7 @@ namespace CavesEtVarans.character
             resourceManager.Add(Resource.AP, new Resource(0, GetStatValue(Statistic.MAX_AP, context)));
             
             skillManager.InitCommonSkills();
+            Size = 3;
         }
 
         // Methods
@@ -112,7 +114,7 @@ namespace CavesEtVarans.character
 			private set { }
 			get { return skillManager.Skills; }
 		}
-	}
+    }
 
 }
 

@@ -1,6 +1,6 @@
 ﻿namespace CavesEtVarans.battlefield
 {
-    public interface ICoordinates
+    public interface ICoordinates : utils.IDisposable
     {
         int Column { get; }
         int Layer { get; }

@@ -1,15 +1,30 @@
-﻿using UnityEngine;
+﻿using CavesEtVarans.character;
+using CavesEtVarans.skills.core;
+using UnityEngine;
+using UnityEngine.UI;
+
 namespace CavesEtVarans.gui
 {
 	public class SkillIcon : MonoBehaviour {
+        [SerializeField]
+        private Image image;
 
-		// Use this for initialization
-		void Start () {
-	
-		}
+        [SerializeField]
+        private Text description;
 
-		public void Click() {
-			Debug.Log("Clic !");
+        private Skill skill;
+        public Skill Skill {
+            set {
+                skill = value;
+                description.text = skill.Attributes.Description;
+                image.sprite = Resources.Load<Sprite>(skill.Attributes.Icon);
+            }
+            get {
+                return skill;
+            }
+        }
+        public void Click() {
+            Skill.InitSkill(CharacterManager.Get().ActiveCharacter);
 		}
 
 	}
