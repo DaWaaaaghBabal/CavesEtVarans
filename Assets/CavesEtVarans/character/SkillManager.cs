@@ -17,6 +17,8 @@ namespace CavesEtVarans.character {
 			}
 		}
 
+		internal TriggerManager TriggerManager { get; set; }
+
 		public void InitCommonSkills() {
 			commonSkills = new List<Skill>(); 
 		}

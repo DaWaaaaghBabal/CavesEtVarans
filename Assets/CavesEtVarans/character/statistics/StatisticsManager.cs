@@ -23,7 +23,7 @@ namespace CavesEtVarans.character.statistics {
             InitStat(Statistic.ATTACK, clazz.Attack);
             InitStat(Statistic.DAMAGE, clazz.Damage);
             InitStat(Statistic.WILLPOWER, clazz.Willpower);
-            InitStat(Statistic.DODGE, clazz.Dodge);
+            InitStat(Statistic.STABILITY, clazz.Stability);
             InitStat(Statistic.SPECIAL, clazz.Special);
             InitStat(Statistic.INITIATIVE, clazz.Initiative);
             InitStat(Statistic.ITERATION_MALUS, clazz.Iterative);

@@ -42,10 +42,10 @@ namespace CavesEtVarans.skills.target {
 			throw new TargetPickerParameterException("The player choice type is incorrect.");
         }
 
-        protected HashSet<Tile> GetArea(ICoordinates source, int radius) {
+        protected HashSet<Tile> GetArea(ICoordinates source, int minRadius, int maxRadius) {
 
             HashSet<Tile> result = new HashSet<Tile>();
-            HashSet<Tile> area = Battlefield.GetArea(source, radius);
+            HashSet<Tile> area = Battlefield.GetArea(source, minRadius, maxRadius);
             foreach (Tile t in area) {
                 if (LoSFilter.LoS(t)) {
                     result.Add(t);

@@ -56,16 +56,16 @@ namespace CavesEtVarans.battlefield
     }
 
 	public class SquareOrientation : OrientationStrategy {
-		private Orientation right = new Orientation ("right");
-		private Orientation up = new Orientation ("up");
-		private Orientation left = new Orientation ("left");
-		private Orientation down = new Orientation ("down");
+		private Orientation threeOClock = new Orientation ();
+		private Orientation twelveOClock = new Orientation ();
+		private Orientation nineOClock = new Orientation ();
+		private Orientation sixOClock = new Orientation ();
 
 		public SquareOrientation () {
-			right.Left = up;
-			up.Left = left;
-			left.Left = down;
-			down.Left = right;
+			threeOClock.Left = twelveOClock;
+			twelveOClock.Left = nineOClock;
+			nineOClock.Left = sixOClock;
+			sixOClock.Left = threeOClock;
 
 			flankings = new Flanking[]{ Flanking.Front, Flanking.Flank, Flanking.Back };
 		}
@@ -76,33 +76,33 @@ namespace CavesEtVarans.battlefield
             Orientation[] result = new Orientation[2];
             if (dR == dC) // diagonal
                 return dC > 0 ?
-                    new Orientation[] { up, right } :
-                    new Orientation[] { down, left };
+                    new Orientation[] { twelveOClock, threeOClock } :
+                    new Orientation[] { sixOClock, nineOClock };
             if (dR == -dC) // the other diagonal
                 return dC > 0 ?
-                    new Orientation[] { left, up } :
-                    new Orientation[] { right, down };
+                    new Orientation[] { nineOClock, twelveOClock } :
+                    new Orientation[] { threeOClock, sixOClock };
             if (Math.Abs (dR) > Math.Abs (dC))
 				return dR > 0 ?
-                    new Orientation[] { up, up } :
-                    new Orientation[] { down, down };
+                    new Orientation[] { twelveOClock, twelveOClock } :
+                    new Orientation[] { sixOClock, sixOClock };
             return dC > 0 ?
-                    new Orientation[] { right, right } :
-                    new Orientation[] { left, left };
+                    new Orientation[] { threeOClock, threeOClock } :
+                    new Orientation[] { nineOClock, nineOClock };
         }
 
 		public override Orientation[] AllDirections () {
-			return new Orientation[] { right, down, left, up };
+			return new Orientation[] { threeOClock, sixOClock, nineOClock, twelveOClock };
 		}
 	}
 
 	public class HexOrientation : OrientationStrategy {
-		private Orientation right = new Orientation ("right");
-		private Orientation upRight = new Orientation ("up, right");
-		private Orientation upLeft = new Orientation ("up, left");
-		private Orientation left = new Orientation ("left");
-		private Orientation downLeft = new Orientation ("down, left");
-		private Orientation downRight = new Orientation ("down, right");
+		private Orientation threeOClock = new Orientation ();
+		private Orientation oneOClock = new Orientation ();
+		private Orientation elevenOClock = new Orientation ();
+		private Orientation nineOClock = new Orientation ();
+		private Orientation sevenOClock = new Orientation ();
+		private Orientation fiveOClock = new Orientation ();
 
 		private double cos60;
 		private double sin60;
@@ -112,12 +112,12 @@ namespace CavesEtVarans.battlefield
 			cos60 = 0.5;
 			sin60 = Math.Sqrt (0.75);
 			cos30 = sin60;
-			right.Left = upRight;
-			upRight.Left = upLeft;
-			upLeft.Left = left;
-			left.Left = downLeft;
-			downLeft.Left = downRight;
-			downRight.Left = right;
+			threeOClock.Left = oneOClock;
+			oneOClock.Left = elevenOClock;
+			elevenOClock.Left = nineOClock;
+			nineOClock.Left = sevenOClock;
+			sevenOClock.Left = fiveOClock;
+			fiveOClock.Left = threeOClock;
             
             flankings = new Flanking[] { Flanking.Front, Flanking.FrontFlank, Flanking.BackFlank, Flanking.Back };
         }
@@ -137,16 +137,16 @@ namespace CavesEtVarans.battlefield
 
         private Orientation Cos2Dir(double dY, double cos) {
             if (cos < -cos30)
-                return left;
+                return nineOClock;
             if (cos < 0)
-                return dY > 0 ? upLeft : downLeft;
+                return dY > 0 ? elevenOClock : sevenOClock;
             if (cos < cos30)
-                return dY > 0 ? upRight : downRight;
-            return right;
+                return dY > 0 ? oneOClock : fiveOClock;
+            return threeOClock;
         }
 
         public override Orientation[] AllDirections () {
-			return new Orientation[] { right, downRight, downLeft, left, upLeft, upRight };
+			return new Orientation[] { threeOClock, fiveOClock, sevenOClock, nineOClock, elevenOClock, oneOClock };
 		}
 	}
 }

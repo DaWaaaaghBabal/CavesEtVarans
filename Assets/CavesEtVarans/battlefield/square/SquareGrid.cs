@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace CavesEtVarans.battlefield
 {
@@ -11,25 +10,7 @@ namespace CavesEtVarans.battlefield
 			// We divide dH so that we can have some height variety, like low obstacles, without affecting ranges.
 			return dX + dY;
 		}
-
-		public override HashSet<T> GetArea(ICoordinates tile, int radius) {
-			HashSet<T> result = new HashSet<T>();
-			for (int dR = -radius ; dR <= radius ; dR ++) {
-				int dCMax = radius - Math.Abs(dR);
-				for (int dC = -dCMax ; dC <= dCMax ; dC ++) {
-					int dLMax = radius - Math.Abs(dR) - Math.Abs(dC);
-					for (int dL = 0 ; dL <= dLMax ; dL++) {
-						//The height division forces us to do some shenanigans
-						for (int dH = 0 ; dH < heightDivisor ; dH ++) {
-							int layerOffset = heightDivisor * dL + dH;
-							Select(result, tile.Row + dR, tile.Column + dC, tile.Layer + layerOffset);
-							Select(result, tile.Row + dR, tile.Column + dC, tile.Layer - layerOffset);
-						}
-					}
-				}
-			}
-			return result;
-		}
+		
 		public override bool Adjacent(ICoordinates a, ICoordinates b) {
 			int dR = Math.Abs(a.Row - b.Row);
 			if (dR > 1)
@@ -39,5 +20,14 @@ namespace CavesEtVarans.battlefield
 				return false;
 			return dR * dC == 0;
 		}
-    }
+
+		protected override int[][] InitRingDirections() {
+			return new int[][] {
+				new int[] { -1, -1 }, //clockwise from 3 o'clock
+				new int[] { 1, -1 },
+				new int[] { 1, 1 },
+				new int[] { -1, 1 },
+			};
+		}
+	}
 }

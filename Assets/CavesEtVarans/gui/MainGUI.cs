@@ -1,10 +1,8 @@
-﻿using System;
-using CavesEtVarans.character;
+﻿using CavesEtVarans.character;
 using CavesEtVarans.character.resource;
 using CavesEtVarans.character.statistics;
 using CavesEtVarans.skills.core;
 using UnityEngine;
-using System.Collections.Generic;
 
 namespace CavesEtVarans.gui
 {
@@ -64,9 +62,11 @@ namespace CavesEtVarans.gui
 			y += 20;
 			DisplayStat (character, Statistic.DEFENSE, "Defense", 10, y);
 			y += 20;
-			DisplayStat (character, Statistic.DODGE, "Dodge", 10, y);
+			DisplayStat (character, Statistic.WILLPOWER, "Willpower", 10, y);
 			y += 20;
-			DisplayStat (character, Statistic.ATTACK, "Attack", 10, y);
+			DisplayStat(character, Statistic.ATTACK, "Attack", 10, y);
+			y += 20;
+			DisplayStat(character, Statistic.DAMAGE, "Damage", 10, y);
 			y += 30;
 			GUI.Label (new Rect (10, y, 100, 20), "AP");
 			GUI.Label (new Rect (115, y, 80, 20), character.GetResourceAmount(Resource.AP).ToString ());

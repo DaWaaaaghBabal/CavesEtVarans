@@ -61,8 +61,8 @@ namespace CavesEtVarans.battlefield {
 			return Instance.grid.Get(row, column, layer);
 		}
 
-		public static HashSet<Tile> GetArea(ICoordinates center, int radius) {
-			return Instance.grid.GetArea(center, radius);
+		public static HashSet<Tile> GetArea(ICoordinates center, int minRadius, int maxRadius) {
+			return Instance.grid.GetArea(center, minRadius, maxRadius);
 		}
 
 		public static Tile[] GetStack(int row, int column) {

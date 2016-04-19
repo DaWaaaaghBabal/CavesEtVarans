@@ -12,7 +12,7 @@ namespace CavesEtVarans.skills.target {
 		public PlayerValidation(TargetPickerCallback callback, FlagsList<TargetFlag> flags) : base(callback, flags) { }
         public override void Activate(TargetPicker targetPicker, Context context) {
             Character source = (Character) ReadContext(context, targetPicker.SourceKey);
-            area = GetArea(source.Tile, targetPicker.AoeRadius);
+            area = GetArea(source.Tile, targetPicker.MinRange, targetPicker.MaxRange);
             //@TODO decouple from graphics (use events);
             GraphicBattlefield.HighlightArea(area);
         }

@@ -9,6 +9,8 @@ using System.IO;
 using System.Text;
 using UnityEngine;
 using YamlDotNet.Serialization;
+using CavesEtVarans.skills.effects.buffs;
+using CavesEtVarans.skills.triggers;
 
 namespace CavesEtVarans.test {
 	public class TestYAMLSkillSerializer : MonoBehaviour {
@@ -26,11 +28,11 @@ namespace CavesEtVarans.test {
 		}
 		
 		private void SerializeFullClass() {
-			Skill basicAttack = SetupBasicAttack();
-			Skill heal = SetupHeal();
+
 			List<Skill> skills = new List<Skill>();
-			skills.Add(basicAttack);
-			skills.Add(heal);
+			skills.Add(SetupBasicAttack());
+			skills.Add(SetupHeal());
+			skills.Add(SetupBuff());
 			CharacterClass acolyt = new CharacterClass() {
 				Name = "Acolyte",
 				Health = 48,
@@ -39,7 +41,7 @@ namespace CavesEtVarans.test {
 				Damage = 8,
 				Willpower = 4,
 				Initiative = 8,
-				Dodge = 8,
+				Stability = 8,
 				Iterative = 20,
 				Jump = 2,
 				Energy = 8,
@@ -50,7 +52,8 @@ namespace CavesEtVarans.test {
 			};
 			Debug.Log(SerializeObject(acolyt));
 		}
-		private static Skill SetupHeal() {
+
+		private Skill SetupHeal() {
 
 			IValueCalculator healAmountCalculator = new StatReader() {
 				Source = Context.SOURCE,
@@ -59,7 +62,7 @@ namespace CavesEtVarans.test {
 			TargetPicker healTargetPicker = new TargetPicker() {
 				TargetKey = "target1",
 				SourceKey = Context.SOURCE,
-				Range = 6,
+				MinRange = 6,
 				AoeRadius = 0,
 				TargetNumber = 2,
 				GroundTarget = false,
@@ -86,12 +89,12 @@ namespace CavesEtVarans.test {
             return heal;
 		}
 
-		private static Skill SetupBasicAttack() {
+		private Skill SetupBasicAttack() {
 			IValueCalculator attackDamageCalculator = SetupDamageCalculator();
 			TargetPicker attackTargetPicker = new TargetPicker() {
 				TargetKey = "target1",
 				SourceKey = Context.SOURCE,
-				Range = 6,
+				MinRange = 6,
 				AoeRadius = 0,
 				TargetNumber = 2,
 				GroundTarget = false,
@@ -116,7 +119,56 @@ namespace CavesEtVarans.test {
 			return attack;
 		}
 
-		private static IValueCalculator SetupDamageCalculator() {
+		private Skill SetupBuff() {
+			TargetPicker buffTargetPicker = new TargetPicker() {
+				TargetKey = "target1",
+				SourceKey = Context.SOURCE,
+				MinRange = 4,
+				AoeRadius = 0,
+				TargetNumber = 1,
+				GroundTarget = false,
+				PlayerChoice = PlayerChoiceType.PlayerChoice
+			};
+			SkillAttributes buffAttributes = new SkillAttributes {
+				Name = "Buff de dégâts",
+				Icon = "buff",
+				Description = "Augmente les dégâts de la cible de 3.",
+				Animation = "cast"
+			};
+			BuffEffect buffEffect = new StatIncrement() {
+				StatKey = Statistic.DAMAGE,
+				Value = new FixedValue() {
+					Val = 3
+				}
+			};
+			ApplyBuffEffect effect = new ApplyBuffEffect() {
+				Duration = new Countdown() {
+					Duration = 2
+				},
+				TargetKey = "target1"
+			};
+			effect.Effects.Add(buffEffect);
+			effect.StackingType = StackingType.Independent;
+			Skill buff = new Skill() {
+				Attributes = buffAttributes
+			};
+			buff.Cost.Add("AP", 25);
+			buff.Effects.Add(effect);
+			buff.TargetPickers.Add(buffTargetPicker);
+			return buff;
+		}
+
+		private TriggeredSkill InitTackle() {
+			TriggeredSkill triggeredSkill = new TriggeredSkill();
+
+			IEffect damageEffect = new DamageEffect() {
+				Amount = SetupDamageCalculator(),
+				TargetKey = Context.TRIGGERING_CHARACTER
+			};
+			
+		}
+
+		private IValueCalculator SetupDamageCalculator() {
 			return new ValueMultiplier() {
 				Base = new StatReader() {
 					Source = Context.SOURCE,

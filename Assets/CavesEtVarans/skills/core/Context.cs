@@ -8,20 +8,42 @@ namespace CavesEtVarans.skills.core
 	
 	public class Context
     {
+		public static readonly string SOURCE = "source";
+        public static readonly string TARGETS = "targets/";
         public static readonly string CURRENT_TARGET = "currentTarget";
         public static readonly string MOVEMENT_TARGET = "mvtTarget";
-        public static readonly string TARGETS = "target";
-		public static readonly string SOURCE = "source";
+		public static readonly string BUFF_SOURCE = "buffSource";
 		public static readonly string BUFF_TARGET = "buffTarget";
 		public static readonly string SKILL = "skill";
 		public static readonly string TILE = "tile";
         public static readonly string DAMAGE_TYPE = "damageType";
+		public static readonly string TRIGGERING_SKILL = "triggeringSkill";
+		public static readonly string TRIGGERING_TARGETS = "triggeringTarget";
+		public static readonly string TRIGGERING_CHARACTER = "triggeringCharacter";
+		public static readonly string START_TILE = "startTile";
+		public static readonly string END_TILE = "startTile";
 
 		private Dictionary<string, Object> data;
+		public static readonly Context Empty = new Context();
 
 		private Context ()
 		{
 			data = new Dictionary<string, object> ();
+		}
+
+		/// <summary>
+		/// Returns an iterable of all data stored with keys that start with the argument key.
+		/// </summary>
+		/// <param name="start"></param>
+		/// <returns></returns>
+		public IEnumerable<object> AllKeys(string start) {
+			HashSet<object> result = new HashSet<object>();
+			foreach (string key in data.Keys) {
+				if (start.Equals(key.Substring(start.Length))) {
+					result.Add(data[key]);
+				}
+			}
+			return result;
 		}
 
 		public static Context Init (Skill skill, Character source)
@@ -48,8 +70,20 @@ namespace CavesEtVarans.skills.core
 			Object result = privateContext.Get(key);
 			return result != null ? result : Get(key);
         }
+		
+		public void CopyInto(Context target) {
+			foreach (KeyValuePair<string, object> kv in data) {
+				target.Set(kv.Key, kv.Value);
+			}
+		}
 
-        public static Context ProvideTurnOrderContext() {
+		public Context Duplicate() {
+			Context copy = new Context();
+			CopyInto(copy);
+			return copy;
+		}
+		
+		public static Context ProvideTurnOrderContext() {
             return new Context();
         }
         public static Context ProvidePrivateContext(ContextDependent contextDependent) {

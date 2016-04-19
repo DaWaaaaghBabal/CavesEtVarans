@@ -14,7 +14,8 @@ namespace CavesEtVarans.skills.core {
         public string SourceKey { set; get; }
         public int AoeRadius { set; get; }
         public int TargetNumber { set; get; }
-        public int Range { get; internal set; }
+        public int MinRange { get; set; }
+		public int MaxRange { get; set; }
         public FlagsList<TargetFlag> Flags { set; get; }
 		/// <summary>
 		/// If true, will target tiles instead of characters.
@@ -39,7 +40,9 @@ namespace CavesEtVarans.skills.core {
 				playerChoice = PlayerChoiceStrategy.GetStrategy(value, TargetCallback, Flags);
 			}
 		}
-        private GroundTargetingStrategy groundTargeting;
+
+
+		private GroundTargetingStrategy groundTargeting;
         private PlayerChoiceStrategy playerChoice;
         private Context context;
 		private TargetGroup targets;

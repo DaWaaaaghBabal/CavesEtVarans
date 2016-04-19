@@ -7,7 +7,7 @@ Classes:
   Attack: 8
   Damage: 8
   Willpower: 6
-  Dodge: 8
+  Stability: 8
   SpecialName: Enthousiasme
   Special: 8
   Initiative: 8
@@ -29,7 +29,8 @@ Classes:
       PlayerChoice: PlayerChoice
       SourceKey: source
       TargetNumber: 1
-      Range: 2
+      MinRange: 0
+      MaxRange: 2
       GroundTarget: false
     Effects:
     - !skills.effects.DamageEffect
@@ -62,7 +63,8 @@ Classes:
       SourceKey: source
       TargetNumber: 1
       AoeRadius: 1
-      Range: 4
+      MinRange: 2
+      MaxRange: 4
       GroundTarget: false
     Effects:
     - !skills.effects.HealEffect
@@ -80,7 +82,7 @@ Classes:
   Attack: 9
   Damage: 8
   Willpower: 9
-  Dodge: 6
+  Stability: 6
   SpecialName: Foi
   Special: 8
   Initiative: 8
@@ -102,10 +104,12 @@ Classes:
       PlayerChoice: PlayerChoice
       SourceKey: source
       TargetNumber: 1
-      Range: 2
+      MinRange: 0
+      MaxRange: 2
       GroundTarget: false
     Effects:
     - !skills.effects.DamageEffect
+      Filter: !skills.effects.conditions.NoCondition
       Amount: !skills.values.ValueMultiplier
         Base: !skills.values.StatReader
           Source: source
@@ -135,14 +139,48 @@ Classes:
       SourceKey: source
       TargetNumber: 1
       AoeRadius: 1
-      Range: 4
+      MinRange: 2
+      MaxRange: 4
       GroundTarget: false
     Effects:
     - !skills.effects.HealEffect
+      Filter: !skills.effects.conditions.NoCondition
       Amount: !skills.values.StatReader
         Source: source
         Stat: WP
       TargetKey: target1
     Flags:
     - OrientToTarget
+  - Attributes:
+      Name: Buff de dégâts
+      Icon: buff
+      Animation: Cast
+      Description: Augmente les dégâts de la cible de 3.
+    Cost:
+      Elements:
+        AP: 25
+    TargetPickers:
+    - TargetKey: target1
+      SourceKey: source
+      TargetNumber: 1
+      MinRange: 0
+      MaxRange: 4
+      Flags: []
+      PlayerChoice: PlayerChoice
+      GroundTarget: false
+    Effects:
+    - !skills.effects.ApplyBuffEffect
+      Filter: !skills.effects.conditions.NoCondition
+      StackingType: Independent
+      Duration: !skills.effects.buffs.Countdown
+        Duration: 2
+      Effects:
+      - !skills.effects.buffs.StatIncrement
+        Type: Increment
+        Value: !skills.values.StatReader
+          Source: buffSource
+          Stat: WP
+        StatKey: DMG
+      TargetKey: target1
+    Flags: []
 

@@ -6,6 +6,7 @@ using CavesEtVarans.skills.core;
 using System;
 using System.Collections.Generic;
 using CavesEtVarans.skills.effects.buffs;
+using CavesEtVarans.skills.effects;
 
 namespace CavesEtVarans.character
 {
@@ -20,15 +21,6 @@ namespace CavesEtVarans.character
             }
         }
 
-        private void InitClass(string value) {
-            clazz = ClassManager.Instance.ClassByName(value);
-            statisticsManager.InitClassStats(clazz);
-            skillManager.InitClassSkills(clazz);
-            int maxHealth = GetStatValue(Statistic.HEALTH, Context.Init(null, this));
-            resourceManager.Add(Resource.HP, new Resource(0, maxHealth));
-            resourceManager.Set(Resource.HP, maxHealth);
-        }
-
         public Tile Tile { get; set; }
         public Orientation Orientation { get; set; }
         public int Size { get; set; }
@@ -38,23 +30,38 @@ namespace CavesEtVarans.character
         private ResourceManager resourceManager;
         private SkillManager skillManager;
         private BuffManager buffManager;
+		private TriggerManager triggerManager;
 
-        public Character() {
+		public Character() {
             Context context = Context.Init(null, this);
             statisticsManager = new StatisticsManager();
             resourceManager = new ResourceManager();
             skillManager = new SkillManager();
             buffManager = new BuffManager(this);
             resourceManager.Add(Resource.AP, new Resource(0, GetStatValue(Statistic.MAX_AP, context)));
-            
-            skillManager.InitCommonSkills();
+
+			triggerManager = new TriggerManager(this);
+			triggerManager.Register();
+			skillManager.TriggerManager = triggerManager;
+			skillManager.InitCommonSkills();
             Size = 3;
         }
 
         // Methods
+
+		private void InitClass(string value) {
+            clazz = ClassManager.Instance.ClassByName(value);
+            statisticsManager.InitClassStats(clazz);
+            skillManager.InitClassSkills(clazz);
+            int maxHealth = GetStatValue(Statistic.HEALTH, Context.Init(null, this));
+            resourceManager.Add(Resource.HP, new Resource(0, maxHealth));
+            resourceManager.Set(Resource.HP, maxHealth);
+        }
+
         public void Activate() {
             //@TODO do other stuff...
             MainGUI.ActivateCharacter(this);
+			buffManager.Tick();
         }
 
         public void EndTurn() {
@@ -66,17 +73,14 @@ namespace CavesEtVarans.character
         }
 
         public void TakeDamage(int amount) {
-            //@TODO event
             resourceManager.Decrement(Resource.HP, amount);
         }
 
         public void ApplyBuff(BuffInstance buff, Context context) {
-            //@TODO event
             buffManager.ApplyBuff(buff, context);
         }
 
         public void RemoveBuff(BuffInstance buff) {
-            //@TODO event
             buffManager.RemoveBuff(buff);
         }
 
@@ -114,7 +118,15 @@ namespace CavesEtVarans.character
 			private set { }
 			get { return skillManager.Skills; }
 		}
-    }
+
+		public void ApplyStatModifier(string key, IStatModifier modifier) {
+			statisticsManager.AddModifier(key, modifier);
+		}
+
+		public void RemoveStatModifier(string key, IStatModifier modifier) {
+			statisticsManager.RemoveModifier(key, modifier);
+		}
+	}
 
 }
 

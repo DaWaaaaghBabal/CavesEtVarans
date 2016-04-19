@@ -1,6 +1,7 @@
 ﻿using System;
 using CavesEtVarans.battlefield;
 using CavesEtVarans.character;
+using CavesEtVarans.rules;
 using CavesEtVarans.skills.core;
 
 namespace CavesEtVarans.skills.values
@@ -16,8 +17,7 @@ namespace CavesEtVarans.skills.values
     /// </summary>
 	public class DamageFormula : ContextDependent, IValueCalculator
 	{
-        private static double[] flankingBonuses = new double[] {0, .075, .15, .225, .3};
-		public IValueCalculator Attack { set; get; }
+        public IValueCalculator Attack { set; get; }
 		public IValueCalculator Defense { set; get; }
 
 		public double Value(Context context)
@@ -28,7 +28,7 @@ namespace CavesEtVarans.skills.values
             Character source = ReadContext(context, Context.SOURCE) as Character;
             Character target = ReadContext(context, Context.CURRENT_TARGET) as Character;
             Flanking flanking = Battlefield.Flanking(source, target);
-            return 1.0 + 0.5 * Math.Tanh(ratio) + flankingBonuses[(int) flanking];
+            return 1.0 + 0.5 * Math.Tanh(ratio) + RulesConstants.FLANKING_BONUSES[(int) flanking];
 		}
 	}
 }

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using CavesEtVarans.battlefield;
+﻿using CavesEtVarans.battlefield;
 using CavesEtVarans.character;
 using CavesEtVarans.exceptions;
 using CavesEtVarans.skills.core;
@@ -12,7 +11,7 @@ namespace CavesEtVarans.skills.target {
 		public override void Activate(TargetPicker targetPicker, Context context) {
             // Nothing is asked from the player. Which means we already know who will be targeted.
             Character source = (Character)ReadContext(context, targetPicker.SourceKey);
-            foreach (Tile t in GetArea(source.Tile, targetPicker.AoeRadius)) {
+            foreach (Tile t in GetArea(source.Tile, targetPicker.MinRange, targetPicker.MaxRange)) {
                 Callback(t);
             }
             targetPicker.EndPicking();

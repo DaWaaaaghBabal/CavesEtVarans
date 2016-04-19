@@ -13,8 +13,8 @@ namespace CavesEtVarans.character.statistics {
 		 * Otherwise, differences in application order and lack of operation priority 
          * will lead to inconsistent results.
 		 */
-		ModifierType Type { set; get; }
-		IValueCalculator value { set; get; }
+		ModifierType Type { get; }
+		IValueCalculator Value { set; get; }
 	}
 	
 	public enum ModifierType {

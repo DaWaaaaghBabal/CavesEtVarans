@@ -1,5 +1,5 @@
 ﻿namespace CavesEtVarans.skills.core {
-	public interface IEffect
+	public interface IEffect : IContextDependent
 	{
 		void Apply (Context context);
 	}

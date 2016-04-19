@@ -14,7 +14,7 @@ namespace CavesEtVarans.character.statistics
 		public static readonly string WILLPOWER = "WP";
 		public static readonly string HEALTH = "HP";
 		public static readonly string INITIATIVE = "INI";
-		public static readonly string DODGE = "DDG";
+		public static readonly string STABILITY = "STA";
 		public static readonly string JUMP = "JMP";
 		public static readonly string ITERATION_MALUS = "ITER";
 		public static readonly string SPECIAL = "SPE";
@@ -53,10 +53,10 @@ namespace CavesEtVarans.character.statistics
 			statModifiers.Remove (mod);
 		}
 
-		// Each modifier is either a multiplier (stat +X%), an incrementer (stat +X) or an overrider (stat =X).
-		// To add a new modifier, it must be dispatched to the right list.
 		public void AddModifier (IStatModifier mod)
 		{
+			// Each modifier is either a multiplier (stat +X%), an incrementer (stat +X) or an overrider (stat =X).
+			// To add a new modifier, it must be dispatched to the right list.
 			int i = 0;
 			foreach (IStatModifier m in statModifiers) {
 				if (mod.Type >= m.Type)

@@ -1,5 +1,6 @@
 ﻿using CavesEtVarans.skills.core;
 using System.Collections.Generic;
+using CavesEtVarans.skills.triggers;
 
 namespace CavesEtVarans.character
 {
@@ -10,7 +11,7 @@ namespace CavesEtVarans.character
 		public int Attack { set; get; }
 		public int Damage { get; set; }
 		public int Willpower { set; get; }
-		public int Dodge { set; get; }
+		public int Stability { set; get; }
 		public string SpecialName { set; get; }
 		public int Special { get; set; }
 		public int Initiative { set; get; }
@@ -19,6 +20,7 @@ namespace CavesEtVarans.character
 		public string EnergyName { set; get; }
 		public int Jump { set; get; }
 		public List<Skill> Skills { set; get; }
-        public int MaxEnergy { get; internal set; }
+		public List<TriggeredSkill> TriggeredSkills { set; get; }
+		public int MaxEnergy { get; internal set; }
     }
 }

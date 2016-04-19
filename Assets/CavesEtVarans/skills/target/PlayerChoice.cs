@@ -15,7 +15,7 @@ namespace CavesEtVarans.skills.target {
 		public override void Activate(TargetPicker targetPicker, Context context) {
 			Character source = (Character) ReadContext(context, targetPicker.SourceKey);
 			radius = targetPicker.AoeRadius;
-			area = GetArea(source.Tile, targetPicker.Range);
+			area = GetArea(source.Tile, targetPicker.MinRange, targetPicker.MaxRange);
 			//@TODO decouple from graphics (use events);
 			GraphicBattlefield.HighlightArea(area);
 		}
@@ -31,7 +31,7 @@ namespace CavesEtVarans.skills.target {
 		public override bool TargetTile(Tile tile) {
 			if (area.Contains(tile)) {
 				bool result = false;
-				foreach (Tile t in GetArea(tile, radius))
+				foreach (Tile t in GetArea(tile, 0, radius))
 					result |= Callback(t);
 				return result;
 			}

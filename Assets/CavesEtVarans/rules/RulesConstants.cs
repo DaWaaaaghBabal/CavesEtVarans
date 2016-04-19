@@ -1,7 +1,4 @@
-﻿using System;
-using CavesEtVarans.battlefield;
-
-namespace CavesEtVarans.rules
+﻿namespace CavesEtVarans.rules
 {
 	class RulesConstants
 	{
@@ -11,5 +8,7 @@ namespace CavesEtVarans.rules
 		public static readonly int BASE_MOVEMENT_COST = 12;
 		public static readonly int HEIGHT_DIVISOR = 3;
         public static readonly double LOS_THRESHOLD = 0.9;
-    }
+		public static readonly double[] FLANKING_BONUSES = new double[] {0, .075, .15, .225, .3};
+
+	}
 }
