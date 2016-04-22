@@ -34,13 +34,16 @@ namespace CavesEtVarans.battlefield {
 			placementStrategy = HexOrSquare.ProvidePlacement();
 			generationStrategy.GenerateMap(heightMap, CreateTile);
 			ClassManager classMgr = ClassManager.Instance;
-            classMgr.ParseTextResource("classes");
+
 			Faction factionA = new Faction("Faction A");
-            PlaceCharacter(4, 11, 0, "Character C", factionA);
-			Faction factionB = new Faction("Faction B");
+            PlaceCharacter(2, 10, 0, "Paladin 1", factionA, "Paladin");
+            PlaceCharacter(1, 11, 0, "Paladin 2", factionA, "Paladin");
+
+            Faction factionB = new Faction("Faction B");
 			factionB.TreatAs(factionA, FriendOrFoe.Foe);
 			factionA.TreatAs(factionB, FriendOrFoe.Foe);
-			PlaceCharacter(1,  2, 0, "Character B", factionB);
+			PlaceCharacter(1,  2, 0, "Berserker", factionB, "Berserker");
+
             CharacterManager.Get().ActivateNext();
         }
 		
@@ -58,10 +61,10 @@ namespace CavesEtVarans.battlefield {
 			tileObject.transform.position += offset;
 		}
 
-		private void PlaceCharacter(int row, int column, int layer, string name, Faction faction) {
+		private void PlaceCharacter(int row, int column, int layer, string name, Faction faction, string clazz) {
 			Character character = new Character {
 				Name = name,
-				CharacterClass = "Paladin",
+				CharacterClass = clazz,
 				Faction = faction
 			};
 			CharacterManager.Get().Add(character);

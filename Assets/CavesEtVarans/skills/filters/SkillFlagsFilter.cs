@@ -1,9 +1,10 @@
 ﻿using CavesEtVarans.exceptions;
 using CavesEtVarans.skills.core;
+using CavesEtVarans.skills.filters;
 
-namespace CavesEtVarans.skills.triggers.filters {
+namespace CavesEtVarans.skills.filters {
 
-    public class SkillFlagsFilter : TriggerFilter {
+    public class SkillFlagsFilter : AbstractFilter {
         public FlagsList<SkillFlag> Flags { get; set; }
         public FilterType Operation { set; get; }
         public override bool Filter(Context c) {

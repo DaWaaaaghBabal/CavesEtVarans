@@ -1,22 +1,50 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using CavesEtVarans.battlefield;
 using CavesEtVarans.character;
 using CavesEtVarans.graphics;
 using CavesEtVarans.gui;
 using CavesEtVarans.skills.core;
-using CavesEtVarans.skills.target;
+using CavesEtVarans.skills.filters;
+using CavesEtVarans.skills.values;
 
 namespace CavesEtVarans.skills.targets {
     public class TargetSelector : ContextDependent, ITargetSelector {
         public string CenterKey { set; get; }
         public string TargetKey { set; get; }
-        public IValueCalculator MinRange { set; get; }
-        public IValueCalculator MaxRange { set; get; }
-        public IValueCalculator AoEMinRadius { set; get; }
-        public IValueCalculator AoEMaxRadius { set; get; }
+        public IValueCalculator MinRange {
+            set { minRange = value; }
+            get {
+                if (minRange == null)
+                    minRange = new FixedValue(0);
+                return minRange;
+            }
+        }
+        public IValueCalculator MaxRange {
+            set { maxRange = value; }
+            get {
+                if (maxRange == null)
+                    maxRange = new FixedValue(0);
+                return maxRange;
+            }
+        }
+        public IValueCalculator AoEMinRadius {
+            set { aoeMinRadius = value; }
+            get {
+                if (aoeMinRadius == null)
+                    aoeMinRadius = new FixedValue(0);
+                return aoeMinRadius;
+            }
+        }
+        public IValueCalculator AoEMaxRadius {
+            set { aoeMaxRadius = value; }
+            get {
+                if (aoeMaxRadius == null)
+                    aoeMaxRadius = new FixedValue(0);
+                return aoeMaxRadius;
+            }
+        }
         public int NumberOfTargets { get; set; }
-        public TargetFilter TargetFilter { set; get; }
+        public FiltersList TargetFilters { set; get; }
         public bool TargetGround { set; get; }
         public bool Optional { set; get; }
         public PlayerChoiceType PlayerChoice {
@@ -32,7 +60,7 @@ namespace CavesEtVarans.skills.targets {
         }
         public bool LineOfSight {
             set {
-                LoSFilter = LineOfSightFilter.ProvideLoSFilter(value);
+                LoSFilter = LineOfSightCalculator.ProvideLoSFilter(value);
                 LoS = value;
             }
             get {
@@ -41,7 +69,7 @@ namespace CavesEtVarans.skills.targets {
         }
         public bool AoELineOfSight {
             set {
-                AoELoSFilter = LineOfSightFilter.ProvideLoSFilter(value);
+                AoELoSFilter = LineOfSightCalculator.ProvideLoSFilter(value);
                 AoELoS = value;
             }
             get {
@@ -50,11 +78,15 @@ namespace CavesEtVarans.skills.targets {
         }
 
 
+        private IValueCalculator minRange;
+        private IValueCalculator maxRange;
+        private IValueCalculator aoeMinRadius;
+        private IValueCalculator aoeMaxRadius;
         private PlayerChoiceType playerChoiceType;
         private bool LoS, AoELoS;
-        private int aoeMinRadius, aoeMaxRadius;
-        private LineOfSightFilter LoSFilter;
-        private LineOfSightFilter AoELoSFilter;
+        private int aoeMin, aoeMax;
+        private LineOfSightCalculator LoSFilter;
+        private LineOfSightCalculator AoELoSFilter;
         private PlayerChoiceStrategy playerChoiceStrategy;
 
         private TargetGroup targets;
@@ -67,8 +99,8 @@ namespace CavesEtVarans.skills.targets {
             GUIEventHandler.Get().ActivePicker = this;
             int minRange = (int) MinRange.Value(context);
             int maxRange = (int) MaxRange.Value(context);
-            aoeMinRadius = (int) AoEMinRadius.Value(context);
-            aoeMaxRadius = (int) AoEMaxRadius.Value(context);
+            aoeMin = (int) AoEMinRadius.Value(context);
+            aoeMax = (int) AoEMaxRadius.Value(context);
             ITargetable center = ExtractCenter(context);
             targets = new TargetGroup();
             playerChoiceStrategy.Activate(
@@ -84,7 +116,7 @@ namespace CavesEtVarans.skills.targets {
             playerChoiceStrategy.TargetTile(tile);
         }
 
-        private HashSet<Tile> GetArea(ITargetable center, LineOfSightFilter LoSFilter, int minRange, int maxRange) {
+        private HashSet<Tile> GetArea(ITargetable center, LineOfSightCalculator LoSFilter, int minRange, int maxRange) {
             HashSet<Tile> result = new HashSet<Tile>();
             HashSet<Tile> area = Battlefield.GetArea(center.Tile, minRange, maxRange);
             foreach (Tile t in area) {
@@ -104,14 +136,19 @@ namespace CavesEtVarans.skills.targets {
         }
 
         private void SelectTile(Tile tile) {
-            ITargetable center = TileToTarget(tile);
-            HashSet<Tile> aoe = GetArea (tile, AoELoSFilter, aoeMinRadius, aoeMaxRadius);
+            ITargetable center = tile;
+            if (!TargetGround && tile.Character != null) { 
+                    center = tile.Character;
+            }
+            HashSet<Tile> aoe = GetArea (center, AoELoSFilter, aoeMin, aoeMax);
             SelectArea(aoe);
         }
 
         private bool FinalizeSelection(Tile tile) {
+            Context c = context.Duplicate();
             ITargetable target = TileToTarget(tile);
-            if (target != null && TargetFilter.Filter(target)) {
+            c.Set(Context.FILTER_TARGET, target);
+            if (target != null && TargetFilters.Filter(c)) {
                 targets.Add(target);
                 return true;
             }
@@ -136,7 +173,13 @@ namespace CavesEtVarans.skills.targets {
         }
 
         private ITargetable ExtractCenter(Context context) {
-            ITargetable center = ReadContext(context, CenterKey) as ITargetable;
+            object obj = ReadContext(context, CenterKey);
+            ITargetable center = obj as ITargetable;
+            if (center == null) {
+                TargetGroup group = obj as TargetGroup;
+                center = group.PickOne; 
+            }
+                
             return center;
         }
 

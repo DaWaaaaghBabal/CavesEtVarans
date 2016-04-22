@@ -22,21 +22,19 @@ namespace CavesEtVarans.character {
 			classes = new Dictionary<string, CharacterClass>();
 		}
 
-		public void ParseTextResource(string resourceName) {
+		private void ParseTextResource(string resourceName) {
 			TextAsset textResource = Resources.Load<TextAsset>(resourceName);
 			string yaml = textResource.text;
 			//This is used to make the user-friendly YAML compliant with the deserializer. It requires adding a bunch of tokens to each class reference.
 			yaml = Regex.Replace(yaml, "!(?<class>.*)\\r\\n", "!CavesEtVarans.${class},%20Assembly-CSharp,%20Version=0.0.0.0,%20Culture=neutral,%20PublicKeyToken=null\n");
 			StringReader input = new StringReader(yaml);
-			ClassList list = new Deserializer().Deserialize<ClassList>(input);
-			foreach(CharacterClass clazz in list.Classes) {
-				classes.Add(clazz.Name, clazz);
-			}
+			CharacterClass clazz = new Deserializer().Deserialize<CharacterClass>(input);
+			classes.Add(clazz.Name, clazz);
 		}
 
 		public CharacterClass ClassByName(string className) {
-			if (!classes.ContainsKey(className))
-				throw new CharacterClassException("No character class found with this name.");
+            if (!classes.ContainsKey(className))
+                ParseTextResource(className);
 			return classes[className];
 		}
 	}

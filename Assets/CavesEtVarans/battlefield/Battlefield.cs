@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using CavesEtVarans.character;
-using CavesEtVarans.skills.target;
 
 namespace CavesEtVarans.battlefield {
 	public class Battlefield {

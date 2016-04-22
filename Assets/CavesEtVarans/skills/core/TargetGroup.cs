@@ -7,12 +7,16 @@ namespace CavesEtVarans.skills.core {
 
         public TargetGroup(ITargetable target) : base(){
             Add(target);
+            PickOne = target;
         }
 
-		public void Add(TargetGroup group) {
+        public ITargetable PickOne { get; private set; }
+
+        public void Add(TargetGroup group) {
 			foreach (ITargetable target in group) {
 				Add(target);
 			}
+            PickOne = group.PickOne;
 		}
 	}
 }

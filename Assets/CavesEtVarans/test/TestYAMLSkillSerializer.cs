@@ -1,22 +1,7 @@
-﻿using CavesEtVarans.character;
-using CavesEtVarans.character.statistics;
-using CavesEtVarans.skills.core;
-using CavesEtVarans.skills.effects;
-using CavesEtVarans.skills.target;
-using CavesEtVarans.skills.values;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using UnityEngine;
-using YamlDotNet.Serialization;
-using CavesEtVarans.skills.effects.buffs;
-using CavesEtVarans.skills.triggers;
-using CavesEtVarans.skills.events;
-using CavesEtVarans.skills.triggers.filters;
-using CavesEtVarans.character.factions;
+﻿using UnityEngine;
 
 namespace CavesEtVarans.test {
-	public class TestYAMLSkillSerializer : MonoBehaviour {
+    public class TestYAMLSkillSerializer : MonoBehaviour {
 		/*private StringBuilder SerializeObject(System.Object obj) {
 			var serializer = new Serializer(SerializationOptions.Roundtrip);
 			var stringBuilder = new StringBuilder();

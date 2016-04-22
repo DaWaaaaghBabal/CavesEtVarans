@@ -2,7 +2,6 @@
 using CavesEtVarans.utils;
 using System.Collections.Generic;
 using System;
-using CavesEtVarans.skills.target;
 
 namespace CavesEtVarans.battlefield {
 	public abstract class Grid<T> where T : ICoordinates {

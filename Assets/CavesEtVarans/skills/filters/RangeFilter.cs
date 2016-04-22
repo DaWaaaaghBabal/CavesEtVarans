@@ -2,11 +2,9 @@
 using CavesEtVarans.battlefield;
 using CavesEtVarans.character;
 using CavesEtVarans.skills.core;
-using CavesEtVarans.skills.target;
-using CavesEtVarans.skills.targets;
 
-namespace CavesEtVarans.skills.triggers.filters {
-	public class RangeFilter : TriggerFilter {
+namespace CavesEtVarans.skills.filters {
+	public class RangeFilter : AbstractFilter {
 
         public IValueCalculator MinRange { set; get; }
         public IValueCalculator MaxRange { set; get; }

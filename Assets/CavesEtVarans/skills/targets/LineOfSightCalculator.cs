@@ -2,8 +2,8 @@
 using CavesEtVarans.rules;
 
 namespace CavesEtVarans.skills.targets {
-    public abstract class LineOfSightFilter {
-        public static LineOfSightFilter ProvideLoSFilter(bool checkLoS) {
+    public abstract class LineOfSightCalculator {
+        public static LineOfSightCalculator ProvideLoSFilter(bool checkLoS) {
             if (checkLoS) return new CheckLoS();
             else return new IgnoreLoS();
         }
@@ -27,7 +27,7 @@ namespace CavesEtVarans.skills.targets {
 
         public abstract bool LoS(ICoordinates source, int sourceHeight, Tile targetTile, bool groundTarget);
  
-        private class IgnoreLoS : LineOfSightFilter {
+        private class IgnoreLoS : LineOfSightCalculator {
             public override bool LoS(ICoordinates source, int sourceHeight, Tile targetTile, bool groundTarget) {
                 // Ignoring LoS means we always have LoS.
                 return true;
@@ -36,7 +36,7 @@ namespace CavesEtVarans.skills.targets {
                 return 0;
             }
         }
-        private class CheckLoS : LineOfSightFilter {
+        private class CheckLoS : LineOfSightCalculator {
             public override bool LoS(ICoordinates source, int sourceHeight, Tile targetTile, bool groundTarget) {
                 double cover = Cover(source, sourceHeight, targetTile, groundTarget);
                 return cover < RulesConstants.LOS_THRESHOLD;

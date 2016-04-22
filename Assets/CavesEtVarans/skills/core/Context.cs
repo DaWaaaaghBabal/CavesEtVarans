@@ -20,13 +20,14 @@ namespace CavesEtVarans.skills.core
 		public static readonly string TRIGGERING_SKILL = "triggeringSkill";
 		public static readonly string TRIGGERING_TARGETS = "triggeringTarget";
 		public static readonly string TRIGGERING_CHARACTER = "triggeringCharacter";
+        public static readonly string FILTER_TARGET = "filterTarget";
 		public static readonly string START_TILE = "startTile";
 		public static readonly string END_TILE = "endTile";
 
 		private Dictionary<string, Object> data;
 		public static readonly Context Empty = new Context();
 
-		private Context ()
+        private Context ()
 		{
 			data = new Dictionary<string, object> ();
 		}
