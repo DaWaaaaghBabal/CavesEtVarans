@@ -2,7 +2,7 @@
 using CavesEtVarans.character;
 
 namespace CavesEtVarans.skills.core {
-	public interface ITargetPicker
+	public interface ITargetSelector
 	{
 		void Activate(Context context);
 		void TargetCharacter(Character character);

@@ -11,10 +11,13 @@ using UnityEngine;
 using YamlDotNet.Serialization;
 using CavesEtVarans.skills.effects.buffs;
 using CavesEtVarans.skills.triggers;
+using CavesEtVarans.skills.events;
+using CavesEtVarans.skills.triggers.filters;
+using CavesEtVarans.character.factions;
 
 namespace CavesEtVarans.test {
 	public class TestYAMLSkillSerializer : MonoBehaviour {
-		private StringBuilder SerializeObject(System.Object obj) {
+		/*private StringBuilder SerializeObject(System.Object obj) {
 			var serializer = new Serializer(SerializationOptions.Roundtrip);
 			var stringBuilder = new StringBuilder();
 			var stringWriter = new StringWriter(stringBuilder);
@@ -33,6 +36,8 @@ namespace CavesEtVarans.test {
 			skills.Add(SetupBasicAttack());
 			skills.Add(SetupHeal());
 			skills.Add(SetupBuff());
+			List<TriggeredSkill> triggered = new List<TriggeredSkill>();
+			triggered.Add(SetupTackle());
 			CharacterClass acolyt = new CharacterClass() {
 				Name = "Acolyte",
 				Health = 48,
@@ -48,7 +53,8 @@ namespace CavesEtVarans.test {
 				EnergyName = "moral",
 				SpecialName = "Enthousiasme",
 				Special = 8,
-				Skills = skills
+				Skills = skills,
+				TriggeredSkills = triggered,
 			};
 			Debug.Log(SerializeObject(acolyt));
 		}
@@ -62,8 +68,8 @@ namespace CavesEtVarans.test {
 			TargetPicker healTargetPicker = new TargetPicker() {
 				TargetKey = "target1",
 				SourceKey = Context.SOURCE,
-				MinRange = 6,
-				AoeRadius = 0,
+				Range = new FixedRange {Min = 0, Max = 5 },
+				AoeRadius = new FixedRange (0, 1),
 				TargetNumber = 2,
 				GroundTarget = false,
 				PlayerChoice = PlayerChoiceType.PlayerChoice
@@ -94,8 +100,8 @@ namespace CavesEtVarans.test {
 			TargetPicker attackTargetPicker = new TargetPicker() {
 				TargetKey = "target1",
 				SourceKey = Context.SOURCE,
-				MinRange = 6,
-				AoeRadius = 0,
+				Range = new FixedRange {Min = 0, Max = 5 },
+				AoeRadius = new ZeroRange(),
 				TargetNumber = 2,
 				GroundTarget = false,
 				PlayerChoice = PlayerChoiceType.PlayerChoice
@@ -123,8 +129,8 @@ namespace CavesEtVarans.test {
 			TargetPicker buffTargetPicker = new TargetPicker() {
 				TargetKey = "target1",
 				SourceKey = Context.SOURCE,
-				MinRange = 4,
-				AoeRadius = 0,
+				Range = new FixedRange {Min = 0, Max = 5 },
+				AoeRadius = new ZeroRange(),
 				TargetNumber = 1,
 				GroundTarget = false,
 				PlayerChoice = PlayerChoiceType.PlayerChoice
@@ -157,17 +163,37 @@ namespace CavesEtVarans.test {
 			buff.TargetPickers.Add(buffTargetPicker);
 			return buff;
 		}
-
-		private TriggeredSkill InitTackle() {
+		private TriggeredSkill SetupTackle() {
 			TriggeredSkill triggeredSkill = new TriggeredSkill();
 
 			IEffect damageEffect = new DamageEffect() {
 				Amount = SetupDamageCalculator(),
-				TargetKey = Context.TRIGGERING_CHARACTER
+				TargetKey = "target1"
 			};
-			
+			TargetPicker targetPicker = new TargetPicker() {
+				TargetKey = "target1",
+				SourceKey = Context.TRIGGERING_CHARACTER,
+				Range = new FixedRange {Min = 0, Max = 0 },
+				AoeRadius = new ZeroRange(),
+				TargetNumber = 1,
+				GroundTarget = false,
+				PlayerChoice = PlayerChoiceType.NoValidation
+			};
+			Skill tackle = new Skill() {
+				Attributes = new SkillAttributes {
+					Animation = "Attack",
+				}
+			};
+			tackle.Effects.Add(damageEffect);
+			tackle.TargetPickers.Add(targetPicker);
+			triggeredSkill.TriggerType = TriggerType.Movement;
+			triggeredSkill.Skill = tackle;
+			triggeredSkill.TriggerFilters = new TriggerFiltersList();
+			triggeredSkill.TriggerFilters.Add(new FriendOrFoeFilter() {
+				Accepts = FriendOrFoe.Foe | FriendOrFoe.Neutral
+			});
+			return triggeredSkill;
 		}
-
 		private IValueCalculator SetupDamageCalculator() {
 			return new ValueMultiplier() {
 				Base = new StatReader() {
@@ -185,6 +211,6 @@ namespace CavesEtVarans.test {
 					}
 				}
 			};
-		}
+		}*/
 	}
 }

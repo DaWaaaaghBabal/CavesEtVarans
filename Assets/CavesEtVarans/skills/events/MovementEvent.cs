@@ -12,5 +12,9 @@ namespace CavesEtVarans.skills.events {
 			StartTile = start;
 			EndTile = end;
 		}
+
+		public override TriggerType TriggerType() {
+			return events.TriggerType.Movement;
+		}
 	}
 }

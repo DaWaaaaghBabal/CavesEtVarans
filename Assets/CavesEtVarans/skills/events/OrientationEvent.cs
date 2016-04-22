@@ -13,5 +13,9 @@ namespace CavesEtVarans.skills.events {
 			OldOrientation = oldOrientation;
 			NewOrientation = newOrientation;
 		}
+
+		public override TriggerType TriggerType() {
+			return events.TriggerType.Orientation;
+		}
 	}
 }

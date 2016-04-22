@@ -49,9 +49,9 @@ namespace CavesEtVarans.battlefield {
 			Instance.grid.Add(tile);
             int row = tile.Row;
             int column = tile.Column;
-            for (int i = 0 ; i < tile.Size ; i++) {
+            for (int i = 0 ; i <= tile.Layer ; i++) {
                 int layer = tile.Layer - i;
-                Obstacle obstacle = new Obstacle(row, column, layer, 1);
+                Obstacle obstacle = new Obstacle(row, column, i, 1);
                 if (layer >= 0)
                     Instance.lineOfSight.Add(obstacle);
             }

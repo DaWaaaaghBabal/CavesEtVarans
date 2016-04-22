@@ -1,4 +1,5 @@
-﻿using CavesEtVarans.character;
+﻿using System;
+using CavesEtVarans.character;
 using CavesEtVarans.skills.core;
 
 namespace CavesEtVarans.skills.events
@@ -15,5 +16,9 @@ namespace CavesEtVarans.skills.events
             this.Target = target;
             this.Amount = amount;
         }
-    }
+
+		public override TriggerType TriggerType() {
+			return events.TriggerType.Damage;
+		}
+	}
 }

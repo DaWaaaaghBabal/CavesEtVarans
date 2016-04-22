@@ -37,11 +37,6 @@
 			return SetValue (GetValue () + value);
 		}
 
-		public int Decrement (int value)
-		{
-			return SetValue (GetValue () - value);
-		}
-
 		public int SetValue (int newValue)
 		{
 			if (newValue < min) {

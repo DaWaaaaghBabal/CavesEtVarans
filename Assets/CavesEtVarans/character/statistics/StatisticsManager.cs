@@ -18,18 +18,19 @@ namespace CavesEtVarans.character.statistics {
 		}
 
         public void InitClassStats(CharacterClass clazz) {
-            InitStat(Statistic.HEALTH, clazz.Health);
-            InitStat(Statistic.DEFENSE, clazz.Defense);
             InitStat(Statistic.ATTACK, clazz.Attack);
             InitStat(Statistic.DAMAGE, clazz.Damage);
-            InitStat(Statistic.WILLPOWER, clazz.Willpower);
-            InitStat(Statistic.STABILITY, clazz.Stability);
-            InitStat(Statistic.SPECIAL, clazz.Special);
+            InitStat(Statistic.DEFENSE, clazz.Defense);
+            InitStat(Statistic.HEALTH, clazz.Health);
             InitStat(Statistic.INITIATIVE, clazz.Initiative);
             InitStat(Statistic.ITERATION_MALUS, clazz.Iterative);
             InitStat(Statistic.JUMP, clazz.Jump);
-            InitStat(Statistic.MAX_ENERGY, clazz.MaxEnergy);
-        }
+			InitStat(Statistic.MAX_ENERGY, clazz.MaxEnergy);
+			InitStat(Statistic.MELEE_RANGE, 1);
+            InitStat(Statistic.SPECIAL, clazz.Special);
+            InitStat(Statistic.STABILITY, clazz.Stability);
+            InitStat(Statistic.WILLPOWER, clazz.Willpower);
+		}
 
         // These statistics always have the same value for every character. They are defined in the game rules.
         private void InitConstantStats ()

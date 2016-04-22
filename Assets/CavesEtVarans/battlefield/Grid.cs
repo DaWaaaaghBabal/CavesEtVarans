@@ -57,17 +57,22 @@ namespace CavesEtVarans.battlefield {
 		/// <param name="radius"></param>
 		/// <param name="result"></param>
 		protected void SelectRing(int[] centerCoord, int radius, HashSet<T> result) {
+			
 			// We start on the right then select all segments of the ring
 			int row = centerCoord[0];
 			int column = centerCoord[1] + radius;
 			int layer = centerCoord[2];
-			foreach (int[] direction in ringDirections) {
-				int dR = direction[0];
-				int dC = direction[1];
-				for (int i = 0 ; i < radius ; i++) {
-					row += dR;
-					column += dC;
-					Select(result, row, column, layer);
+			if (radius == 0) {
+				Select(result, row, column, layer);
+			} else {
+				foreach (int[] direction in ringDirections) {
+					int dR = direction[0];
+					int dC = direction[1];
+					for (int i = 0 ; i < radius ; i++) {
+						row += dR;
+						column += dC;
+						Select(result, row, column, layer);
+					}
 				}
 			}
 		}

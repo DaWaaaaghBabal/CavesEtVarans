@@ -14,14 +14,14 @@ namespace CavesEtVarans.gui
 		public static GUIEventHandler Get() {
 			if (instance == null) {
 				instance = new GUIEventHandler();
-				instance.ActivePicker = new BasicUITargetPicker();
+				instance.ActivePicker = new BasicUITargetSelector();
 			}
 			return instance;
 		}
 
 		private GUIEventHandler(){}
 
-		public ITargetPicker ActivePicker { set; get; }
+		public ITargetSelector ActivePicker { set; get; }
 
 		public void HandleClickOnTile (GraphicTile graphicTile)
 		{
@@ -50,7 +50,7 @@ namespace CavesEtVarans.gui
 
         public void Reset() {
             GraphicBattlefield.ClearHighlightedArea();
-            new BasicUITargetPicker().Activate(Context.Init(null, null));
+            new BasicUITargetSelector().Activate(Context.Init(null, null));
         }
     }
 }

@@ -68,7 +68,7 @@ namespace CavesEtVarans.character
                 // No character was ready to act : fill all AP gauges, then start again.
                 foreach (Character c in Characters) {
                     // The amount of AP gained by each character is slightly randomised, to mess with the turn order.
-                    c.IncrementAP(c.GetStatValue(Statistic.INITIATIVE, context) + rand.Next(1, 4));
+                    c.IncrementResource(resource.Resource.AP, c.GetStatValue(Statistic.INITIATIVE, context) + rand.Next(1, 4));
                 }
                 SearchForNewActiveCharacter();
             }

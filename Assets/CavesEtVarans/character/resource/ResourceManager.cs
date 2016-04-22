@@ -37,16 +37,9 @@ namespace CavesEtVarans.character.resource
 			}
 		}
 
-		public void Increment(string key, int newValue) {
+		public void Increment(string key, int amount) {
 			if (resources.ContainsKey(key)) {
-				resources[key].Increment(newValue);
-			} else {
-				throw new Exception("The wanted ressource (" + key + ") does not exist.");
-			}
-		}
-		public void Decrement(string key, int newValue) {
-			if (resources.ContainsKey(key)) {
-				resources[key].Decrement(newValue);
+				resources[key].Increment(amount);
 			} else {
 				throw new Exception("The wanted ressource (" + key + ") does not exist.");
 			}

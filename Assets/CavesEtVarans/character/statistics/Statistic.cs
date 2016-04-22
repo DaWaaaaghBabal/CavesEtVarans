@@ -18,6 +18,7 @@ namespace CavesEtVarans.character.statistics
 		public static readonly string JUMP = "JMP";
 		public static readonly string ITERATION_MALUS = "ITER";
 		public static readonly string SPECIAL = "SPE";
+		public static readonly string MELEE_RANGE = "MELEE";
 
 		public static readonly string MAX_AP = "MAP";
 		public static readonly string ACTION_AP = "AAP";

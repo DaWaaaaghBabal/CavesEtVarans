@@ -4,15 +4,16 @@ using CavesEtVarans.character.statistics;
 using CavesEtVarans.skills.core;
 using CavesEtVarans.skills.effects;
 using System;
+using CavesEtVarans.skills.targets;
 
 namespace CavesEtVarans.gui {
-	public class BasicUITargetPicker : ITargetPicker {
+	public class BasicUITargetSelector : ITargetSelector {
 		private Skill movementSkill;
-		public BasicUITargetPicker() {
+		public BasicUITargetSelector() {
 			movementSkill = new Skill();
-            movementSkill.AddTargetPicker(new TargetPicker()
+            movementSkill.AddTargetSelector(new TargetSelector()
             {
-                TargetKey = Context.TILE
+                TargetKey = Context.TILE,
             });
             movementSkill.AddEffect(new MovementEffect()
             {

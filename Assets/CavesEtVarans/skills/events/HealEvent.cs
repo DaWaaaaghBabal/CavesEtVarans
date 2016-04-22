@@ -15,5 +15,9 @@ namespace CavesEtVarans.skills.events
             this.Target = target;
             this.Amount = amount;
         }
-    }
+
+		public override TriggerType TriggerType() {
+			return events.TriggerType.Heal;
+		}
+	}
 }

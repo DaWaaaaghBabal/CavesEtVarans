@@ -34,14 +34,7 @@ namespace CavesEtVarans.character.resource
 		{
 			return gauge.CanBeDecreased (qty);
 		}
-
-		public int Decrement(int qty)
-		{
-			int newValue = gauge.Decrement (qty);
-			Notify(this);
-			return newValue;
-		}
-
+        
 		public int Increment(int qty)
 		{
 			int newValue = gauge.Increment(qty);

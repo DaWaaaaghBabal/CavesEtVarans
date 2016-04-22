@@ -21,7 +21,7 @@ namespace CavesEtVarans.skills.core
 		public static readonly string TRIGGERING_TARGETS = "triggeringTarget";
 		public static readonly string TRIGGERING_CHARACTER = "triggeringCharacter";
 		public static readonly string START_TILE = "startTile";
-		public static readonly string END_TILE = "startTile";
+		public static readonly string END_TILE = "endTile";
 
 		private Dictionary<string, Object> data;
 		public static readonly Context Empty = new Context();
@@ -39,7 +39,7 @@ namespace CavesEtVarans.skills.core
 		public IEnumerable<object> AllKeys(string start) {
 			HashSet<object> result = new HashSet<object>();
 			foreach (string key in data.Keys) {
-				if (start.Equals(key.Substring(start.Length))) {
+				if (start.Length <= key.Length && start.Equals(key.Substring(0, start.Length))) {
 					result.Add(data[key]);
 				}
 			}

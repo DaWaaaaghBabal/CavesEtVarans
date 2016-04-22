@@ -3,14 +3,11 @@
 namespace CavesEtVarans.skills.core
 {
     public class FlagsList<T> : List<T> {
-        public bool this[T index]
-        {
-            get
-            {
+        public bool this[T index] {
+            get {
                 return Contains(index);
             }
-            set
-            {
+            set {
                 if (value) Add(index);
                 else Remove(index);
             }

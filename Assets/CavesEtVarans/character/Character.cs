@@ -6,13 +6,15 @@ using CavesEtVarans.skills.core;
 using System;
 using System.Collections.Generic;
 using CavesEtVarans.skills.effects.buffs;
-using CavesEtVarans.skills.effects;
+using CavesEtVarans.character.factions;
+using CavesEtVarans.skills.events;
 
 namespace CavesEtVarans.character
 {
     public class Character : ITargetable {
 
         public string Name { get; set; }
+        public Faction Faction { get; set; }
         public int Level { get; set; }
         public String CharacterClass {
             get { return clazz.Name; }
@@ -20,8 +22,11 @@ namespace CavesEtVarans.character
                 InitClass(value);
             }
         }
+		public FriendOrFoe FriendOrFoe(Character other) {
+			return Faction.FriendOrFoe(other.Faction);
+		}
 
-        public Tile Tile { get; set; }
+		public Tile Tile { get; set; }
         public Orientation Orientation { get; set; }
         public int Size { get; set; }
 
@@ -62,6 +67,7 @@ namespace CavesEtVarans.character
             //@TODO do other stuff...
             MainGUI.ActivateCharacter(this);
 			buffManager.Tick();
+            new StartTurnEvent(this).Trigger(Context.Empty);
         }
 
         public void EndTurn() {
@@ -73,7 +79,7 @@ namespace CavesEtVarans.character
         }
 
         public void TakeDamage(int amount) {
-            resourceManager.Decrement(Resource.HP, amount);
+            resourceManager.Increment(Resource.HP, - amount);
         }
 
         public void ApplyBuff(BuffInstance buff, Context context) {
@@ -106,9 +112,6 @@ namespace CavesEtVarans.character
 				resourceManager.Set(Resource.AP, value);
 			}
 		}
-		public void IncrementAP(int amount) {
-			resourceManager.Increment(Resource.AP, amount);
-		}
 		
 		public bool CanPay(Cost cost) {
 			return cost.CanBePaid(resourceManager);
@@ -126,6 +129,11 @@ namespace CavesEtVarans.character
 		public void RemoveStatModifier(string key, IStatModifier modifier) {
 			statisticsManager.RemoveModifier(key, modifier);
 		}
+
+        public void IncrementResource(string resourceKey, int amount) {
+            resourceManager.Increment(resourceKey, amount);
+        }
+
 	}
 
 }

@@ -18,7 +18,7 @@ namespace CavesEtVarans.skills.core
 
 		public void Pay(ResourceManager ressManager) {
 			foreach (KeyValuePair<string, int> elem in Elements) {
-				ressManager.Decrement(elem.Key, elem.Value);
+				ressManager.Increment(elem.Key, - elem.Value);
 			}
 		}
 

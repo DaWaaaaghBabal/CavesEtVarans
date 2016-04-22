@@ -38,7 +38,7 @@ namespace CavesEtVarans.graphics {
 		public SquarePlacement() {
 			unitRow = new Vector3(0, 0, 1);
 			unitColumn = new Vector3(1, 0, 0);
-			unitLayer = new Vector3(0, 1.0f / RulesConstants.HEIGHT_DIVISOR, 0);
+			unitLayer = new Vector3(0, 1.5f / RulesConstants.HEIGHT_DIVISOR, 0);
 			baseAngle = 90;
 		}
 	}
@@ -47,7 +47,7 @@ namespace CavesEtVarans.graphics {
 		public HexPlacement() {
 			unitColumn = new Vector3(1, 0, 0);
 			unitRow = Quaternion.Euler(0, -120, 0) * unitColumn;
-			unitLayer = new Vector3(0, 1.0f / RulesConstants.HEIGHT_DIVISOR, 0);
+			unitLayer = new Vector3(0, 1.2f / RulesConstants.HEIGHT_DIVISOR, 0);
 			baseAngle = 60;
 		}
 	}

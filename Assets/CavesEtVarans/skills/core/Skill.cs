@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System;
 using CavesEtVarans.skills.effects;
 using CavesEtVarans.battlefield;
+using CavesEtVarans.skills.targets;
 
 namespace CavesEtVarans.skills.core {
 	/* About everything in the game, every action and every specificity of a character, is a Skill.
@@ -26,20 +27,20 @@ namespace CavesEtVarans.skills.core {
 
 		public SkillAttributes Attributes { get; set; }
 		public Cost Cost { set; get; }
-		public List<TargetPicker> TargetPickers { set; get; }
+		public List<TargetSelector> TargetPickers { set; get; }
 		public List<IEffect> Effects { set; get; }
         public FlagsList<SkillFlag> Flags { set; get; }
 		public Skill() {
-			TargetPickers = new List<TargetPicker>();
+			TargetPickers = new List<TargetSelector>();
 			Effects = new List<IEffect>();
 			Cost = new Cost();
 			Attributes = new SkillAttributes();
             Flags = new FlagsList<SkillFlag>();
         }
-		public void InitSkill (Character source)
+
+		public void InitSkill (Context context)
 		{
 			targetPickerIndex = 0;
-			Context context = Context.Init (this, source);
 			NextTargetPicker (context);
 		}
 
@@ -47,8 +48,8 @@ namespace CavesEtVarans.skills.core {
 		public void NextTargetPicker (Context context)
 		{
 			if (targetPickerIndex < TargetPickers.Count) {
-				TargetPickers [targetPickerIndex].Activate (context);
 				targetPickerIndex++;
+				TargetPickers [targetPickerIndex - 1].Activate (context);
 			} else {
 				UseSkill (context);
 			}
@@ -118,9 +119,9 @@ namespace CavesEtVarans.skills.core {
 			Effects.Add(effect);
 		}
 
-        public void AddTargetPicker(TargetPicker targetPicker)
+        public void AddTargetSelector(TargetSelector targetSelector)
         {
-            TargetPickers.Add(targetPicker);
+            TargetPickers.Add(targetSelector);
         }
     }
 }

@@ -3,10 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using CavesEtVarans.skills.events;
 
 namespace CavesEtVarans.skills.core {
 	public delegate void EventBroadcaster<T>(T e, Context context) where T : GameEvent<T>;
 	public abstract class GameEvent<T> where T : GameEvent<T> {
+		public abstract TriggerType TriggerType();
 		public static event EventBroadcaster<T> Listeners = Mock;
         private static void Mock(T e, Context c)
         {
