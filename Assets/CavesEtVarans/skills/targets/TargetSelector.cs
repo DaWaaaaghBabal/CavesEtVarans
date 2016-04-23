@@ -76,8 +76,7 @@ namespace CavesEtVarans.skills.targets {
                 return AoELoS;
             }
         }
-
-
+        
         private IValueCalculator minRange;
         private IValueCalculator maxRange;
         private IValueCalculator aoeMinRadius;

@@ -1,0 +1,82 @@
+﻿!data.CharacterClass
+Name: Stalker
+Health: 36
+Defense: 7
+Attack: 6
+Damage: 11
+Willpower: 8
+Stability: 7
+SpecialName: Instinct
+Special: 8
+Initiative: 8
+Iterative: 20
+MaxEnergy: 8
+EnergyPerLevel: 1
+EnergyName: Focus
+EnergyKey: Focus
+Jump: 2
+HiddenResources: {}
+Skills:
+- Attributes:
+      Name: Attaque éclair
+      Icon: basicAttack
+      Animation: Attack
+      Description: "ATK contre DEF. Inflige [DMG] dégâts physiques à une cible au contact."
+  Cost:
+    Elements:
+      AP: 40
+  TargetPickers:
+  - TargetKey: movementTarget
+    CenterKey: source
+    MinRange: !skills.values.FixedValue
+      Val: 1
+    MaxRange: !skills.values.FixedValue
+      Val: 1
+    NumberOfTargets: 1
+    TargetFilters:
+    - !skills.filters.EmptyTileFilter
+      TargetKey: filterTarget
+    TargetGround: true
+    Optional : false
+    PlayerChoice: PlayerChoice
+    LineOfSight: true
+    AoELineOfSight: true
+  - TargetKey: attackTarget
+    CenterKey: targets/movementTarget
+    MinRange: !skills.values.FixedValue
+      Val: 1
+    MaxRange: !skills.values.FixedValue
+      Val: 1
+    NumberOfTargets: 1
+    TargetFilters:
+    - !skills.filters.FriendOrFoeFilter
+      Accepts: Foe
+      PointOfViewKey: source
+    TargetGround: false
+    Optional : false
+    PlayerChoice: PlayerChoice
+    LineOfSight: true
+    AoELineOfSight: true
+  Effects:
+  - !skills.effects.MovementEffect
+    TargetKey: source
+    TileTargetKey: movementTarget
+  - !skills.effects.DamageEffect
+    Amount: !skills.values.ValueMultiplier
+      Base: !skills.values.StatReader
+        Source: source
+        Stat: DMG
+      Factor: !skills.values.DamageFormula
+        Attack: !skills.values.StatReader
+          Source: source
+          Stat: ATK
+        Defense: !skills.values.StatReader
+          Source: currentTarget
+          Stat: DEF
+    TargetKey: attackTarget
+  Flags:
+  - OrientToTarget
+  - Melee
+  - Offensive
+  - SingleTarget
+TriggeredSkills: []

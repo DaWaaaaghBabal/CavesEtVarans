@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using CavesEtVarans.character;
 using CavesEtVarans.character.factions;
+using CavesEtVarans.data;
 using CavesEtVarans.graphics;
 using UnityEngine;
 
@@ -37,7 +38,7 @@ namespace CavesEtVarans.battlefield {
 
 			Faction factionA = new Faction("Faction A");
             PlaceCharacter(2, 10, 0, "Paladin 1", factionA, "Paladin");
-            PlaceCharacter(1, 11, 0, "Paladin 2", factionA, "Paladin");
+            PlaceCharacter(1, 11, 0, "Stalker", factionA, "Stalker");
 
             Faction factionB = new Faction("Faction B");
 			factionB.TreatAs(factionA, FriendOrFoe.Foe);

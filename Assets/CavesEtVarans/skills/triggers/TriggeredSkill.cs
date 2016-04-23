@@ -7,6 +7,7 @@ namespace CavesEtVarans.skills.triggers {
 		public TriggerFiltersList TriggerFilters { set; get; }
 		public TriggerType TriggerType { set; get; }
 		public void Trigger(Context c) {
+            UnityEngine.Debug.Log("Triggering skill : " + Skill.Attributes.Name);
 			if (TriggerFilters.Filter(c)) {
 				c.Set(Context.SKILL, Skill);
 				if (Skill.Flags[SkillFlag.Reaction])

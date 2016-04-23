@@ -3,11 +3,10 @@ using CavesEtVarans.skills.core;
 
 namespace CavesEtVarans.skills.filters {
     public class SameCharacterFilter : AbstractFilter{
-        public string FirstCharacterKey { set; get; }
-        public string SecondCharacterKey { set; get; }
+        public string ComparedCharacterKey { set; get; }
         public override bool Filter(Context c) {
-            Character c1 = ReadContext(c, FirstCharacterKey) as Character;
-            Character c2 = ReadContext(c, SecondCharacterKey) as Character;
+            Character c1 = ReadContext(c, ComparedCharacterKey) as Character;
+            Character c2 = ReadContext(c, TargetKey) as Character;
             return c1 == c2;
         }
     }

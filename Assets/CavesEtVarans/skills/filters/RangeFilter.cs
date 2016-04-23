@@ -2,16 +2,32 @@
 using CavesEtVarans.battlefield;
 using CavesEtVarans.character;
 using CavesEtVarans.skills.core;
+using CavesEtVarans.skills.values;
 
 namespace CavesEtVarans.skills.filters {
 	public class RangeFilter : AbstractFilter {
-
-        public IValueCalculator MinRange { set; get; }
-        public IValueCalculator MaxRange { set; get; }
+        
 		public string CenterKey { set; get; }
-		public string TargetKey { set; get; }
+        public IValueCalculator MinRange {
+            set { minRange = value; }
+            get {
+                if (minRange == null)
+                    minRange = new FixedValue(0);
+                return minRange;
+            }
+        }
+        public IValueCalculator MaxRange {
+            set { maxRange = value; }
+            get {
+                if (maxRange == null)
+                    maxRange = new FixedValue(0);
+                return maxRange;
+            }
+        }
 
-		public override bool Filter(Context c) {
+        private IValueCalculator minRange;
+        private IValueCalculator maxRange;
+        public override bool Filter(Context c) {
 			Character source = ReadContext(c, CenterKey) as Character;
 			ITargetable triggeringCharacter = ReadContext(c, TargetKey) as ITargetable;
             int min = (int) MinRange.Value(c);

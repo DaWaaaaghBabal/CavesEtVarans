@@ -1,6 +1,5 @@
 ﻿using CavesEtVarans.exceptions;
 using CavesEtVarans.skills.core;
-using CavesEtVarans.skills.filters;
 
 namespace CavesEtVarans.skills.filters {
 

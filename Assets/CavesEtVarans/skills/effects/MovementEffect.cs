@@ -10,10 +10,7 @@ namespace CavesEtVarans.skills.effects {
 
 		public override void Apply(Character target, Context context) {
             TargetGroup tiles = (TargetGroup)ReadContext(context, Context.TARGETS + TileTargetKey);
-            // There should be only one target tile, but it's still a set, so we take the first element that comes
-            Tile[] tileArray = new Tile[tiles.Count];
-            tiles.CopyTo(tileArray);
-            Tile targetTile = tileArray[0];
+            Tile targetTile = tiles.PickOne as Tile;
             Tile startTile = target.Tile;
             Battlefield.Move(target, targetTile);
             new MovementEvent(target, startTile, targetTile).Trigger(context);

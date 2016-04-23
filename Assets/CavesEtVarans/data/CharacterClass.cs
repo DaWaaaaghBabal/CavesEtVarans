@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using CavesEtVarans.skills.triggers;
 
-namespace CavesEtVarans.character
+namespace CavesEtVarans.data
 {
 	public class CharacterClass {
 		public string Name { set; get; }
@@ -16,11 +16,13 @@ namespace CavesEtVarans.character
 		public int Special { get; set; }
 		public int Initiative { set; get; }
 		public int Iterative { set; get; }
-		public int Energy { set; get; }
-		public string EnergyName { set; get; }
 		public int Jump { set; get; }
 		public List<Skill> Skills { set; get; }
 		public List<TriggeredSkill> TriggeredSkills { set; get; }
-		public int MaxEnergy { get; internal set; }
+		public int MaxEnergy { get; set; }
+        public int EnergyPerLevel { set; get; }
+        public string EnergyKey { set; get; }
+        public string EnergyName { set; get; }
+        public Dictionary<string, int> HiddenResources { set; get; }
     }
 }

@@ -64,7 +64,6 @@ namespace CavesEtVarans.skills.core {
 		public void UseSkill (Context context)
 		{
 			Character source = (Character)ReadContext(context, Context.SOURCE);
-
             if (source.CanPay(Cost)) { 
 				PayCosts (context);
                 if (Flags[SkillFlag.OrientToTarget])
@@ -95,6 +94,7 @@ namespace CavesEtVarans.skills.core {
         {
             // to orient towards the targets, we orient towards the tile that is at the center of the target group.
             TargetGroup targetCharacters = new TargetGroup((Character)ReadContext(context, Context.SOURCE));
+            //@TODO this means that the source of a skill is quite often one of the targets. Fix that.
             context.Set(Context.TARGETS + Context.SOURCE, targetCharacters);
             string key = TargetPickers[0].TargetKey;
             TargetGroup targets = (TargetGroup) ReadContext(context, Context.TARGETS + key);

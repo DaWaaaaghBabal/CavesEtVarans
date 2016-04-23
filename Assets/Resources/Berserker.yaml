@@ -1,4 +1,4 @@
-﻿!character.CharacterClass
+﻿!data.CharacterClass
 Name: Berserker
 Health: 54
 Defense: 9
@@ -10,15 +10,19 @@ SpecialName: Rage
 Special: 2
 Initiative: 8
 Iterative: 20
-Energy: 8
+MaxEnergy: 8
+EnergyPerLevel: 1
 EnergyName: Fureur
+EnergyKey: Fury
 Jump: 2
+HiddenResources:
+  StrikeBackCharges: 1
 Skills:
 - Attributes:
     Name: Attaque de base
     Icon: basicAttack
     Animation: Attack
-    Description: ATK contre DEF. Inflige [DMG] dégâts physiques à une cible au contact.
+    Description: "ATK contre DEF. Inflige [DMG] dégâts physiques à une cible au contact."
   Cost:
     Elements:
       AP: 25
@@ -34,7 +38,6 @@ Skills:
     - !skills.filters.FriendOrFoeFilter
       Accepts: Foe
       PointOfViewKey: source
-      TargetKey: filterTarget
     TargetGround: false
     Optional : false
     PlayerChoice: PlayerChoice
@@ -65,7 +68,7 @@ TriggeredSkills:
   Skill:
     Attributes:
       Name: Fendoir
-      Description : Quand le personnage utilise une attaque de mêlée à cible unique, il inflige [30% DMG] dégâts physiques aux ennemis au contact de sa cible.
+      Description : "Quand le personnage utilise une attaque de mêlée à cible unique, il inflige [30% DMG] dégâts physiques aux ennemis au contact de sa cible."
     Cost:
       Elements: {}
     TargetPickers:
@@ -80,7 +83,6 @@ TriggeredSkills:
       - !skills.filters.FriendOrFoeFilter
         Accepts: Foe
         PointOfViewKey: source
-        TargetKey: filterTarget
       TargetGround: false
       Optional : false
       PlayerChoice: NoValidation
@@ -110,5 +112,82 @@ TriggeredSkills:
     Flags: [Melee, Offensive, SingleTarget]
     Operation: And
   - !skills.filters.SameCharacterFilter
-    FirstCharacterKey: triggeringCharacter
-    SecondCharacterKey: source
+    ComparedCharacterKey: triggeringCharacter
+    TargetKey: source
+
+- TriggerType: SkillUse
+  Skill:
+    Attributes:
+      Name: Riposte
+      Animation: Attack
+      Description : "Quand le personnage est ciblé par une compétence à cible unique au contact, il riposte et inflige [DMG] dégâts au lanceur. Une seule riposte par tour."
+    Cost:
+      Elements:
+        StrikeBackCharges: 1
+    TargetPickers:
+    - TargetKey: target1
+      CenterKey: triggeringCharacter
+      NumberOfTargets: 1
+      TargetFilters: 
+      - !skills.filters.FriendOrFoeFilter
+        Accepts: Foe
+        PointOfViewKey: source
+      TargetGround: false
+      Optional : false
+      PlayerChoice: NoValidation
+      LineOfSight: true
+      AoELineOfSight: true
+    Effects:
+    - !skills.effects.DamageEffect
+      Filter: !skills.effects.conditions.NoCondition
+      Amount: !skills.values.ValueMultiplier
+        Base: !skills.values.StatReader
+          Source: source
+          Stat: DMG
+        Factor: !skills.values.DamageFormula
+          Attack: !skills.values.StatReader
+            Source: source
+            Stat: ATK
+          Defense: !skills.values.StatReader
+            Source: currentTarget
+            Stat: DEF
+      TargetKey: target1
+    Flags: [OrientToTarget, Melee, Offensive, SingleTarget]
+  TriggerFilters:
+  - !skills.filters.SkillFlagsFilter
+    Flags: [Offensive]
+    Operation: And
+  - !skills.filters.RangeFilter
+    TargetKey: triggeringCharacter
+    CenterKey: source
+    MinRange: !skills.values.FixedValue
+      Val: 1
+    MaxRange: !skills.values.FixedValue
+      Val: 1
+  - !skills.filters.CharacterInTargetsFilter
+    CharacterKey: source
+- TriggerType: StartTurn
+  Skill:
+    Attributes:
+      Name: Endurant
+      Description : "Le personnage récupère 15% des PV maximum au début de son tour."
+    Cost:
+      Elements: {}
+    TargetPickers:
+    - TargetKey: target1
+      CenterKey: triggeringCharacter
+      NumberOfTargets: 1
+      TargetFilters: []
+      TargetGround: false
+      Optional : false
+      PlayerChoice: NoValidation
+      LineOfSight: true
+      AoELineOfSight: true
+    Effects:
+    - !skills.effects.ResourceEffect
+      Amount: !skills.values.FixedValue
+        Val: 1
+      ResourceKey: StrikeBackCharges
+      TargetKey: target1
+    Flags: [NoEvent]
+  TriggerFilters: []

@@ -40,7 +40,7 @@ namespace CavesEtVarans.skills.core
 		public IEnumerable<object> AllKeys(string start) {
 			HashSet<object> result = new HashSet<object>();
 			foreach (string key in data.Keys) {
-				if (start.Length <= key.Length && start.Equals(key.Substring(0, start.Length))) {
+				if (key.StartsWith(start)) {
 					result.Add(data[key]);
 				}
 			}

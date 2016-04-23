@@ -1,0 +1,42 @@
+﻿!data.MissionDescriptor
+Factions:
+- &order
+  Name: Ordre
+  Color: A0A0F0
+  FriendsAndFoes:
+    *chaos: Foe
+    *good: Ally
+    *evil: Foe
+- &chaos 
+  Name: Chaos
+  Color: CC0000
+  FriendsAndFoes:
+    *order: Foe
+    *evil: Neutral
+    *good: Neutral
+- &good
+  Name: Good
+  Color: FFEECC
+  FriendsAndFoes:
+    *order: Ally
+    *evil: Foe
+    *chaos: Neutral
+- &evil
+  Name: Evil
+  Color: "550055"
+  FriendsAndFoes:
+    *order: Foe
+    *good: Foe
+    *chaos: Neutral
+
+Characters:
+- Name: Ra'argah
+  Race: Orque
+  Class: Berserker
+  Level: 1
+  Faction: *chaos
+- Name: Durandil
+  Race: Elf
+  Class: Paladin
+  Level: 1
+  Faction: *order

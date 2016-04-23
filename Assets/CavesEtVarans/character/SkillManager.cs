@@ -1,6 +1,7 @@
 ﻿using CavesEtVarans.skills.core;
 using System.Collections.Generic;
 using CavesEtVarans.skills.triggers;
+using CavesEtVarans.data;
 
 namespace CavesEtVarans.character {
 	public class SkillManager {

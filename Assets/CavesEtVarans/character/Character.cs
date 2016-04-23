@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using CavesEtVarans.skills.effects.buffs;
 using CavesEtVarans.character.factions;
 using CavesEtVarans.skills.events;
+using CavesEtVarans.data;
 
 namespace CavesEtVarans.character
 {
@@ -58,9 +59,13 @@ namespace CavesEtVarans.character
             clazz = ClassManager.Instance.ClassByName(value);
             statisticsManager.InitClassStats(clazz);
             skillManager.InitClassSkills(clazz);
+
             int maxHealth = GetStatValue(Statistic.HEALTH, Context.Init(null, this));
             resourceManager.Add(Resource.HP, new Resource(0, maxHealth));
             resourceManager.Set(Resource.HP, maxHealth);
+            foreach (KeyValuePair<string, int> KV in clazz.HiddenResources) {
+                resourceManager.Add(KV.Key, new Resource(0, KV.Value));
+            }
         }
 
         public void Activate() {
