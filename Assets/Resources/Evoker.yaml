@@ -1,0 +1,135 @@
+﻿!data.CharacterClass
+Name: Evoker
+Health: 30
+Defense: 5
+Attack: 6
+Damage: 11
+Willpower: 9
+Stability: 7
+SpecialName: Maîtrise
+Special: 2
+Initiative: 8
+Iterative: 20
+MaxEnergy: 8
+EnergyPerLevel: 1
+EnergyName: Mana
+EnergyKey: Mana
+Jump: 2
+HiddenResources: {}
+Skills:
+- Attributes:
+    Name: Trait de feu
+    Icon: fireBolt
+    Animation: Attack
+    Description: "VOL contre VOL. Inflige [DMG] dégâts magiques à une cible à 2-3 cases."
+  Cost:
+    Elements:
+      AP: 25
+  TargetPickers:
+  - TargetKey: target1
+    CenterKey: source
+    MinRange: !skills.values.FixedValue
+      Val: 2
+    MaxRange: !skills.values.FixedValue
+      Val: 3
+    NumberOfTargets: 1
+    TargetFilters: 
+    - !skills.filters.FriendOrFoe
+      Accepts: Foe
+      PointOfViewKey: source
+      TargetKey: filterTarget
+    TargetGround: false
+    Optional : false
+    PlayerChoice: PlayerChoice
+    LineOfSight: true
+    AoELineOfSight: true
+  Effects:
+  - !skills.effects.OrientationEffect
+    TargetKey: source
+    OrientationTargetKey: target1
+  - !skills.effects.DamageEffect
+    Amount: !skills.values.ValueMultiplier
+      Base: !skills.values.StatReader
+        Source: source
+        Stat: DMG
+      Factor: !skills.values.DamageFormula
+        Attack: !skills.values.StatReader
+          Source: source
+          Stat: WP
+        Defense: !skills.values.StatReader
+          Source: currentTarget
+          Stat: WP
+    TargetKey: target1
+  Flags: [Ranged, Offensive, SingleTarget]
+- Attributes:
+    Name: Poste de tir
+    Icon: firingStance
+    Animation: Cast
+    Description: "Pendant 2 tours, augmente les DMG de 50% mais augmente le coût de déplacement de 20."
+  Cost:
+    Elements:
+      AP: 75
+  TargetPickers:
+  - TargetKey: target1
+    CenterKey: source
+    NumberOfTargets: 1
+    TargetFilters:
+    TargetGround: false
+    Optional : false
+    PlayerChoice: PlayerValidation
+    TargetFilters: []
+    LineOfSight: false
+    AoELineOfSight: false
+  Effects:
+  - !skills.effects.ApplyBuffEffect
+    StackingType: Independent
+    Duration: !skills.effects.buffs.Countdown
+      Duration: 2
+    Effects:
+    - !skills.effects.buffs.StatMultiplier
+      Value: !skills.values.FixedValue
+        Val: 1.5
+      StatKey: DMG
+    - !skills.effects.buffs.StatIncrement
+      Value: !skills.values.FixedValue
+        Val: 20
+      StatKey: MC
+    TargetKey: target1
+  Flags: [Ranged, Offensive, SingleTarget]
+TriggeredSkills:
+- TriggerType: StartTurn
+  Skill:
+    Attributes:
+      Name: Sans pitié
+      Description : "DMG augmentés de 30% contre les cibles ayant moins de 30% de leurs PV."
+    Cost:
+      Elements: {}
+    TargetPickers:
+    - TargetKey: target1
+      CenterKey: triggeringCharacter
+      NumberOfTargets: 1
+      TargetFilters: []
+      TargetGround: false
+      Optional : false
+      PlayerChoice: NoValidation
+      LineOfSight: true
+      AoELineOfSight: true
+    Effects:
+    - !skills.effects.ApplyBuffEffect
+      StackingType: Replacement
+      Effects:
+      - !skills.effects.buffs.StatMultiplier
+        Value: !skills.values.FixedValue
+          Val: 1.3
+        StatKey: DMG
+        Filters:
+          - !skills.filters.ResourceHigher
+            TargetKey: currentTarget
+            ResourceKey: HP
+            Type: Percentage
+            Threshold: !skills.values.FixedValue
+              Val: 0.3
+            Inverted: true
+      TargetKey: target1
+    Flags: [NoEvent]
+  TriggerFilters: []

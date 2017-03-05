@@ -25,7 +25,7 @@ namespace CavesEtVarans.gui
         }
         public void Click() {
 			Character source =  CharacterManager.Get().ActiveCharacter;
-            Skill.InitSkill(Context.Init(Skill, source));
+            source.InitSkill(Skill);
 		}
 
 	}

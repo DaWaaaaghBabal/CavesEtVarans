@@ -1,15 +1,14 @@
 ﻿using CavesEtVarans.character;
-using CavesEtVarans.character.factions;
 using CavesEtVarans.skills.core;
 
 namespace CavesEtVarans.skills.filters {
-	public class FriendOrFoeFilter : AbstractFilter {
-		public FriendOrFoe Accepts { set; get; }
+	public class FriendOrFoe : AbstractFilter {
+		public character.factions.FriendOrFoe Accepts { set; get; }
         public string PointOfViewKey { set; get; }
-        public override bool Filter(Context c) {
+        protected override bool FilterContext(Context c) {
 			Character source = ReadContext(c, PointOfViewKey) as Character;
 			Character trigger = ReadContext(c, TargetKey) as Character;
-            FriendOrFoe friendOrFoe = source.FriendOrFoe(trigger);
+            character.factions.FriendOrFoe friendOrFoe = source.FriendOrFoe(trigger);
             return (friendOrFoe & Accepts) > 0;
         }
 	}

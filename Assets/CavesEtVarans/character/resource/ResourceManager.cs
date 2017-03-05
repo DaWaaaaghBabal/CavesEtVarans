@@ -10,28 +10,29 @@ namespace CavesEtVarans.character.resource
      * The filling of resources from a character is done when the 
      * character's data is parsed
      */
-	public class ResourceManager
-	{
+	public class ResourceManager {
+        public Action<Resource, int> SetterCallback;
 		protected Dictionary<string, Resource> resources;
 		public void Add (string key, Resource res)
 		{
 			resources.Add (key, res);
 		}
 		public ResourceManager() {
-				resources = new Dictionary<string, Resource>();
+			resources = new Dictionary<string, Resource>();
+            Resource.InitSetterCallback(this);
 		}
 
 		public int GetAmount (string key)
 		{
 			if (resources.ContainsKey (key)) {
-				return resources [key].GetValue();
+				return resources [key].Value;
 			} else {
 				throw new Exception("The wanted ressource (" + key + ") does not exist.");
 			}
 		}
 		public void Set (string key, int newValue) {
 			if (resources.ContainsKey(key)) {
-				resources[key].SetValue(newValue);
+				SetterCallback(resources[key], newValue);
 			} else {
 				throw new Exception("The wanted ressource (" + key + ") does not exist.");
 			}
@@ -45,11 +46,16 @@ namespace CavesEtVarans.character.resource
 			}
 		}
 
-		public Boolean CanBePaid (String key, int amount)
+		public bool CanBePaid (String key, int amount)
 		{
 			return (resources[key].CanBePaid(amount));
 		}
 
-	}
+        public Resource Get(string key) {
+            if (resources.ContainsKey(key))
+                return resources[key];
+            return null;
+        }
+    }
 
 }

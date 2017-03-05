@@ -5,7 +5,7 @@ Defense: 7
 Attack: 6
 Damage: 11
 Willpower: 8
-Stability: 7
+Stability: 9
 SpecialName: Instinct
 Special: 8
 Initiative: 8
@@ -21,26 +21,22 @@ Skills:
       Name: Attaque éclair
       Icon: basicAttack
       Animation: Attack
-      Description: "ATK contre DEF. Inflige [DMG] dégâts physiques à une cible au contact."
+      Description: "ATK contre DEF. Se déplace d'une case, puis inflige [DMG] dégâts physiques à une cible au contact."
   Cost:
     Elements:
-      AP: 40
+      AP: 30
   TargetPickers:
   - TargetKey: movementTarget
-    CenterKey: source
     MinRange: !skills.values.FixedValue
       Val: 1
     MaxRange: !skills.values.FixedValue
       Val: 1
-    NumberOfTargets: 1
     TargetFilters:
-    - !skills.filters.EmptyTileFilter
+    - !skills.filters.EmptyTile
       TargetKey: filterTarget
     TargetGround: true
-    Optional : false
     PlayerChoice: PlayerChoice
-    LineOfSight: true
-    AoELineOfSight: true
+    
   - TargetKey: attackTarget
     CenterKey: targets/movementTarget
     MinRange: !skills.values.FixedValue
@@ -49,18 +45,21 @@ Skills:
       Val: 1
     NumberOfTargets: 1
     TargetFilters:
-    - !skills.filters.FriendOrFoeFilter
+    - !skills.filters.FriendOrFoe
       Accepts: Foe
       PointOfViewKey: source
     TargetGround: false
-    Optional : false
     PlayerChoice: PlayerChoice
-    LineOfSight: true
-    AoELineOfSight: true
   Effects:
+  - !skills.effects.OrientationEffect
+    TargetKey: source
+    OrientationTargetKey: movementTarget
   - !skills.effects.MovementEffect
     TargetKey: source
     TileTargetKey: movementTarget
+  - !skills.effects.OrientationEffect
+    TargetKey: source
+    OrientationTargetKey: attackTarget
   - !skills.effects.DamageEffect
     Amount: !skills.values.ValueMultiplier
       Base: !skills.values.StatReader
@@ -75,8 +74,31 @@ Skills:
           Stat: DEF
     TargetKey: attackTarget
   Flags:
-  - OrientToTarget
   - Melee
   - Offensive
   - SingleTarget
-TriggeredSkills: []
+TriggeredSkills: 
+- TriggerType: StartTurn
+  Skill:
+    Attributes:
+      Name: Pied léger
+      Description : "Coût de déplacement réduit de 5 PA."
+    Cost:
+      Elements: {}
+    TargetPickers:
+    - TargetKey: target1
+      CenterKey: triggeringCharacter
+      TargetFilters: []
+      TargetGround: false
+      PlayerChoice: NoValidation
+    Effects:
+    - !skills.effects.ApplyBuffEffect
+      StackingType: Replacement
+      Effects:
+      - !skills.effects.buffs.StatIncrement
+        Value: !skills.values.FixedValue
+          Val: -5
+        StatKey: MC
+      TargetKey: target1
+    Flags: [NoEvent]
+  TriggerFilters: []

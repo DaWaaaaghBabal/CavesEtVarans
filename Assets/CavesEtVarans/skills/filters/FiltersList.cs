@@ -4,10 +4,10 @@ using CavesEtVarans.skills.core;
 namespace CavesEtVarans.skills.filters {
     public class FiltersList : List<AbstractFilter> {
         public bool Filter(Context c) {
+            bool result = true;
             foreach (AbstractFilter filter in this)
-                if (!filter.Filter(c))
-                    return false;
-            return true;
+                result &= filter.Filter(c);
+            return result;
         }
     }
 }

@@ -3,10 +3,10 @@ using CavesEtVarans.skills.core;
 
 namespace CavesEtVarans.skills.filters {
 
-    public class SkillFlagsFilter : AbstractFilter {
+    public class SkillFlags: AbstractFilter {
         public FlagsList<SkillFlag> Flags { get; set; }
         public FilterType Operation { set; get; }
-        public override bool Filter(Context c) {
+        protected override bool FilterContext(Context c) {
             Skill skill = ReadContext(c, Context.TRIGGERING_SKILL) as Skill;
             FlagsList<SkillFlag> flags = skill.Flags;
             switch(Operation) {

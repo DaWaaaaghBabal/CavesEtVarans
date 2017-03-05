@@ -2,16 +2,15 @@
 using CavesEtVarans.skills.core;
 
 namespace CavesEtVarans.skills.effects.buffs {
-	public class StatMultiplier : IStatModifier {
-		public ModifierType Type { get; private set; }
-		public IValueCalculator Value { get; set; }
-		
-		public double GetValue(double originalValue, Context context) {
-			return originalValue * Value.Value(context);
-		}
-
-		public StatMultiplier() {
-			Type = ModifierType.Multiply;
-		}
-	}
+	public class StatMultiplier : StatModifier {
+        [YamlDotNet.Serialization.YamlIgnore]
+        public override ModifierType Type {
+            get { return ModifierType.Multiply; }
+            protected set { }
+        }
+        protected override double GetModifiedValue(double originalValue, Context context) {
+            Context localContext = CopyContext(context);
+            return originalValue * Value.Value(localContext);
+        }
+    }
 }

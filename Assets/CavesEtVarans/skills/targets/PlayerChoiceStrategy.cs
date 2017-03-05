@@ -19,6 +19,8 @@ namespace CavesEtVarans.skills.targets {
         protected TargetSelector targetSelector;
         public Action<HashSet<Tile>> BatchSelectionCallback { get; set; }
         public Action<Tile> SelectionCallback { get; set; }
+        public bool CanBeEmpty { get; private set; }
+
         protected HashSet<Tile> area;
         public static PlayerChoiceStrategy ProvidePlayerChoice(PlayerChoiceType type) {
             switch (type) {
@@ -35,22 +37,20 @@ namespace CavesEtVarans.skills.targets {
         public abstract void Activate(HashSet<Tile> area);
         public abstract void TargetTile(Tile tile);
 
+
         protected void Highlight(HashSet<Tile> area) {
             GraphicBattlefield.ClearHighlightedArea();
             GraphicBattlefield.HighlightArea(area);
         }
-            
-        private class NoValidation : PlayerChoiceStrategy {
-            public override void Activate(HashSet<Tile> area) {
-                BatchSelectionCallback(area);
-            }
-
-            public override void TargetTile(Tile tile) {
-                throw new TargetPickerExecutionException("A no-validation target selector should never have to call TargetTile");
-            }
-        }
 
         private class PlayerChoice : PlayerChoiceStrategy {
+            public int NumberOfTargets { set; get; }
+            private int count;
+
+            public PlayerChoice() {
+                CanBeEmpty = false;
+            }
+
             public override void Activate(HashSet<Tile> area) {
                 Highlight(area);
                 this.area = area;
@@ -62,6 +62,10 @@ namespace CavesEtVarans.skills.targets {
         }
 
         private class PlayerValidation : PlayerChoiceStrategy {
+            public PlayerValidation() {
+                CanBeEmpty = true;
+            }
+
             public override void Activate(HashSet<Tile> area) {
                 Highlight(area);
                 this.area = area;
@@ -69,6 +73,20 @@ namespace CavesEtVarans.skills.targets {
 
             public override void TargetTile(Tile tile) {
                 if (area.Contains(tile)) BatchSelectionCallback(area);
+            }
+        }
+
+        private class NoValidation : PlayerChoiceStrategy {
+            public NoValidation() {
+                CanBeEmpty = true;
+            }
+
+            public override void Activate(HashSet<Tile> area) {
+                BatchSelectionCallback(area);
+            }
+
+            public override void TargetTile(Tile tile) {
+                throw new TargetPickerExecutionException("A no-validation target selector should never have to call TargetTile");
             }
         }
 

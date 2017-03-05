@@ -36,7 +36,7 @@ namespace CavesEtVarans.character {
 			if (!alreadyThere) Apply(buff, context);
 		}
 
-		public void Tick() {
+		public void HalfTick() {
 			foreach (BuffInstance b in TempCopy) {
 				b.Tick();
 			}

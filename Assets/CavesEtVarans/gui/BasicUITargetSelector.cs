@@ -15,6 +15,10 @@ namespace CavesEtVarans.gui {
             {
                 TargetKey = Context.TILE,
             });
+            movementSkill.AddEffect(new OrientationEffect() {
+                TargetKey = Context.MOVEMENT_TARGET,
+                OrientationTargetKey = Context.TILE
+            });
             movementSkill.AddEffect(new MovementEffect()
             {
                 TargetKey = Context.MOVEMENT_TARGET,
@@ -22,7 +26,6 @@ namespace CavesEtVarans.gui {
             });
 			movementSkill.Attributes.Animation = "Walk";
             movementSkill.Flags[SkillFlag.NoEvent] = true;
-            movementSkill.Flags[SkillFlag.OrientToTarget] = true;
         }
 
 		public void TargetCharacter(Character character) {

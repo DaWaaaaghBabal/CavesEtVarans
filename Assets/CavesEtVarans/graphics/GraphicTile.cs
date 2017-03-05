@@ -14,7 +14,6 @@ namespace CavesEtVarans.graphics
 	{
 		public Tile Tile { set; get; }
 		public float size;
-        public bool debug;
         public GameObject edgePrefab;
         public GameObject cornerPrefab;
         public int edgeAngle;
@@ -50,10 +49,7 @@ namespace CavesEtVarans.graphics
         }
         
         public void OnPointerClick(PointerEventData eventData) {
-            if (debug) {
-                Debug.Log(Tile);
-            }
-            if (eventData.button == PointerEventData.InputButton.Left)
+           if (eventData.button == PointerEventData.InputButton.Left)
                 GUIEventHandler.Get().HandleClickOnTile(this);
 		}
     }

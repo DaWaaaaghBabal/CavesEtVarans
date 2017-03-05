@@ -6,7 +6,14 @@ using System.Collections.Generic;
 namespace CavesEtVarans.skills.effects {
 	public class ApplyBuffEffect : TargetedEffect {
 
-		public Duration Duration { set; get; }
+        private Duration duration;
+		public Duration Duration {
+            set { duration = value; }
+            get {
+                if (duration == null) duration = new Constant();
+                return duration;
+            }
+        }
 		public List<BuffEffect> Effects { set; get; }
 
 		public StackingType StackingType {

@@ -9,7 +9,14 @@ using CavesEtVarans.skills.values;
 
 namespace CavesEtVarans.skills.targets {
     public class TargetSelector : ContextDependent, ITargetSelector {
-        public string CenterKey { set; get; }
+
+        public string CenterKey { set { centerKey = value; }
+            get {
+                if (centerKey == null)
+                    centerKey = Context.SOURCE;
+                return centerKey;
+            }
+        }
         public string TargetKey { set; get; }
         public IValueCalculator MinRange {
             set { minRange = value; }
@@ -76,7 +83,8 @@ namespace CavesEtVarans.skills.targets {
                 return AoELoS;
             }
         }
-        
+
+        private string centerKey;
         private IValueCalculator minRange;
         private IValueCalculator maxRange;
         private IValueCalculator aoeMinRadius;
@@ -91,6 +99,13 @@ namespace CavesEtVarans.skills.targets {
         private TargetGroup targets;
         private Context context;
         private int count;
+
+        public TargetSelector() {
+            NumberOfTargets = 1;
+            Optional = false;
+            LineOfSight = true;
+            AoELineOfSight = true;
+        }
 
         public void Activate(Context context) {
             count = 0;
@@ -151,7 +166,7 @@ namespace CavesEtVarans.skills.targets {
                 targets.Add(target);
                 return true;
             }
-            return false;
+            return playerChoiceStrategy.CanBeEmpty; // @TODO could be done more elegantly. Refactor.
         }
 
         private ITargetable TileToTarget(Tile tile) {
@@ -166,7 +181,7 @@ namespace CavesEtVarans.skills.targets {
         }
 
         private void Count() {
-            if (++count == NumberOfTargets) {
+            if (++count >= NumberOfTargets) {
                 EndPicking();
             }
         }

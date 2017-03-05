@@ -1,0 +1,119 @@
+﻿!data.CharacterClass
+Name: Shadowmancer
+Health: 48
+Defense: 8
+Attack: 8
+Damage: 8
+Willpower: 11
+Stability: 7
+SpecialName: Obscurité
+Special: 2
+Initiative: 8
+Iterative: 20
+MaxEnergy: 8
+EnergyPerLevel: 1
+EnergyName: Mana
+EnergyKey: Mana
+Jump: 2
+HiddenResources: {}
+Skills:
+- Attributes:
+    Name: Trait d'ombre
+    Icon: fireBolt
+    Animation: Attack
+    Description: "VOL contre VOL. Inflige [DMG] dégâts magiques à une cible à 2-3 cases et lui retire 5 PA."
+  Cost:
+    Elements:
+      AP: 25
+  TargetPickers:
+  - TargetKey: target1
+    CenterKey: source
+    MinRange: !skills.values.FixedValue
+      Val: 2
+    MaxRange: !skills.values.FixedValue
+      Val: 3
+    NumberOfTargets: 1
+    TargetFilters: 
+    - !skills.filters.FriendOrFoe
+      Accepts: Foe
+      PointOfViewKey: source
+      TargetKey: filterTarget
+    TargetGround: false
+    Optional : false
+    PlayerChoice: PlayerChoice
+    LineOfSight: true
+    AoELineOfSight: true
+  Effects:
+  - !skills.effects.OrientationEffect
+    TargetKey: source
+    OrientationTargetKey: target1
+  - !skills.effects.DamageEffect
+    Amount: !skills.values.ValueMultiplier
+      Base: !skills.values.StatReader
+        Source: source
+        Stat: DMG
+      Factor: !skills.values.DamageFormula
+        Attack: !skills.values.StatReader
+          Source: source
+          Stat: WP
+        Defense: !skills.values.StatReader
+          Source: currentTarget
+          Stat: WP
+    TargetKey: target1
+  - !skills.effects.ResourceEffect
+    ResourceKey: AP
+    Amount: !skills.values.ValueMultiplier
+      Base: !skills.values.FixedValue
+        Val: -5
+      Factor: !skills.values.DamageFormula
+        Attack: !skills.values.StatReader
+          Source: source
+          Stat: WP
+        Defense: !skills.values.StatReader
+          Source: currentTarget
+          Stat: WP
+    TargetKey: target1
+  Flags: [Ranged, Offensive, SingleTarget]
+
+TriggeredSkills:
+- TriggerType: StartTurn
+  Skill:
+    Attributes:
+      Name: Contrôle des foules
+      Description : "Au début du tour, retire 5 PA à tous les ennemis au contact."
+    Cost:
+      Elements: {}
+    TargetPickers:
+    - TargetKey: target1
+      CenterKey: triggeringCharacter
+      MinRange: !skills.values.FixedValue
+        Val: 1
+      MaxRange: !skills.values.FixedValue
+        Val: 1
+      NumberOfTargets: 1
+      TargetFilters:
+      - !skills.filters.FriendOrFoe
+        Accepts: Foe
+        PointOfViewKey: source
+        TargetKey: filterTarget
+      TargetGround: false
+      Optional : false
+      PlayerChoice: NoValidation
+      LineOfSight: true
+      AoELineOfSight: true
+    Effects:
+    - !skills.effects.ResourceEffect
+      ResourceKey: AP
+      Amount: !skills.values.ValueMultiplier
+        Base: !skills.values.FixedValue
+          Val: -5
+        Factor: !skills.values.DamageFormula
+          Attack: !skills.values.StatReader
+            Source: source
+            Stat: WP
+          Defense: !skills.values.StatReader
+            Source: currentTarget
+            Stat: WP
+      TargetKey: target1
+    Flags: [NoEvent]
+  TriggerFilters: []

@@ -43,7 +43,9 @@ namespace CavesEtVarans.battlefield {
             Faction factionB = new Faction("Faction B");
 			factionB.TreatAs(factionA, FriendOrFoe.Foe);
 			factionA.TreatAs(factionB, FriendOrFoe.Foe);
-			PlaceCharacter(1,  2, 0, "Berserker", factionB, "Berserker");
+            PlaceCharacter(1, 10, 0, "Berserker", factionB, "Berserker");
+            PlaceCharacter(6, 6, 6, "Evoker", factionB, "Evoker");
+            PlaceCharacter(5, 13, 6, "Shadowmancer", factionB, "Shadowmancer");
 
             CharacterManager.Get().ActivateNext();
         }

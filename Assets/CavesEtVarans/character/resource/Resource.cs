@@ -14,35 +14,45 @@ namespace CavesEtVarans.character.resource
 		public static readonly string AP = "AP";
 		public static readonly string HP = "HP";
 
-		public Resource (int min, int max)
+        public Resource (int min, int max)
 		{
 			gauge = new Gauge (min, max);
 		}
+        private int value;
+		public int Value {
+            get {
+                return gauge.GetValue();
+            }
+            private set {
+                gauge.SetValue(value);
+                Notify(this);
+            }
+        }
 
-		public int GetValue ()
-		{
-			return gauge.GetValue ();
-		}
+        public double Percentage {
+            get {
+                return gauge.Percentage;
+            }
+            private set { }
+        }
 
-		internal void SetValue (int newValue)
-		{
-			gauge.SetValue (newValue);
-			Notify(this);
-		}
-
-		public Boolean CanBePaid (int qty)
-		{
+        public bool CanBePaid (int qty) {
 			return gauge.CanBeDecreased (qty);
 		}
-        
-		public int Increment(int qty)
+
+        public int Increment(int qty)
 		{
 			int newValue = gauge.Increment(qty);
 			Notify(this);
 			return newValue;
 		}
 
+        public static void InitSetterCallback(ResourceManager resourceManager) {
+            resourceManager.SetterCallback = SetterCallback;
+        }
+        private static void SetterCallback(Resource resource, int value) {
+            resource.Value = value;
+        }
 	}
-
 }
 

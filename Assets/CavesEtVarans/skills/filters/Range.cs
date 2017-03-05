@@ -5,7 +5,7 @@ using CavesEtVarans.skills.core;
 using CavesEtVarans.skills.values;
 
 namespace CavesEtVarans.skills.filters {
-	public class RangeFilter : AbstractFilter {
+	public class Range : AbstractFilter {
         
 		public string CenterKey { set; get; }
         public IValueCalculator MinRange {
@@ -27,7 +27,7 @@ namespace CavesEtVarans.skills.filters {
 
         private IValueCalculator minRange;
         private IValueCalculator maxRange;
-        public override bool Filter(Context c) {
+        protected override bool FilterContext(Context c) {
 			Character source = ReadContext(c, CenterKey) as Character;
 			ITargetable triggeringCharacter = ReadContext(c, TargetKey) as ITargetable;
             int min = (int) MinRange.Value(c);

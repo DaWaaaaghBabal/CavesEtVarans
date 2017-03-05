@@ -41,7 +41,7 @@ namespace CavesEtVarans.gui
 
 		void OnGUI ()
 		{
-			if (GUI.Button(new Rect(10, 10, 100, 30), "End turn")) {
+			if (GUI.Button(new Rect(210, 210, 100, 30), "End turn")) {
 				ActiveCharacter.EndTurn();
                 GUIEventHandler.Get().Reset();
 				CharacterManager.Get().ActivateNext();

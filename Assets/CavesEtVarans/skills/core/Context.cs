@@ -50,8 +50,9 @@ namespace CavesEtVarans.skills.core
 		public static Context Init (Skill skill, Character source)
 		{
 			Context context = new Context ();
-			context.Set (SOURCE, source);
-			context.Set (SKILL, skill);
+            context.Set(SOURCE, source);
+            context.Set(TARGETS + SOURCE, new TargetGroup(source));
+            context.Set (SKILL, skill);
 			return context;
 		}
 

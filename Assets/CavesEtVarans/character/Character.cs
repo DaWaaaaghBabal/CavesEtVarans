@@ -27,7 +27,11 @@ namespace CavesEtVarans.character
 			return Faction.FriendOrFoe(other.Faction);
 		}
 
-		public Tile Tile { get; set; }
+        public void InitSkill(Skill skill) {
+            skill.InitSkill(Context.Init(skill, this));
+        }
+
+        public Tile Tile { get; set; }
         public Orientation Orientation { get; set; }
         public int Size { get; set; }
 
@@ -70,12 +74,13 @@ namespace CavesEtVarans.character
 
         public void Activate() {
             //@TODO do other stuff...
-            MainGUI.ActivateCharacter(this);
-			buffManager.Tick();
             new StartTurnEvent(this).Trigger(Context.Empty);
+			buffManager.HalfTick();
+            MainGUI.ActivateCharacter(this);
         }
 
         public void EndTurn() {
+            buffManager.HalfTick();
             AP = AP / 2;
         }
 
@@ -139,7 +144,10 @@ namespace CavesEtVarans.character
             resourceManager.Increment(resourceKey, amount);
         }
 
-	}
+        public Resource GetResource(string resourceKey) {
+            return resourceManager.Get(resourceKey);
+        }
+    }
 
 }
 

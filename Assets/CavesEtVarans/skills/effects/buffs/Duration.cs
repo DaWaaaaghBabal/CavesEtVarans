@@ -1,19 +1,24 @@
-﻿using CavesEtVarans.skills.core;
+﻿using System;
+using CavesEtVarans.skills.core;
 
 namespace CavesEtVarans.skills.effects.buffs {
 	public abstract class Duration : ContextDependent {
-		public abstract Duration Instantiate(Context context);
-		public abstract int Tick();
+        public virtual Duration Instantiate(Context context) {
+            return MemberwiseClone() as Duration;
+        }
+		public abstract int HalfTick();
 	}
 
 	public class Countdown : Duration {
-		public int Duration { set; get; }
-		public override Duration Instantiate(Context context) {
-			return MemberwiseClone() as Duration;
-		}
-
-		public override int Tick() {
-			return --Duration;
+		public double Duration { set; get; }
+		public override int HalfTick() {
+			Duration -= 0.5;
+            return (int) Math.Ceiling(Duration); 
 		}
 	}
+    public class Constant : Duration {
+        public override int HalfTick() {
+            return 1;
+        }
+    }
 }

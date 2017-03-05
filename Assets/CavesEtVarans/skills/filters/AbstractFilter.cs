@@ -14,6 +14,10 @@ namespace CavesEtVarans.skills.filters {
                 return targetKey;
             }
         }
-        public abstract bool Filter(Context c);
+        public bool Inverted { set; get; }
+        public bool Filter (Context c) {
+            return Inverted ^ FilterContext(c);
+        }
+        protected abstract bool FilterContext(Context c);
 	}
 }

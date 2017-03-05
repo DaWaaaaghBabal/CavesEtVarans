@@ -20,7 +20,7 @@ namespace CavesEtVarans.skills.effects.buffs {
 		}
 
 		public void Tick() {
-			if (Duration.Tick() == 0) {
+			if (Duration.HalfTick() == 0) {
 				Character target = ReadContext(Context.Empty, Context.BUFF_TARGET) as Character;
 				RemoveFrom(target);
 			}

@@ -2,10 +2,10 @@
 using CavesEtVarans.skills.core;
 
 namespace CavesEtVarans.skills.filters {
-    public class CharacterInTargetsFilter : AbstractFilter {
+    public class CharacterInTargets : AbstractFilter {
         public string CharacterKey { set; get; }
 
-        public override bool Filter(Context c) {
+        protected override bool FilterContext(Context c) {
             Character character = ReadContext(c, CharacterKey) as Character;
             TargetGroup targets = ReadContext(c, Context.TRIGGERING_TARGETS) as TargetGroup;
             return targets.Contains(character);

@@ -49,10 +49,12 @@
 			return value;
 		}
 
-		public double getPercentage ()
-		{
-			return (value - min) / (max - min);
-		}
+		public double Percentage {
+            get {
+                return (double)(value - min) / (double)(max - min);
+            }
+            private set { }
+        }
 
 		override public string ToString ()
 		{
@@ -64,7 +66,7 @@
 				Min = min,
 				Max = max,
 				Value = value,
-				Percentage = getPercentage()
+				Percentage = Percentage
 			});
 		}
 	}

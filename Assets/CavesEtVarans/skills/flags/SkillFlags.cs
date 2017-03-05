@@ -1,8 +1,8 @@
 ﻿namespace CavesEtVarans.skills.core {
     public enum SkillFlag {
-        OrientToTarget, NoEvent,
-		Reaction, SingleTarget,
-        Offensive, Support, Defensive, Melee
+        NoEvent, Reaction, SingleTarget,
+        Offensive, Support, Defensive,
+        Melee, Ranged
 	}
 
     public enum TargetFlag {

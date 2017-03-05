@@ -5,7 +5,7 @@ Defense: 9
 Attack: 11
 Damage: 10
 Willpower: 7
-Stability: 5
+Stability: 6
 SpecialName: Rage
 Special: 2
 Initiative: 8
@@ -35,7 +35,7 @@ Skills:
       Val: 1
     NumberOfTargets: 1
     TargetFilters:  
-    - !skills.filters.FriendOrFoeFilter
+    - !skills.filters.FriendOrFoe
       Accepts: Foe
       PointOfViewKey: source
     TargetGround: false
@@ -44,6 +44,9 @@ Skills:
     LineOfSight: true
     AoELineOfSight: true
   Effects:
+  - !skills.effects.OrientationEffect
+    TargetKey: source
+    OrientationTargetKey: target1
   - !skills.effects.DamageEffect
     Filter: !skills.effects.conditions.NoCondition
     Amount: !skills.values.ValueMultiplier
@@ -59,7 +62,6 @@ Skills:
           Stat: DEF
     TargetKey: target1
   Flags:
-  - OrientToTarget
   - Melee
   - Offensive
   - SingleTarget
@@ -80,7 +82,7 @@ TriggeredSkills:
         Val: 1
       NumberOfTargets: 1
       TargetFilters: 
-      - !skills.filters.FriendOrFoeFilter
+      - !skills.filters.FriendOrFoe
         Accepts: Foe
         PointOfViewKey: source
       TargetGround: false
@@ -90,7 +92,6 @@ TriggeredSkills:
       AoELineOfSight: true
     Effects:
     - !skills.effects.DamageEffect
-      Filter: !skills.effects.conditions.NoCondition
       Amount: !skills.values.ValueMultiplier
         Base: !skills.values.ValueMultiplier
           Base: !skills.values.FixedValue
@@ -108,10 +109,10 @@ TriggeredSkills:
       TargetKey: target1
     Flags: [NoEvent]
   TriggerFilters:
-  - !skills.filters.SkillFlagsFilter
+  - !skills.filters.SkillFlags
     Flags: [Melee, Offensive, SingleTarget]
     Operation: And
-  - !skills.filters.SameCharacterFilter
+  - !skills.filters.SameCharacter
     ComparedCharacterKey: triggeringCharacter
     TargetKey: source
 
@@ -129,7 +130,7 @@ TriggeredSkills:
       CenterKey: triggeringCharacter
       NumberOfTargets: 1
       TargetFilters: 
-      - !skills.filters.FriendOrFoeFilter
+      - !skills.filters.FriendOrFoe
         Accepts: Foe
         PointOfViewKey: source
       TargetGround: false
@@ -138,6 +139,9 @@ TriggeredSkills:
       LineOfSight: true
       AoELineOfSight: true
     Effects:
+    - !skills.effects.OrientationEffect
+      TargetKey: source
+      OrientationTargetKey: target1
     - !skills.effects.DamageEffect
       Filter: !skills.effects.conditions.NoCondition
       Amount: !skills.values.ValueMultiplier
@@ -152,19 +156,19 @@ TriggeredSkills:
             Source: currentTarget
             Stat: DEF
       TargetKey: target1
-    Flags: [OrientToTarget, Melee, Offensive, SingleTarget]
+    Flags: [Melee, Offensive, SingleTarget]
   TriggerFilters:
-  - !skills.filters.SkillFlagsFilter
+  - !skills.filters.SkillFlags
     Flags: [Offensive]
     Operation: And
-  - !skills.filters.RangeFilter
+  - !skills.filters.Range
     TargetKey: triggeringCharacter
     CenterKey: source
     MinRange: !skills.values.FixedValue
       Val: 1
     MaxRange: !skills.values.FixedValue
       Val: 1
-  - !skills.filters.CharacterInTargetsFilter
+  - !skills.filters.CharacterInTargets
     CharacterKey: source
 - TriggerType: StartTurn
   Skill:

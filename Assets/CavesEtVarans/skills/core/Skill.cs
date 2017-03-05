@@ -66,8 +66,6 @@ namespace CavesEtVarans.skills.core {
 			Character source = (Character)ReadContext(context, Context.SOURCE);
             if (source.CanPay(Cost)) { 
 				PayCosts (context);
-                if (Flags[SkillFlag.OrientToTarget])
-                    OrientSource(context);
                 if (!Flags[SkillFlag.NoEvent])
 				    new SkillUseEvent(this, source).Trigger(context);
 				ApplyEffects (context);
@@ -89,31 +87,6 @@ namespace CavesEtVarans.skills.core {
 				effect.Apply (context);
 			}
 		}
-
-        private void OrientSource(Context context)
-        {
-            // to orient towards the targets, we orient towards the tile that is at the center of the target group.
-            TargetGroup targetCharacters = new TargetGroup((Character)ReadContext(context, Context.SOURCE));
-            //@TODO this means that the source of a skill is quite often one of the targets. Fix that.
-            context.Set(Context.TARGETS + Context.SOURCE, targetCharacters);
-            string key = TargetPickers[0].TargetKey;
-            TargetGroup targets = (TargetGroup) ReadContext(context, Context.TARGETS + key);
-            int row = 0, column = 0, layer = 0, count = targets.Count;
-            foreach (ITargetable target in targets)
-            {
-                Tile t = target.Tile;
-                row += t.Row ;
-                column += t.Column;
-                layer += t.Layer;
-            }
-            TargetGroup targetTiles = new TargetGroup(new Tile(row/count, column/count, layer/count, 0));
-            context.Set(Context.TARGETS + "bogusTile", targetTiles);
-            new OrientationEffect()
-            {
-                TargetKey = Context.SOURCE,
-                TileTargetKey = "bogusTile"
-            }.Apply(context);
-        }
 
         public void AddEffect(IEffect effect) {
 			Effects.Add(effect);
