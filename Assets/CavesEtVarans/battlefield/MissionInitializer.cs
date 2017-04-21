@@ -4,6 +4,7 @@ using CavesEtVarans.character.factions;
 using CavesEtVarans.data;
 using CavesEtVarans.graphics;
 using UnityEngine;
+using CavesEtVarans.map;
 
 public delegate void CreateTile(int row, int column, int layer, int cost);
 
@@ -20,22 +21,23 @@ namespace CavesEtVarans.battlefield {
 
 		private HexOrSquare hexOrSquare;
 		private	PlacementStrategy placementStrategy;
-		private GenerationStrategy generationStrategy;
+		private IMapGenerator mapGenerator;
 		void Start() {
 			if (hexagonal) {
-				hexOrSquare = new HexGridProvider(wallPrefab);
+				hexOrSquare = new HexGridProvider();
 			} else {
-				hexOrSquare = new SquareGridProvider(wallPrefab);
+				hexOrSquare = new SquareGridProvider();
 			}
 			HexOrSquare.SetSingleton(hexOrSquare);
-
-			generationStrategy = HexOrSquare.ProvideGridGenerator();
+            hexOrSquare.WallPrefab = wallPrefab;
+			mapGenerator = HexOrSquare.ProvideGridGenerator();
 			Battlefield.Init();
 			GraphicBattlefield.Init();
 			placementStrategy = HexOrSquare.ProvidePlacement();
-			generationStrategy.GenerateMap(heightMap, CreateTile);
+            ((GenerationStrategy)mapGenerator).HeightMap = heightMap;
+			mapGenerator.GenerateMap(CreateTile);
 			ClassManager classMgr = ClassManager.Instance;
-
+            /**/
 			Faction factionA = new Faction("Faction A");
             PlaceCharacter(2, 10, 0, "Paladin 1", factionA, "Paladin");
             PlaceCharacter(1, 11, 0, "Stalker", factionA, "Stalker");
@@ -46,7 +48,7 @@ namespace CavesEtVarans.battlefield {
             PlaceCharacter(1, 10, 0, "Berserker", factionB, "Berserker");
             PlaceCharacter(6, 6, 6, "Evoker", factionB, "Evoker");
             PlaceCharacter(5, 13, 6, "Shadowmancer", factionB, "Shadowmancer");
-
+            
             CharacterManager.Get().ActivateNext();
         }
 		
@@ -54,7 +56,7 @@ namespace CavesEtVarans.battlefield {
 			Tile tile = new Tile(row, column, layer, cost);
 			Battlefield.AddTile(tile);
 
-			GameObject tileObject = (GameObject) Instantiate(tilePrefab, transform.position, transform.rotation);
+			GameObject tileObject = Instantiate(tilePrefab, transform.position, transform.rotation);
 			GraphicTile graphicTile = tileObject.GetComponent<GraphicTile>();
 			float size = graphicTile.size;
 

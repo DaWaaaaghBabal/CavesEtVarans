@@ -6,7 +6,6 @@ using CavesEtVarans.graphics;
 namespace CavesEtVarans.battlefield {
 
 	public class HexGridProvider : HexOrSquare {
-		public HexGridProvider(GameObject wallPrefab) : base(wallPrefab) { }
         protected override Grid<T> InitGrid<T>() {
 			return new HexGrid<T>();
 		}
@@ -16,7 +15,7 @@ namespace CavesEtVarans.battlefield {
 		}
 
 		protected override HighlightStrategy InitHighlight() {
-			return new HexHighlighter(wallPrefab);
+			return new HexHighlighter(WallPrefab);
 		}
 
         protected override LineOfSightStrategy InitLineOfSight() {

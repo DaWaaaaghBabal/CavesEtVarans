@@ -2,23 +2,23 @@
 using CavesEtVarans.graphics;
 using CavesEtVarans.gui;
 using UnityEngine;
+using CavesEtVarans.map;
 
 namespace CavesEtVarans.battlefield {
 	public abstract class HexOrSquare {
 		private static HexOrSquare instance;
 		
-		protected GameObject wallPrefab;
 		private Grid<Tile> tileGrid;
+        //@TODO creates a dependency between model and graphics. FIX THAT.
+        //Note : might not be fixable : hex/square variation affects both graphics and model.
 		private HighlightStrategy highlight;
-        //@TODO creates a dependency between model and grahpics. FIX THAT. 
-        //Note : might not be fixable : hex/square dichotomy affects both graphics and model.
 		private PlacementStrategy placement;
 		private GenerationStrategy gridGenerator;
 		private OrientationStrategy orientation;
         private LineOfSightStrategy lineOfSight;
 
-		public HexOrSquare(GameObject wallPrefab) {
-			this.wallPrefab = wallPrefab;
+		public GameObject WallPrefab { set; get; }
+		public HexOrSquare() {
 			tileGrid = InitGrid<Tile>();
 			highlight = InitHighlight();
 			placement = InitPlacement();
@@ -48,7 +48,7 @@ namespace CavesEtVarans.battlefield {
 		internal static OrientationStrategy ProvideOrientation() {
 			return instance.orientation;
 		}
-		public static GenerationStrategy ProvideGridGenerator() {
+		public static IMapGenerator ProvideGridGenerator() {
 			return instance.gridGenerator;
 		}
 

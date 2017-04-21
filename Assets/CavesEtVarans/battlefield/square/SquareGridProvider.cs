@@ -6,7 +6,6 @@ using UnityEngine;
 namespace CavesEtVarans.battlefield {
 
 	public class SquareGridProvider : HexOrSquare {
-		public SquareGridProvider(GameObject wallPrefab) : base(wallPrefab) { }
 		protected override Grid<T> InitGrid<T>() {
 			return new SquareGrid<T>();
 		}
@@ -16,7 +15,7 @@ namespace CavesEtVarans.battlefield {
 		}
 
 		protected override HighlightStrategy InitHighlight() {
-			return new SquareHighlighter(wallPrefab);
+			return new SquareHighlighter(WallPrefab);
 		}
 
         protected override LineOfSightStrategy InitLineOfSight() {

@@ -52,7 +52,7 @@ namespace CavesEtVarans.character
 		}
 
 		protected void SearchForNewActiveCharacter () {
-            // Search for all characters that areready to act
+            // Search for all characters that are ready to act
             List<Character> ready = new List<Character>();
             foreach (Character c in Characters) {
                 if (c.AP >= c.GetStatValue(Statistic.ACTION_AP, context)) {
