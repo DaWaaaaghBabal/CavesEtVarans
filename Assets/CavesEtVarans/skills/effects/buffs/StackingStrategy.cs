@@ -9,8 +9,8 @@ namespace CavesEtVarans.skills.effects.buffs {
 	public abstract class StackingStrategy {
 		public virtual StackingType StackingType { get; private set; }
 
-		public abstract void Stack(BuffInstance oldInstance, BuffInstance newInstance, Context context,
-			Action<BuffInstance, Context> AddBuffCallback, Action<BuffInstance> RemoveBuffCallback);
+		public abstract void Stack(BuffInstance oldInstance, BuffInstance newInstance,
+			Action<BuffInstance> AddBuffCallback, Action<BuffInstance> RemoveBuffCallback);
 
 		public static StackingStrategy ProvideInstance(StackingType type) {
 			switch (type) {
@@ -29,28 +29,28 @@ namespace CavesEtVarans.skills.effects.buffs {
 		private class Replacement : StackingStrategy {
 			public override StackingType StackingType { get { return StackingType.Replacement; } }
 
-			public override void Stack(BuffInstance oldInstance, BuffInstance newInstance, Context context,
-				Action<BuffInstance, Context> AddBuffCallback, Action<BuffInstance> RemoveBuffCallback) {
+			public override void Stack(BuffInstance oldInstance, BuffInstance newInstance,
+				Action<BuffInstance> AddBuffCallback, Action<BuffInstance> RemoveBuffCallback) {
 
 				RemoveBuffCallback(oldInstance);
-				AddBuffCallback(newInstance, context);
+				AddBuffCallback(newInstance);
 			}
 		}
 
 		private class Independent : StackingStrategy {
 			public override StackingType StackingType { get { return StackingType.Independent; } }
 
-			public override void Stack(BuffInstance oldInstance, BuffInstance newInstance, Context context,
-				Action<BuffInstance, Context> AddBuffCallback, Action<BuffInstance> RemoveBuffCallback) {
+			public override void Stack(BuffInstance oldInstance, BuffInstance newInstance,
+				Action<BuffInstance> AddBuffCallback, Action<BuffInstance> RemoveBuffCallback) {
 
-				AddBuffCallback(newInstance, context);
+				AddBuffCallback(newInstance);
 			}
 		}
 		private class StackWithDuration : StackingStrategy {
 			public override StackingType StackingType { get { return StackingType.WithDuration; } }
 
-			public override void Stack(BuffInstance oldInstance, BuffInstance newInstance, Context context,
-				Action<BuffInstance, Context> AddBuffCallback, Action<BuffInstance> RemoveBuffCallback) {
+			public override void Stack(BuffInstance oldInstance, BuffInstance newInstance,
+				Action<BuffInstance> AddBuffCallback, Action<BuffInstance> RemoveBuffCallback) {
 
 				oldInstance.Stacks++;
 				oldInstance.Duration = newInstance.Duration;

@@ -20,13 +20,13 @@ namespace CavesEtVarans.skills.values
         public IValueCalculator Attack { set; get; }
 		public IValueCalculator Defense { set; get; }
 
-		public double Value(Context context)
+		public double Value()
 		{
-			double diff = Attack.Value(context) - Defense.Value(context);
-			double sum = Attack.Value(context) + Defense.Value(context);
+			double diff = Attack.Value() - Defense.Value();
+			double sum = Attack.Value() + Defense.Value();
             double ratio = 4.5 * diff / sum;
-            Character source = ReadContext(context, Context.SOURCE) as Character;
-            Character target = ReadContext(context, Context.CURRENT_TARGET) as Character;
+            Character source = ReadContext(ContextKeys.SOURCE) as Character;
+            Character target = ReadContext(ContextKeys.CURRENT_TARGET) as Character;
             Flanking flanking = Battlefield.Flanking(source, target);
             return 1.0 + 0.5 * Math.Tanh(ratio) + RulesConstants.FLANKING_BONUSES[(int) flanking];
 		}

@@ -4,8 +4,8 @@ namespace CavesEtVarans.skills.values {
 	public class ValueMultiplier : ContextDependent, IValueCalculator {
 		public IValueCalculator Base { set; get; }
 		public IValueCalculator Factor { set; get; }
-		public double Value(Context context) {
-			return Base.Value(context) * Factor.Value(context);
+		public double Value() {
+			return Base.Value() * Factor.Value();
 		}
 	}
 }

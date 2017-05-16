@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using CavesEtVarans.battlefield;
 using CavesEtVarans.character;
 using CavesEtVarans.graphics;
@@ -13,7 +14,7 @@ namespace CavesEtVarans.skills.targets {
         public string CenterKey { set { centerKey = value; }
             get {
                 if (centerKey == null)
-                    centerKey = Context.SOURCE;
+                    centerKey = ContextKeys.SOURCE;
                 return centerKey;
             }
         }
@@ -97,7 +98,6 @@ namespace CavesEtVarans.skills.targets {
         private PlayerChoiceStrategy playerChoiceStrategy;
 
         private TargetGroup targets;
-        private Context context;
         private int count;
 
         public TargetSelector() {
@@ -107,15 +107,14 @@ namespace CavesEtVarans.skills.targets {
             AoELineOfSight = true;
         }
 
-        public void Activate(Context context) {
+        public void Activate() {
             count = 0;
-            this.context = context;
             GUIEventHandler.Get().ActivePicker = this;
-            int minRange = (int) MinRange.Value(context);
-            int maxRange = (int) MaxRange.Value(context);
-            aoeMin = (int) AoEMinRadius.Value(context);
-            aoeMax = (int) AoEMaxRadius.Value(context);
-            ITargetable center = ExtractCenter(context);
+            int minRange = (int) MinRange.Value();
+            int maxRange = (int) MaxRange.Value();
+            aoeMin = (int) AoEMinRadius.Value();
+            aoeMax = (int) AoEMaxRadius.Value();
+            ITargetable center = ExtractCenter();
             targets = new TargetGroup();
             playerChoiceStrategy.Activate(
                 GetArea(center, LoSFilter, minRange, maxRange)
@@ -159,10 +158,9 @@ namespace CavesEtVarans.skills.targets {
         }
 
         private bool FinalizeSelection(Tile tile) {
-            Context c = context.Duplicate();
             ITargetable target = TileToTarget(tile);
-            c.Set(Context.FILTER_TARGET, target);
-            if (target != null && TargetFilters.Filter(c)) {
+            SetContext(ContextKeys.FILTER_TARGET, target);
+            if (target != null && TargetFilters.Filter()) {
                 targets.Add(target);
                 return true;
             }
@@ -186,8 +184,8 @@ namespace CavesEtVarans.skills.targets {
             }
         }
 
-        private ITargetable ExtractCenter(Context context) {
-            object obj = ReadContext(context, CenterKey);
+        private ITargetable ExtractCenter() {
+            object obj = ReadContext(CenterKey);
             ITargetable center = obj as ITargetable;
             if (center == null) {
                 TargetGroup group = obj as TargetGroup;
@@ -198,11 +196,11 @@ namespace CavesEtVarans.skills.targets {
         }
 
         private void EndPicking() {
-            string compoundKey = Context.TARGETS + TargetKey;
-            context.Set(compoundKey, targets);
+            SetContext(TargetKey, targets);
+            ((TargetGroup)ReadContext(ContextKeys.TARGETS)).Add(targets);
             //@TODO decouple from graphics (use events);
             GraphicBattlefield.ClearHighlightedArea();
-            ((Skill) ReadContext(context, Context.SKILL)).NextTargetPicker(context);
+            ((Skill) ReadContext(ContextKeys.SKILL)).NextTargetPicker();
         }
 
         public void Cancel() {

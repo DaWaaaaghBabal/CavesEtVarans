@@ -1,7 +1,8 @@
 ﻿namespace CavesEtVarans.skills.core
 {
-	public interface IValueCalculator : IContextDependent
+	public interface IValueCalculator
 	{
-		double Value (Context context);
+		double Value ();
+        ContextDependent Parent { set; get; }
 	}
 }

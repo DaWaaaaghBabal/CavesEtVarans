@@ -3,7 +3,7 @@ using CavesEtVarans.skills.core;
 
 namespace CavesEtVarans.skills.effects.buffs {
 	public abstract class Duration : ContextDependent {
-        public virtual Duration Instantiate(Context context) {
+        public virtual Duration Instantiate() {
             return MemberwiseClone() as Duration;
         }
 		public abstract int HalfTick();

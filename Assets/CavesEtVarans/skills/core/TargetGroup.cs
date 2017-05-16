@@ -3,9 +3,7 @@
 namespace CavesEtVarans.skills.core {
     public class TargetGroup : HashSet<ITargetable> {
         public ITargetable PickOne { get; private set; }
-        public TargetGroup() {
-        }
-
+        public TargetGroup() { }
         public TargetGroup(ITargetable target) : base(){
             Add(target);
             PickOne = target;

@@ -8,12 +8,12 @@ namespace CavesEtVarans.skills.effects {
 
         public string TileTargetKey { set; get; }
 
-		public override void Apply(Character target, Context context) {
-            TargetGroup tiles = (TargetGroup)ReadContext(context, Context.TARGETS + TileTargetKey);
+		public override void Apply(Character target) {
+            TargetGroup tiles = (TargetGroup)ReadContext(TileTargetKey);
             Tile targetTile = tiles.PickOne as Tile;
             Tile startTile = target.Tile;
             Battlefield.Move(target, targetTile);
-            new MovementEvent(target, startTile, targetTile).Trigger(context);
+            new MovementEvent(target, startTile, targetTile).Trigger();
 		}
 	}
 }

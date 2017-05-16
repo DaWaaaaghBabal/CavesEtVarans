@@ -39,11 +39,11 @@ namespace CavesEtVarans.character.statistics
 		/* Returns the modified value of the statistic. It takes into account all effects that modify
          this statistic in the current context. Effects that increase the value by a percentage are applied first,
          then effects that add a fixed value, then effects that replace the value by another.*/
-		public int GetValue (Context context)
+		public int GetValue ()
 		{
 			double val = value;
 			foreach (IStatModifier mod in statModifiers) {
-				val = mod.GetValue (val, context);
+				val = mod.GetValue(val);
 			}
 			// Rounded down.
 			return (int)val;
@@ -68,8 +68,7 @@ namespace CavesEtVarans.character.statistics
 		}
 
 		private void NotifyStatChange() {
-			Context context = Context.ProvideDisplayContext();
-			int newValue = GetValue(context);
+			int newValue = GetValue();
 			Notify (new StatChange { NewValue = newValue });
 		}
 	}

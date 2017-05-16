@@ -28,7 +28,7 @@ namespace CavesEtVarans.character
 		}
 
         public void InitSkill(Skill skill) {
-            skill.InitSkill(Context.Init(skill, this));
+            skill.InitSkill(this);
         }
 
         public Tile Tile { get; set; }
@@ -43,12 +43,11 @@ namespace CavesEtVarans.character
 		private TriggerManager triggerManager;
 
 		public Character() {
-            Context context = Context.Init(null, this);
             statisticsManager = new StatisticsManager();
             resourceManager = new ResourceManager();
             skillManager = new SkillManager();
             buffManager = new BuffManager(this);
-            resourceManager.Add(Resource.AP, new Resource(0, GetStatValue(Statistic.MAX_AP, context)));
+            resourceManager.Add(Resource.AP, new Resource(0, GetStatValue(Statistic.MAX_AP)));
 
 			triggerManager = new TriggerManager(this);
 			triggerManager.Register();
@@ -64,7 +63,7 @@ namespace CavesEtVarans.character
             statisticsManager.InitClassStats(clazz);
             skillManager.InitClassSkills(clazz);
 
-            int maxHealth = GetStatValue(Statistic.HEALTH, Context.Init(null, this));
+            int maxHealth = GetStatValue(Statistic.HEALTH);
             resourceManager.Add(Resource.HP, new Resource(0, maxHealth));
             resourceManager.Set(Resource.HP, maxHealth);
             foreach (KeyValuePair<string, int> KV in clazz.HiddenResources) {
@@ -74,7 +73,7 @@ namespace CavesEtVarans.character
 
         public void Activate() {
             //@TODO do other stuff...
-            new StartTurnEvent(this).Trigger(Context.Empty);
+            new StartTurnEvent(this).Trigger();
 			buffManager.HalfTick();
             MainGUI.ActivateCharacter(this);
         }
@@ -92,8 +91,8 @@ namespace CavesEtVarans.character
             resourceManager.Increment(Resource.HP, - amount);
         }
 
-        public void ApplyBuff(BuffInstance buff, Context context) {
-            buffManager.ApplyBuff(buff, context);
+        public void ApplyBuff(BuffInstance buff) {
+            buffManager.ApplyBuff(buff);
         }
 
         public void RemoveBuff(BuffInstance buff) {
@@ -104,9 +103,9 @@ namespace CavesEtVarans.character
             return resourceManager.GetAmount(key);
         }
 
-        public int GetStatValue(string key, Context context)
+        public int GetStatValue(string key)
 		{
-			return statisticsManager.GetValue(key, context);
+			return statisticsManager.GetValue(key);
 		}
 
 		override public string ToString ()

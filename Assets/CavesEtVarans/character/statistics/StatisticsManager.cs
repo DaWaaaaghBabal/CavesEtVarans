@@ -46,9 +46,9 @@ namespace CavesEtVarans.character.statistics {
         }
 
 		// Returns the value of the statistic referenced by the string given as a key.
-		public int GetValue (string key, Context context)
+		public int GetValue (string key)
 		{
-			return statistics [key].GetValue (context);
+			return statistics [key].GetValue();
 		}
 
 		// Adds a modifier to the statistic referenced by the string given as a key.

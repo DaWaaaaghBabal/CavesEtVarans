@@ -45,7 +45,6 @@ namespace CavesEtVarans.skills.targets {
 
         private class PlayerChoice : PlayerChoiceStrategy {
             public int NumberOfTargets { set; get; }
-            private int count;
 
             public PlayerChoice() {
                 CanBeEmpty = false;

@@ -50,7 +50,7 @@ namespace CavesEtVarans.gui
 
         public void Reset() {
             GraphicBattlefield.ClearHighlightedArea();
-            new BasicUITargetSelector().Activate(Context.Init(null, null));
+            new BasicUITargetSelector().Activate();
         }
     }
 }

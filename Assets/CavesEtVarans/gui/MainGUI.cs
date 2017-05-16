@@ -20,7 +20,6 @@ namespace CavesEtVarans.gui
             set { }
         }
 		private static Character displayedCharacter;
-		private Context context = Context.ProvideDisplayContext();
 		public static void ActivateCharacter (Character newActive)
 		{
             instance.GetComponent<SkillBar>().DisplaySkills(CharacterManager.Get().ActiveCharacter);
@@ -74,13 +73,13 @@ namespace CavesEtVarans.gui
 
 		private void DisplayStat(Character character, string key, string label, int X, int Y) {
 			GUI.Label(new Rect(X, Y, 100, 20), label);
-			GUI.Label(new Rect(X + 105, Y, 80, 20), character.GetStatValue(key, context).ToString());
+			GUI.Label(new Rect(X + 105, Y, 80, 20), character.GetStatValue(key).ToString());
 		}
 		private void DisplayHealth(Character character, int X, int Y) {
 			GUI.Label(new Rect(X, Y, 100, 20), "Health");
 
 			string healthText = character.GetResourceAmount(Resource.HP).ToString();
-			healthText += " / " + character.GetStatValue(Statistic.HEALTH, context);
+			healthText += " / " + character.GetStatValue(Statistic.HEALTH);
 
 			GUI.Label(new Rect(X + 105, Y, 80, 20), healthText);
 		}

@@ -17,12 +17,12 @@ namespace CavesEtVarans.gui
             HealEvent.Listeners += HandleHealEvent;
         }
 
-        public void HandleDamageEvent(DamageEvent e, Context c) {
+        public void HandleDamageEvent(DamageEvent e) {
             FloatingText dmgText = SpawnOverCharacter(e.Target);
             dmgText.DisplayedText = "-" + e.Amount;
             dmgText.Color = damageColor;
         }
-        public void HandleHealEvent(HealEvent e, Context c) {
+        public void HandleHealEvent(HealEvent e) {
             FloatingText healText = SpawnOverCharacter(e.Target);
             healText.DisplayedText = "+" + e.Amount;
             healText.Color = healColor;

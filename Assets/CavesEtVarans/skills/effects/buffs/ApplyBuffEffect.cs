@@ -27,20 +27,20 @@ namespace CavesEtVarans.skills.effects {
 			Effects = new List<BuffEffect>();
 		}
 
-		public override void Apply(Character target, Context context) {
+		public override void Apply(Character target) {
 			BuffInstance instance = new BuffInstance();
-			instance.SetLocalContext(Context.BUFF_SOURCE, ReadContext(context, Context.SOURCE));
-			instance.SetLocalContext(Context.BUFF_TARGET, ReadContext(context, Context.CURRENT_TARGET));
+			instance.SetLocalContext(ContextKeys.BUFF_SOURCE, ReadContext(ContextKeys.SOURCE));
+			instance.SetLocalContext(ContextKeys.BUFF_TARGET, ReadContext(ContextKeys.CURRENT_TARGET));
 
 			foreach (BuffEffect effect in Effects) {
 				BuffEffect effectInstance = effect.Clone() as BuffEffect;
-				effectInstance.SetLocalContext(Context.BUFF_SOURCE, ReadContext(context, Context.SOURCE));
-				effectInstance.SetLocalContext(Context.BUFF_TARGET, ReadContext(context, Context.CURRENT_TARGET));
+				effectInstance.SetLocalContext(ContextKeys.BUFF_SOURCE, ReadContext(ContextKeys.SOURCE));
+				effectInstance.SetLocalContext(ContextKeys.BUFF_TARGET, ReadContext(ContextKeys.CURRENT_TARGET));
 				instance.AddEffect(effectInstance);
             }
 			instance.SourceEffect = this;
-            instance.Duration = Duration.Instantiate(context);
-			target.ApplyBuff(instance, context);
+            instance.Duration = Duration.Instantiate();
+			target.ApplyBuff(instance);
 		}
 	}
 }

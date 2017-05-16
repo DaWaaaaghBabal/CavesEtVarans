@@ -28,13 +28,13 @@ namespace CavesEtVarans.skills.effects.buffs {
         }
         public string StatKey { get; set; }
 
-        public double GetValue(double originalValue, Context context) {
-            return Filters.Filter(context) ? GetModifiedValue(originalValue, context) : originalValue;
+        public double GetValue(double originalValue) {
+            return Filters.Filter() ? GetModifiedValue(originalValue) : originalValue;
         }
 
-        protected abstract double GetModifiedValue(double originalValue, Context context);
+        protected abstract double GetModifiedValue(double originalValue);
 
-        public override void ApplyOn(Character target, Context context) {
+        public override void ApplyOn(Character target) {
             target.ApplyStatModifier(StatKey, this);
         }
 

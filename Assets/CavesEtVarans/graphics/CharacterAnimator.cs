@@ -8,11 +8,9 @@ namespace CavesEtVarans.graphics {
 	public class CharacterAnimator : MonoBehaviour {
 
 		public Character Character { set; get; }
-		private float walkAnimLength;
         private AnimationQueue animationQueue;
 		void Start() {
 			RegisterListeners();
-			walkAnimLength = ExtractClip("Walk").length;
             animationQueue = new AnimationQueue();
         }
 
@@ -26,7 +24,7 @@ namespace CavesEtVarans.graphics {
 			OrientationEvent.Listeners += CatchOrientation;
 		}
 		
-		private void CatchOrientation(OrientationEvent e, Context context) {
+		private void CatchOrientation(OrientationEvent e) {
 			if (Character.Equals(e.Source)) {
                 //@TODO Fix import to remove the necessity for the 90° offset
                 int newAngle = 90 + GraphicBattlefield.AngleForDirection(e.NewOrientation);
@@ -37,7 +35,7 @@ namespace CavesEtVarans.graphics {
             }
 		}
 
-		private void CatchMovement(MovementEvent e, Context context) {
+		private void CatchMovement(MovementEvent e) {
 			if (Character.Equals(e.Source))
             {
                 int angle = 90 + GraphicBattlefield.AngleForDirection(Character.Orientation);
@@ -75,7 +73,7 @@ namespace CavesEtVarans.graphics {
             animationQueue.Queue(element);
         }
 
-        private void CatchSkillUse(SkillUseEvent e, Context context) {
+        private void CatchSkillUse(SkillUseEvent e) {
 			if (Character.Equals(e.Source)) {
 				QueueAnimation(e.Skill.Attributes.Animation);
 			}

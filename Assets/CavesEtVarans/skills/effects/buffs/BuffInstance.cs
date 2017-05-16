@@ -21,14 +21,14 @@ namespace CavesEtVarans.skills.effects.buffs {
 
 		public void Tick() {
 			if (Duration.HalfTick() == 0) {
-				Character target = ReadContext(Context.Empty, Context.BUFF_TARGET) as Character;
+				Character target = ReadContext(ContextKeys.BUFF_TARGET) as Character;
 				RemoveFrom(target);
 			}
 		}
 
-		public void ApplyOn(Character character, Context context) {
+		public void ApplyOn(Character character) {
 			foreach(BuffEffect effect in effects) {
-				effect.ApplyOn(character, context);
+				effect.ApplyOn(character);
 			}
 		}
 

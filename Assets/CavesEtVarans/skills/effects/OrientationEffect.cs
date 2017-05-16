@@ -7,8 +7,8 @@ namespace CavesEtVarans.skills.effects {
 	public class OrientationEffect : TargetedEffect {
         public string OrientationTargetKey { get; set; }
 
-        public override void Apply(Character target, Context context) {
-            TargetGroup targets = (TargetGroup)ReadContext(context, Context.TARGETS + OrientationTargetKey);
+        public override void Apply(Character target) {
+            TargetGroup targets = (TargetGroup)ReadContext(OrientationTargetKey);
             // We need to average the positions of all targets to know where to look.
             int row = 0, column = 0, layer = 0, count = targets.Count;
             foreach(ITargetable tgt in targets) {
@@ -22,7 +22,7 @@ namespace CavesEtVarans.skills.effects {
 			Orientation oldOrientation = target.Orientation;
 			target.Orientation = newOrientation;
             if (!newOrientation.Equals(oldOrientation))
-			    new OrientationEvent(target, oldOrientation, newOrientation).Trigger(context);
+			    new OrientationEvent(target, oldOrientation, newOrientation).Trigger();
 		}
 	}
 }

@@ -6,8 +6,8 @@ namespace CavesEtVarans.skills.effects.buffs {
 		public ModifierType Type { get; private set; }
 		public IValueCalculator Value { get; set; }
 
-		public double GetValue(double originalValue, Context context) {
-			return originalValue + Value.Value(context);
+		public double GetValue(double originalValue) {
+			return originalValue + Value.Value();
 		}
 
 		public StatIncrementer() {

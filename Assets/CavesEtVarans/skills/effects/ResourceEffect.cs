@@ -5,8 +5,8 @@ namespace CavesEtVarans.skills.effects {
     public class ResourceEffect : TargetedEffect {
         public IValueCalculator Amount { set; get;}
         public string ResourceKey { set; get; }
-        public override void Apply(Character target, Context context) {
-            int amount = (int) Amount.Value(context);
+        public override void Apply(Character target) {
+            int amount = (int) Amount.Value();
             target.IncrementResource(ResourceKey, amount);
         }
     }

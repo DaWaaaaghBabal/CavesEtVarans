@@ -7,9 +7,9 @@ namespace CavesEtVarans.skills.values
 		public string Source { get; set; }
 		public string Stat { get; set; }
 
-		public  double Value(Context context) {
-			Character character = (Character) (Character) ReadContext(context, Source);
-			return character.GetStatValue(Stat, context);
+		public double Value() {
+			Character character = (Character) ReadContext(Source);
+			return character.GetStatValue(Stat);
 		}
 	}
 }

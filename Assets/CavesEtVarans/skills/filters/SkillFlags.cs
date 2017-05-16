@@ -6,14 +6,13 @@ namespace CavesEtVarans.skills.filters {
     public class SkillFlags: AbstractFilter {
         public FlagsList<SkillFlag> Flags { get; set; }
         public FilterType Operation { set; get; }
-        protected override bool FilterContext(Context c) {
-            Skill skill = ReadContext(c, Context.TRIGGERING_SKILL) as Skill;
-            FlagsList<SkillFlag> flags = skill.Flags;
+        protected override bool FilterContext() {
+            Skill skill = ReadContext(ContextKeys.TRIGGERING_SKILL) as Skill;
             switch(Operation) {
                 case FilterType.And:
-                    return And(flags);
+                    return And(skill.Flags);
                 case FilterType.Or:
-                    return Or(flags);
+                    return Or(skill.Flags);
                 default:
                     throw new UndefinedValueException("Property \"Operation\" of type SkillFlagsFilter must be set (Or / And).");
             }

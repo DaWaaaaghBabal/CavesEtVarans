@@ -8,9 +8,8 @@ namespace CavesEtVarans.skills.effects.buffs {
 			get { return ModifierType.Increment; }
 			protected set { }
 		}
-		protected override double GetModifiedValue(double originalValue, Context context) {
-			Context localContext = CopyContext(context);
-			return originalValue + Value.Value(localContext);
+		protected override double GetModifiedValue(double originalValue) {
+			return originalValue + Value.Value();
 		}
 	}
 }

@@ -27,11 +27,11 @@ namespace CavesEtVarans.skills.filters {
 
         private IValueCalculator minRange;
         private IValueCalculator maxRange;
-        protected override bool FilterContext(Context c) {
-			Character source = ReadContext(c, CenterKey) as Character;
-			ITargetable triggeringCharacter = ReadContext(c, TargetKey) as ITargetable;
-            int min = (int) MinRange.Value(c);
-            int max = (int) MaxRange.Value(c);
+        protected override bool FilterContext() {
+			Character source = ReadContext(CenterKey) as Character;
+			ITargetable triggeringCharacter = ReadContext(TargetKey) as ITargetable;
+            int min = (int) MinRange.Value();
+            int max = (int) MaxRange.Value();
             return GetArea(source.Tile, min, max).Contains(triggeringCharacter.Tile);
 		}
 

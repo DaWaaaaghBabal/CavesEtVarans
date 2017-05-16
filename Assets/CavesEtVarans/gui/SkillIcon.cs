@@ -6,11 +6,8 @@ using UnityEngine.UI;
 namespace CavesEtVarans.gui
 {
 	public class SkillIcon : MonoBehaviour {
-        [SerializeField]
-        private Image image;
-
-        [SerializeField]
-        private Text description;
+        public Image image;
+        public Text description;
 
         private Skill skill;
         public Skill Skill {

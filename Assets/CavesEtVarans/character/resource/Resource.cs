@@ -18,7 +18,6 @@ namespace CavesEtVarans.character.resource
 		{
 			gauge = new Gauge (min, max);
 		}
-        private int value;
 		public int Value {
             get {
                 return gauge.GetValue();

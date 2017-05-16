@@ -22,18 +22,18 @@ namespace CavesEtVarans.character {
 			buffs = new List<BuffInstance>();
 		}
 
-		public void ApplyBuff(BuffInstance buff, Context context) {
+		public void ApplyBuff(BuffInstance buff) {
 			bool alreadyThere = false;
 			foreach (BuffInstance b in TempCopy) {
 				alreadyThere = true;
 				ApplyBuffEffect sourceEffect = b.SourceEffect;
 				if (sourceEffect == buff.SourceEffect) {
 					StackingStrategy stacking = sourceEffect.Stacking;
-					stacking.Stack(b, buff, context, Apply, RemoveBuff);
+					stacking.Stack(b, buff, Apply, RemoveBuff);
 				}
 				break;
 			}
-			if (!alreadyThere) Apply(buff, context);
+			if (!alreadyThere) Apply(buff);
 		}
 
 		public void HalfTick() {
@@ -42,9 +42,9 @@ namespace CavesEtVarans.character {
 			}
 		}
 		
-		private void Apply(BuffInstance buff, Context context) {
+		private void Apply(BuffInstance buff) {
 			buffs.Add(buff);
-			buff.ApplyOn(Character, context);
+			buff.ApplyOn(Character);
 		}
 
 		public void RemoveBuff(BuffInstance buff) {

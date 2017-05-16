@@ -1,6 +1,5 @@
 ﻿using CavesEtVarans.character;
 using CavesEtVarans.skills.core;
-using CavesEtVarans.skills.effects.conditions;
 using CavesEtVarans.skills.filters;
 
 namespace CavesEtVarans.skills.effects {
@@ -19,16 +18,23 @@ namespace CavesEtVarans.skills.effects {
 		}
 		public string TargetKey { set; get; }
 
-		public void Apply(Context context) {
-			TargetGroup targets = (TargetGroup) ReadContext(context, Context.TARGETS + TargetKey);
-            if (targets != null) {
-                foreach (Character target in targets) {
-                    context.Set(Context.CURRENT_TARGET, target);
-					if (Filter.Filter(context))
-                        Apply(target, context);
+		public void Apply() {
+			object targets = ReadContext(TargetKey);
+            if (targets.GetType().Equals(typeof(Character)))
+                ApplyOn(targets as Character);
+            else if (targets != null) {
+                foreach (Character target in targets as TargetGroup) {
+                    ApplyOn(target);
                 }
             }
 		}
-		public abstract void Apply(Character target, Context context);
+
+        private void ApplyOn(Character target) {
+            SetContext(ContextKeys.CURRENT_TARGET, target);
+            if (Filter.Filter())
+                Apply(target);
+        }
+
+        public abstract void Apply(Character target);
 	}
 }

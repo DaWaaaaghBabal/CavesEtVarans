@@ -20,12 +20,10 @@ namespace CavesEtVarans.character
 
         public List<Character> Characters { private set; get; }
 		private Character activeCharacter;
-        private Context context;
 
         private CharacterManager ()
 		{
             Characters = new List<Character>();
-            context = Context.ProvideTurnOrderContext();
         }
 
 		public Character ActiveCharacter {
@@ -55,7 +53,7 @@ namespace CavesEtVarans.character
             // Search for all characters that are ready to act
             List<Character> ready = new List<Character>();
             foreach (Character c in Characters) {
-                if (c.AP >= c.GetStatValue(Statistic.ACTION_AP, context)) {
+                if (c.AP >= c.GetStatValue(Statistic.ACTION_AP)) {
                     ready.Add(c);
                 }
             }
@@ -68,7 +66,7 @@ namespace CavesEtVarans.character
                 // No character was ready to act : fill all AP gauges, then start again.
                 foreach (Character c in Characters) {
                     // The amount of AP gained by each character is slightly randomised, to mess with the turn order.
-                    c.IncrementResource(resource.Resource.AP, c.GetStatValue(Statistic.INITIATIVE, context) + rand.Next(1, 4));
+                    c.IncrementResource(resource.Resource.AP, c.GetStatValue(Statistic.INITIATIVE) + rand.Next(1, 4));
                 }
                 SearchForNewActiveCharacter();
             }
@@ -83,8 +81,8 @@ namespace CavesEtVarans.character
             if (c1.AP > c2.AP) return 1;
             if (c2.AP > c1.AP) return -1;
             // Same AP, we break the tie by comparing Initiative
-            int init1 = c1.GetStatValue(Statistic.INITIATIVE, context);
-            int init2 = c2.GetStatValue(Statistic.INITIATIVE, context);
+            int init1 = c1.GetStatValue(Statistic.INITIATIVE);
+            int init2 = c2.GetStatValue(Statistic.INITIATIVE);
             return init1 - init2;
         }
 	}

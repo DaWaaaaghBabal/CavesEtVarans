@@ -10,91 +10,106 @@ using CavesEtVarans.skills.targets;
 
 namespace CavesEtVarans.skills.core {
 	/* About everything in the game, every action and every specificity of a character, is a Skill.
-     * A skill is defined by a cost in various resources, targets, effects applied to these targets, and tests to check whether each target is affected.
-
+     * A skill is defined by a cost in various resources, targets, and effects applied to these targets.
      * The flow for using a skill is :
      * - activate the first target picker and wait for it to call back
      * - when the target picker calls back, activate the next one and wait
      * - when all target pickers have called back, pay the cost
-     * - apply each test to a set of targets. For each target, the skill can be a miss, a hit, or a critical hit.
      * - apply each effect to a set of targets.
-     * In fact, all targets and test results will be stored in the Context.
+     * All targets and test results will be stored in the Context.
      */
 
 	public class Skill : ContextDependent
 	{
-
-
 		public SkillAttributes Attributes { get; set; }
 		public Cost Cost { set; get; }
-		public List<TargetSelector> TargetPickers { set; get; }
+		public List<TargetSelector> TargetSelectors { set; get; }
 		public List<IEffect> Effects { set; get; }
         public FlagsList<SkillFlag> Flags { set; get; }
+
 		public Skill() {
-			TargetPickers = new List<TargetSelector>();
+			TargetSelectors = new List<TargetSelector>();
 			Effects = new List<IEffect>();
 			Cost = new Cost();
 			Attributes = new SkillAttributes();
             Flags = new FlagsList<SkillFlag>();
         }
 
-		public void InitSkill (Context context)
+        /* Called from the interface, the most basic way to use a Skill : it goes through all the steps
+         * of target selection.
+         */
+		public void InitSkill (Character source)
 		{
+            StartNewContext();
+            SetContext(ContextKeys.SOURCE, source);
+            SetContext(ContextKeys.SKILL, this);
 			targetPickerIndex = 0;
-			NextTargetPicker (context);
+			NextTargetPicker ();
 		}
-
-		int targetPickerIndex;
-		public void NextTargetPicker (Context context)
-		{
-			if (targetPickerIndex < TargetPickers.Count) {
-				targetPickerIndex++;
-				TargetPickers [targetPickerIndex - 1].Activate (context);
-			} else {
-				UseSkill (context);
-			}
-		}
-		private void ResetUI() {
-            GUIEventHandler.Get().Reset();
-		}
+        /* Called when some data is determined before initiating the skill.
+         */
+        public void InitSkill (Dictionary<string, object> contextData) {
+            StartNewContext();
+            foreach (KeyValuePair<string, object> entry in contextData) {
+                SetContext(entry.Key, entry.Value);
+            }
+            SetContext(ContextKeys.SKILL, this);
+            targetPickerIndex = 0;
+            NextTargetPicker();
+        }
 
 		/* Called when all targets have been picked and stored in the Context. Can 
 		 * also be called by another object with a fully initialized Context to bypass target selection.
 		 */
-		public void UseSkill (Context context)
+		public void UseSkill ()
 		{
-			Character source = (Character)ReadContext(context, Context.SOURCE);
+			Character source = (Character)ReadContext(ContextKeys.SOURCE);
             if (source.CanPay(Cost)) { 
-				PayCosts (context);
+				PayCosts ();
                 if (!Flags[SkillFlag.NoEvent])
-				    new SkillUseEvent(this, source).Trigger(context);
-				ApplyEffects (context);
+				    new SkillUseEvent(this, source).Trigger();
+				ApplyEffects ();
 			} else {
 				UnityEngine.Debug.Log("Cost couldn't be paid, skill use cancelled.");
 			}
 			ResetUI();
+            EndContext();
 			ReactionCoordinator.Flush();
 		}
 
-		private void PayCosts (Context context)
+        private int targetPickerIndex;
+		public void NextTargetPicker ()
 		{
-			((Character)ReadContext(context, Context.SOURCE)).Pay(Cost);
-		}
-
-		private void ApplyEffects (Context context)
-		{
-            foreach (IEffect effect in Effects) {
-				effect.Apply (context);
+			if (targetPickerIndex < TargetSelectors.Count) {
+				targetPickerIndex++;
+				TargetSelectors [targetPickerIndex - 1].Activate();
+			} else {
+				UseSkill ();
 			}
 		}
 
         public void AddEffect(IEffect effect) {
-			Effects.Add(effect);
+            Effects.Add(effect);
+        }
+
+        public void AddTargetSelector(TargetSelector targetSelector) {
+            TargetSelectors.Add(targetSelector);
+        }
+
+		private void ResetUI() {
+            GUIEventHandler.Get().Reset();
 		}
 
-        public void AddTargetSelector(TargetSelector targetSelector)
-        {
-            TargetPickers.Add(targetSelector);
-        }
+		private void PayCosts ()
+		{
+			((Character)ReadContext(ContextKeys.SOURCE)).Pay(Cost);
+		}
+
+		private void ApplyEffects ()
+		{
+            foreach (IEffect effect in Effects) {
+				effect.Apply();
+			}
+		}
     }
 }

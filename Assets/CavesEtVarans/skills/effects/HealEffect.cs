@@ -6,11 +6,11 @@ namespace CavesEtVarans.skills.effects {
 	public class HealEffect : TargetedEffect {
 		public IValueCalculator Amount { get; set; }
 		
-		public override void Apply(Character target, Context context) {
-            Character source = (Character) ReadContext(context, Context.SOURCE);
-            int amount = (int)Amount.Value(context);
+		public override void Apply(Character target) {
+            Character source = (Character) ReadContext(ContextKeys.SOURCE);
+            int amount = (int)Amount.Value();
             target.TakeDamage(-amount);
-            new HealEvent(source, target, amount).Trigger(context);
+            new HealEvent(source, target, amount).Trigger();
 		}
 	}
 }

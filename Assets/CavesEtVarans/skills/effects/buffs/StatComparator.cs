@@ -8,10 +8,9 @@ namespace CavesEtVarans.skills.effects.buffs {
 		public IValueCalculator Value { get; set; }
 		public ComparisonType Choice { get; set; }
 
-		public double GetValue(double originalValue, Context context) {
-			bool highest = Choice == ComparisonType.Highest;
-			double val = Value.Value(context);
-			return highest ? 
+		public double GetValue(double originalValue) {
+			double val = Value.Value();
+            return Choice == ComparisonType.Highest ? 
 				Math.Max(val, originalValue) : 
 				Math.Min(val, originalValue);
 		}
