@@ -20,14 +20,5 @@ namespace CavesEtVarans.battlefield
 				return false;
 			return dR * dC == 0;
 		}
-
-		protected override int[][] InitRingDirections() {
-			return new int[][] {
-				new int[] { -1, -1 }, //clockwise from 3 o'clock
-				new int[] { 1, -1 },
-				new int[] { 1, 1 },
-				new int[] { -1, 1 },
-			};
-		}
 	}
 }

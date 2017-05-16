@@ -26,7 +26,7 @@ namespace CavesEtVarans.graphics
 
         private TileEdge Create(GameObject prefab, int angle)
         {
-            GameObject obj = (GameObject)Instantiate(prefab, transform.position, Quaternion.Euler(0, angle, 0));
+            GameObject obj = Instantiate(prefab, transform.position, Quaternion.Euler(0, angle, 0));
             edges.Add(obj);
             return obj.GetComponent<TileEdge>();
         }

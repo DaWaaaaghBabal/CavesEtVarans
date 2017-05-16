@@ -73,7 +73,6 @@ namespace CavesEtVarans.battlefield
 		protected override Orientation[] CalculateDirection (Tile t1, Tile t2) {
 			int dR = t2.Row - t1.Row;
 			int dC = t2.Column - t2.Column;
-            Orientation[] result = new Orientation[2];
             if (dR == dC) // diagonal
                 return dC > 0 ?
                     new Orientation[] { twelveOClock, threeOClock } :
@@ -130,7 +129,7 @@ namespace CavesEtVarans.battlefield
             double dY = sin60 * dR;
             double norm = Math.Sqrt (dX * dX + dY * dY);
             double cos = dX / norm;
-            double mso = 0.001; // oversampling offset
+            double mso = 0.001; // multisampling offset
             // Strict inequalities mean we assign all tiles on a diagonal to the direction on the right of the border.
             return new Orientation[] { Cos2Dir(dY, cos - mso), Cos2Dir(dY, cos + mso) };
         }

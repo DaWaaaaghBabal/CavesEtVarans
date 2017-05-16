@@ -34,8 +34,8 @@ namespace CavesEtVarans.battlefield {
             Size = 1;
         }
 
-		public int GetMovementCost(Context context) {
-			return movementCost.GetValue(context);
+		public int GetMovementCost() {
+			return movementCost.GetValue();
 		}
 
 		public void Dispose() {

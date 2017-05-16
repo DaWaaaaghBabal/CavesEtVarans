@@ -22,16 +22,5 @@ namespace CavesEtVarans.battlefield {
 				return false;
 			return Math.Abs(dC + dR) > 0;
 		}
-
-		protected override int[][] InitRingDirections() {
-			return new int[][] {
-				new int[] { -1, -1 }, //clockwise from 3 o'clock
-				new int[] { 0, -1 },
-				new int[] { 1, 0 },
-				new int[] { 1, 1 },
-				new int[] { 0, 1 },
-				new int[] { -1, 0 }
-			};
-		}
 	}
 }

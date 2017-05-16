@@ -8,7 +8,6 @@ namespace CavesEtVarans.battlefield {
 
 		protected CubeArray<T> content;
 		protected int heightDivisor;
-		protected int[][] ringDirections;
 
 		/// <summary> Returns the distance between two tiles from the point of view of the game,
 		/// i.e ignoring Pythagoras' theorem and using the grid abstraction.
@@ -64,7 +63,7 @@ namespace CavesEtVarans.battlefield {
 			if (radius == 0) {
 				Select(result, row, column, layer);
 			} else {
-				foreach (int[] direction in ringDirections) {
+				foreach (int[] direction in HexOrSquare.ProvideRingDirections()) {
 					int dR = direction[0];
 					int dC = direction[1];
 					for (int i = 0 ; i < radius ; i++) {
@@ -88,10 +87,7 @@ namespace CavesEtVarans.battlefield {
 		public Grid() {
 			content = new CubeArray<T>(15, 15, 10);
 			heightDivisor = RulesConstants.HEIGHT_DIVISOR;
-			ringDirections = InitRingDirections();
 		}
-
-		protected abstract int[][] InitRingDirections();
 
 		public void Add(T t) {
 			content.Add(t, t.Row, t.Column, t.Layer);

@@ -26,14 +26,14 @@ namespace CavesEtVarans.battlefield {
 	}
 	public class SquareGenerator : GenerationStrategy {
 		protected override void PlaceTile(int row, int column, int layer, CreateTile createTile) {
-			createTile(row, column, layer, RulesConstants.BASE_MOVEMENT_COST);
+			createTile(row, column, layer, LandType.PLAIN);
 		}
 	}
 
 	public class HexGenerator : GenerationStrategy {
 		protected override void PlaceTile(int row, int column, int layer, CreateTile createTile) {
             int columnOffset = row >> 1; // Offset column by 1 every second row to bring the grid from a lozange to a rectangle
-            createTile(row, column + columnOffset, layer, RulesConstants.BASE_MOVEMENT_COST);
+            createTile(row, column + columnOffset, layer, LandType.PLAIN);
 		}
 	}
 }

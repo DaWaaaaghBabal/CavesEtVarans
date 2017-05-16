@@ -47,9 +47,9 @@ namespace CavesEtVarans.map {
         private double SampleFromGrid(double[]xyz) {
             //step 1 : figure out in which cell of the grid we fall.
             int[] cellXYZ = new int[] {
-                (int)xyz[0],
-                (int)xyz[1],
-                (int)xyz[2]};
+                (int) Math.Floor(xyz[0]),
+                (int) Math.Floor(xyz[1]),
+                (int) Math.Floor(xyz[2])};
             double[] deltaXYZ = new double[] {
                 xyz[0]-cellXYZ[0],
                 xyz[1]-cellXYZ[1],

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using CavesEtVarans.graphics;
 using CavesEtVarans.gui;
 using UnityEngine;
@@ -15,7 +16,7 @@ namespace CavesEtVarans.battlefield {
 		}
 
 		protected override HighlightStrategy InitHighlight() {
-			return new SquareHighlighter(WallPrefab);
+			return new SquareHighlighter(EdgePrefab);
 		}
 
         protected override LineOfSightStrategy InitLineOfSight() {
@@ -30,5 +31,14 @@ namespace CavesEtVarans.battlefield {
 		protected override PlacementStrategy InitPlacement() {
 			return new SquarePlacement();
 		}
-	}
+
+        protected override IEnumerable<int[]> InitRingDirections() {
+            return new int[][] {
+                new int[] { -1, -1 }, //clockwise from 3 o'clock
+				new int[] { 1, -1 },
+                new int[] { 1, 1 },
+                new int[] { -1, 1 },
+            };
+        }
+    }
 }
