@@ -1,4 +1,5 @@
-﻿using CavesEtVarans.character;
+﻿using CavesEtVarans.battlefield;
+using CavesEtVarans.character;
 using CavesEtVarans.skills.core;
 using CavesEtVarans.skills.events;
 using UnityEngine;
@@ -36,17 +37,17 @@ namespace CavesEtVarans.graphics {
 		}
 
 		private void CatchMovement(MovementEvent e) {
-			if (Character.Equals(e.Source))
+			if (Character.Equals(e.EventData[ContextKeys.TRIGGERING_CHARACTER]))
             {
                 int angle = 90 + GraphicBattlefield.AngleForDirection(Character.Orientation);
                 Quaternion rotation = Quaternion.Euler(0, angle, 0);
-                GraphicTile end = GraphicBattlefield.GetSceneTile(e.EndTile);
-                GraphicTile start = GraphicBattlefield.GetSceneTile(e.StartTile);
+                GraphicTile end = GraphicBattlefield.GetSceneTile((Tile)e.EventData[ContextKeys.END_TILE]);
+                GraphicTile start = GraphicBattlefield.GetSceneTile((Tile)e.EventData[ContextKeys.START_TILE]);
                 Vector3 startPosition = start.transform.position;
                 Vector3 endPosition = end.transform.position;
-                QueueAnimation("Walk - start", startPosition, startPosition, rotation, rotation);
+                //QueueAnimation("Walk - start", startPosition, startPosition, rotation, rotation);
                 QueueAnimation("Walk", startPosition, endPosition, rotation, rotation);
-                QueueAnimation("Walk - end", endPosition, endPosition, rotation, rotation);
+                //("Walk - end", endPosition, endPosition, rotation, rotation);
             }
         }
 
@@ -74,8 +75,8 @@ namespace CavesEtVarans.graphics {
         }
 
         private void CatchSkillUse(SkillUseEvent e) {
-			if (Character.Equals(e.Source)) {
-				QueueAnimation(e.Skill.Attributes.Animation);
+			if (Character.Equals((Character)e.EventData[ContextKeys.TRIGGERING_CHARACTER])) {
+				QueueAnimation(((Skill)e.EventData[ContextKeys.TRIGGERING_SKILL]).Attributes.Animation);
 			}
 		}
 

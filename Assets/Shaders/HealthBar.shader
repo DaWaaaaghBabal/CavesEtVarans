@@ -1,4 +1,6 @@
-﻿Shader "Custom/HealthBar" {
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+Shader "Custom/HealthBar" {
 	Properties {
 		_MainColor ("Main Color", Color) = (0.5, 0, 0, 1)
 		_GradientTex ("Gradient Texture", 2D) = "white" {}
@@ -28,7 +30,7 @@
 
 			vertOutput vert(vertInput input) {
 				vertOutput o;
-				o.pos = mul(UNITY_MATRIX_MVP, input.pos);
+				o.pos = UnityObjectToClipPos(input.pos);
 				o.texCoord = input.texCoord;
 				return o;
 			}

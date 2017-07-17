@@ -7,8 +7,9 @@ using UnityEngine;
 using CavesEtVarans.map;
 using RNG = UnityEngine.Random;
 using System;
+using CavesEtVarans.battlefield;
 
-public delegate void CreateTile(int row, int column, int layer, LandType landType);
+public delegate Tile CreateTile(int row, int column, int layer, LandType landType);
 
 namespace CavesEtVarans.battlefield {
 	public class MissionInitializer : MonoBehaviour {
@@ -16,7 +17,7 @@ namespace CavesEtVarans.battlefield {
 		public GameObject edgePrefab;
 		public GameObject characterPrefab;
 		public bool hexagonal, island;
-		public int radius, seed;
+		public int numberOfPlayers, seed;
 		public TextAsset MissionDescriptor;
 		public TextAsset ClassDescriptor;
 		//@TODO replace with mission config file
@@ -40,25 +41,15 @@ namespace CavesEtVarans.battlefield {
 			landPrefabs[LandType.PLAIN] = plainPrefab;
 			landPrefabs[LandType.SEA] = seaPrefab;
 			landPrefabs[LandType.FOREST] = forestPrefab;
-			//mapGenerator = HexOrSquare.ProvideGridGenerator();
-			//((GenerationStrategy)mapGenerator).HeightMap = heightMap;
-			mapGenerator = new PerlinMapGenerator() {
-				Seed = seed,
-                Depth = 3,
-                PlainToForest = -0,
-                SeaToLand = 0.3,
-                Island = island,
-                MaxAltitude = 10,
-                NoiseSize = 10,
-                Radius = radius,
-			};
+            
+            mapGenerator = new CampaignMapGenerator(seed, 3, 8);
 			Battlefield.Init();
 			GraphicBattlefield.Init();
 			placementStrategy = HexOrSquare.ProvidePlacement();
 			regions = InitRegions();
 			mapGenerator.GenerateMap(CreateTile);
 			ClassManager classMgr = ClassManager.Instance;
-
+            
 			Faction factionA = new Faction("Faction A");
 			PlaceCharacter(2, 10, "Paladin 1", factionA, "Paladin");
 			PlaceCharacter(1, 11, "Stalker", factionA, "Stalker");
@@ -75,14 +66,15 @@ namespace CavesEtVarans.battlefield {
 
 		private Dictionary<Region, ICoordinates> InitRegions() {
 			Dictionary<Region, ICoordinates> result = new Dictionary<Region, ICoordinates>();
-			for (int i = 0; i < radius; i++) {
+            int radius = 10 * (int)Math.Sqrt(numberOfPlayers);
+            for (int i = 0; i < numberOfPlayers * 10; i++) {
 				int row = RNG.Range(-radius, radius);
 				int minColumn = Mathf.Max(-radius, row - radius);
 				int maxColumn = Mathf.Min(radius, row + radius);
 				int column = RNG.Range(minColumn, maxColumn);
 				ICoordinates coord = new Tile(radius + row, radius + column, 0, 0);
 				Region region = new Region() {
-					Color = RNG.ColorHSV(0, 1, 0.15f, 0.2f, 0.9f, 1)
+					Color = RNG.ColorHSV(0.5f, 1f, 0.45f, 0.55f, 0.9f, 1)
 				};
 				result[region] = coord;
 			}
@@ -90,37 +82,20 @@ namespace CavesEtVarans.battlefield {
 			return result;
 		}
 
-		private void CreateTile(int row, int column, int layer, LandType landType) {
-			Tile tile = new Tile(row, column, layer, landType.MovementCost);
-			Battlefield.AddTile(tile);
-			GameObject prefab = landPrefabs[landType];
-			GameObject tileObject = Instantiate(prefab, transform.position, transform.rotation);
-			GraphicTile graphicTile = tileObject.GetComponent<GraphicTile>();
-			float size = graphicTile.size;
+        private Tile CreateTile(int row, int column, int layer, LandType landType) {
+            Tile tile = new Tile(row, column, layer, landType.MovementCost);
+            Battlefield.AddTile(tile);
+            GameObject prefab = landPrefabs[landType];
+            GameObject tileObject = Instantiate(prefab, transform.position, transform.rotation);
+            GraphicTile graphicTile = tileObject.GetComponent<GraphicTile>();
+            float size = graphicTile.size;
 
-			GraphicBattlefield.Associate(tile, graphicTile);
+            GraphicBattlefield.Associate(tile, graphicTile);
 
-			Vector3 offset = placementStrategy.Place(row, column, layer) * size;
-			tileObject.transform.position += offset;
-
-			if (landType != LandType.SEA) {
-				int minDistance = 2 * radius; // 2* radius is the max distance between two tiles in a circular map
-                Region closest = null;
-				foreach(KeyValuePair<Region, ICoordinates> entry in regions) {
-					int distance = Battlefield.GameDistance(tile, (Tile)entry.Value);
-					if (distance < minDistance) {
-						minDistance = distance;
-						closest = entry.Key;
-					}
-				}
-				AssignTileToRegion(tile, closest);
-			}
-		}
-
-		private void AssignTileToRegion(Tile tile, Region region) {
-			region.Tiles.Add(tile);
-			GraphicBattlefield.GetSceneTile(tile).GetComponent<Renderer>().material.color = region.Color;
-		}
+            Vector3 offset = placementStrategy.Place(row, column, layer) * size;
+            tileObject.transform.position += offset;
+            return tile;
+        }
 
 		private void PlaceCharacter(int row, int column, string name, Faction faction, string clazz) {
 			Character character = new Character {

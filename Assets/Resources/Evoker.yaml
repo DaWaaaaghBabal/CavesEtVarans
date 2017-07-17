@@ -25,13 +25,13 @@ Skills:
   Cost:
     Elements:
       AP: 25
-  TargetPickers:
+  TargetSelectors:
   - TargetKey: target1
     CenterKey: source
     MinRange: !skills.values.FixedValue
       Val: 2
     MaxRange: !skills.values.FixedValue
-      Val: 3
+      Val: 30
     NumberOfTargets: 1
     TargetFilters: 
     - !skills.filters.FriendOrFoe
@@ -69,7 +69,7 @@ Skills:
   Cost:
     Elements:
       AP: 75
-  TargetPickers:
+  TargetSelectors:
   - TargetKey: target1
     CenterKey: source
     NumberOfTargets: 1
@@ -104,7 +104,7 @@ TriggeredSkills:
       Description : "DMG augmentés de 30% contre les cibles ayant moins de 30% de leurs PV."
     Cost:
       Elements: {}
-    TargetPickers:
+    TargetSelectors:
     - TargetKey: target1
       CenterKey: triggeringCharacter
       NumberOfTargets: 1

@@ -27,37 +27,24 @@ namespace CavesEtVarans.character {
             StartTurnEvent.Listeners += StartTurnTrigger;
 		}
 
-	    public void SkillUseTrigger(SkillUseEvent e) {
-            TargetGroup targets = (TargetGroup) ReadContext(ContextKeys.TARGETS);
-            Dictionary<string, object> reactionData = new Dictionary<string, object>();
-			reactionData[ContextKeys.TRIGGERING_TARGETS] = targets;
-			reactionData[ContextKeys.TRIGGERING_SKILL] = e.Skill;
-			reactionData[ContextKeys.TRIGGERING_CHARACTER] = e.Source;
-			reactionData[ContextKeys.SOURCE] = character;
-			foreach (TriggeredSkill skill in triggeredSkills[e.TriggerType()]) {
-                skill.Trigger(reactionData);
-			}
-		}
 
-		public void MovementTrigger(MovementEvent e) {
-            Dictionary<string, object> reactionData = new Dictionary<string, object>();
-            reactionData[ContextKeys.TRIGGERING_CHARACTER] = e.Source;
-			reactionData[ContextKeys.START_TILE] = e.StartTile;
-			reactionData[ContextKeys.END_TILE] = e.EndTile;
+        private void Trigger <T> (GameEvent<T> e) where T : GameEvent<T> {
+            Dictionary<string, object> reactionData = new Dictionary<string, object>(e.EventData);
             reactionData[ContextKeys.SOURCE] = character;
-			foreach (TriggeredSkill skill in triggeredSkills[e.TriggerType()]) {
-				skill.Trigger(reactionData);
-			}
-		}
+            foreach (TriggeredSkill skill in triggeredSkills[e.TriggerType()]) {
+                skill.Trigger(reactionData);
+            }
+        }
 
-        public void StartTurnTrigger(StartTurnEvent e) {
-            if (e.Source == character) {
-                Dictionary<string, object> reactionData = new Dictionary<string, object>();
-                reactionData[ContextKeys.TRIGGERING_CHARACTER] = e.Source;
-                reactionData[ContextKeys.SOURCE] = character;
-                foreach (TriggeredSkill skill in triggeredSkills[e.TriggerType()]) {
-                    skill.Trigger(reactionData);
-                }
+	    private void SkillUseTrigger(SkillUseEvent e) {
+            Trigger(e);
+        }
+        private void MovementTrigger(MovementEvent e) {
+            Trigger(e);
+		}
+        private void StartTurnTrigger(StartTurnEvent e) {
+            if (e.EventData[ContextKeys.TRIGGERING_CHARACTER] == character) {
+                Trigger(e);
             }
         }
 	}

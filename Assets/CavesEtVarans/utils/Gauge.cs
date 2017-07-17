@@ -8,64 +8,70 @@
 	{
 		private int min;
 		private int max;
-		private int value;
+		public int Value {
+            get;
+            private set; }
+        public double Percentage {
+            get {
+                return (Value - min) / (double)(max - min);
+            }
+            private set { }
+        }
 
-		public Gauge (int newMin, int newMax)
+        public Gauge (int newMin, int newMax)
 		{
 			min = newMin;
 			max = newMax;
-			value = min;
-		}
-
-		public int GetValue ()
-		{
-			return value;
+			Value = min;
 		}
 
 		public bool CanBeIncreased (int qty)
 		{
-			return GetValue () + qty <= max; 
+			return Value + qty <= max; 
 		}
 
 		public bool CanBeDecreased (int qty)
 		{
-			return GetValue () - qty >= min;
+			return Value - qty >= min;
 		}
 
-		public int Increment (int value)
+        /// <summary>
+        /// Increases a gauge while staying within its limits. Returns the amount by which the gauge was actually increased.
+        /// </summary>
+        /// <param name="amount"></param>
+        /// <returns></returns>
+		public int Increase (int amount)
 		{
-			return SetValue (GetValue () + value);
+            if (amount < 0 && Value + amount < min)
+                amount = Value;
+            else if (amount > 0 && Value + amount > max)
+                amount = max - Value;
+			Value += amount;
+            return amount;
 		}
 
 		public int SetValue (int newValue)
 		{
 			if (newValue < min) {
-				value = min;
+				Value = min;
 			} else if (newValue > max) {
-				value = max;
+				Value = max;
 			} else {
-				value = newValue;
+				Value = newValue;
 			}
-			return value;
+			return Value;
 		}
-
-		public double Percentage {
-            get {
-                return (double)(value - min) / (double)(max - min);
-            }
-            private set { }
-        }
 
 		override public string ToString ()
 		{
-			return value + "/" + max;
+			return Value + "/" + max;
 		}
 
 		private void NotifyGaugeChange () {
 			Notify(new GaugeChange() {
 				Min = min,
 				Max = max,
-				Value = value,
+				Value = Value,
 				Percentage = Percentage
 			});
 		}

@@ -10,23 +10,63 @@ ModelImporter:
     100004: SquareTile
     100006: HexCorner
     100008: HexEdge
+    100010: HexTile_Forest_0
+    100012: HexTile_Forest_1
+    100014: HexTile_Forest_2
+    100016: HexTile_Forest_3
+    100018: HexTile_Forest_4
+    100020: HexTile_Forest_5
+    100022: HexTile_Forest_6
+    100024: HexTile_Sea
     400000: HexTile
     400002: //RootNode
     400004: SquareTile
     400006: HexCorner
     400008: HexEdge
+    400010: HexTile_Forest_0
+    400012: HexTile_Forest_1
+    400014: HexTile_Forest_2
+    400016: HexTile_Forest_3
+    400018: HexTile_Forest_4
+    400020: HexTile_Forest_5
+    400022: HexTile_Forest_6
+    400024: HexTile_Sea
     2300000: HexTile
     2300002: SquareTile
     2300004: HexCorner
     2300006: HexEdge
+    2300008: HexTile_Forest_0
+    2300010: HexTile_Forest_1
+    2300012: HexTile_Forest_2
+    2300014: HexTile_Forest_3
+    2300016: HexTile_Forest_4
+    2300018: HexTile_Forest_5
+    2300020: HexTile_Forest_6
+    2300022: HexTile_Sea
     3300000: HexTile
     3300002: SquareTile
     3300004: HexCorner
     3300006: HexEdge
+    3300008: HexTile_Forest_0
+    3300010: HexTile_Forest_1
+    3300012: HexTile_Forest_2
+    3300014: HexTile_Forest_3
+    3300016: HexTile_Forest_4
+    3300018: HexTile_Forest_5
+    3300020: HexTile_Forest_6
+    3300022: HexTile_Sea
     4300000: SquareTile
     4300002: HexTile
     4300004: HexCorner
     4300006: HexEdge
+    4300008: HexTile_Forest_0
+    4300010: HexTile_Forest_1
+    4300012: HexTile_Forest_2
+    4300014: HexTile_Forest_3
+    4300016: HexTile_Forest_4
+    4300018: HexTile_Forest_5
+    4300020: HexTile_Forest_6
+    4300022: HexTile_Sea
     7400000: Default Take
     9500000: //RootNode
   materials:
@@ -36,7 +76,7 @@ ModelImporter:
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
-    resampleRotations: 1
+    resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
     animationImportErrors: 
@@ -75,6 +115,7 @@ ModelImporter:
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
+    serializedVersion: 2
     human: []
     skeleton: []
     armTwist: 0.5
@@ -85,7 +126,10 @@ ModelImporter:
     legStretch: 0.05
     feetSpacing: 0
     rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 2
   humanoidOversampling: 1

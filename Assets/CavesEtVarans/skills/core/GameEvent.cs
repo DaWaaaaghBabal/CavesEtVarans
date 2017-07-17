@@ -1,21 +1,18 @@
-﻿using CavesEtVarans.skills.core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using CavesEtVarans.skills.events;
 
 namespace CavesEtVarans.skills.core {
 	public delegate void EventBroadcaster<T>(T e) where T : GameEvent<T>;
 	public abstract class GameEvent<T> where T : GameEvent<T> {
 		public abstract TriggerType TriggerType();
-		public static event EventBroadcaster<T> Listeners = Mock;
-        private static void Mock(T e)
-        {
-            //This method is here to provide a default listener so the Listeners delegate is correctly initialised.
-        }
+        public Dictionary<string, object> EventData { private set; get; }
+        public static event EventBroadcaster<T> Listeners;
 		public void Trigger() {
-			Listeners((T)this);
+			if(Listeners != null)
+                Listeners((T)this);
 		}
+        public GameEvent() {
+            EventData = new Dictionary<string, object>();
+        }
 	}
 }

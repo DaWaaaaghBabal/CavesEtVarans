@@ -11,10 +11,6 @@ namespace CavesEtVarans.battlefield {
 			return new HexGrid<T>();
 		}
 
-		protected override GenerationStrategy InitGridGenerator() {
-			return new HexGenerator();
-		}
-
 		protected override HighlightStrategy InitHighlight() {
 			return new HexHighlighter(EdgePrefab);
 		}
@@ -32,7 +28,7 @@ namespace CavesEtVarans.battlefield {
 			return new HexPlacement();
 		}
 
-        protected override IEnumerable<int[]> InitRingDirections() {
+        protected override int[][] InitRingDirections() {
             return new int[][] {
                 new int[] { -1, -1 }, //clockwise from 3 o'clock
 				new int[] { 0, -1 },

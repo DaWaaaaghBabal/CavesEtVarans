@@ -25,7 +25,7 @@ Skills:
   Cost:
     Elements:
       AP: 25
-  TargetPickers:
+  TargetSelectors:
   - TargetKey: target1
     CenterKey: source
     MinRange: !skills.values.FixedValue
@@ -73,7 +73,7 @@ Skills:
   Cost:
     Elements:
       AP: 25
-  TargetPickers:
+  TargetSelectors:
   - TargetKey: target1
     CenterKey: source
     MinRange: !skills.values.FixedValue
@@ -112,7 +112,7 @@ Skills:
   Cost:
     Elements:
       AP: 25
-  TargetPickers:
+  TargetSelectors:
   - TargetKey: target1
     CenterKey: source
     MaxRange: !skills.values.FixedValue
@@ -149,7 +149,7 @@ TriggeredSkills:
       Description: "Quand un ennemi au contact du personnage se déplace, il perd 10 PA."
     Cost:
       Elements: {}
-    TargetPickers:
+    TargetSelectors:
     - TargetKey: target1
       CenterKey: triggeringCharacter
       NumberOfTargets: 1
@@ -193,7 +193,7 @@ TriggeredSkills:
       Description : "Le personnage récupère 15% des PV maximum au début de son tour."
     Cost:
       Elements: {}
-    TargetPickers:
+    TargetSelectors:
     - TargetKey: target1
       CenterKey: triggeringCharacter
       NumberOfTargets: 1

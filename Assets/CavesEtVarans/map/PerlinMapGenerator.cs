@@ -18,8 +18,8 @@ namespace CavesEtVarans.map {
         private PlacementStrategy placementStrategy;
 
         public void GenerateMap(CreateTile createTile) {
-            altitudeGenerator = new PerlinNoiseGenerator() { Seed = Seed };
-            forestGenerator = new PerlinNoiseGenerator() { Seed = 2 * Seed };
+            altitudeGenerator = new PerlinNoiseGenerator(Seed);
+            forestGenerator = new PerlinNoiseGenerator(2*Seed);
             placementStrategy = new HexPlacement();
             // The map is generated in rings expanding from the center.
             for (int i = 1; i <= Radius; i++) {

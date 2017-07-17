@@ -31,7 +31,7 @@ namespace CavesEtVarans.skills.targets {
                 case PlayerChoiceType.PlayerChoice:
                     return new PlayerChoice();
                 default:
-                    throw new UndefinedValueException("Property \"PlayerChoiceType\" of type TargetPicker must be set (NoValidation, PlayerValidation, PlayerChoice).");
+                    throw new UndefinedValueException("Property \"PlayerChoiceType\" of type TargetSelector must be set (NoValidation, PlayerValidation, PlayerChoice).");
             }
         }
         public abstract void Activate(HashSet<Tile> area);

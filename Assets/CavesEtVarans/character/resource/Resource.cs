@@ -20,9 +20,9 @@ namespace CavesEtVarans.character.resource
 		}
 		public int Value {
             get {
-                return gauge.GetValue();
+                return gauge.Value;
             }
-            private set {
+            set {
                 gauge.SetValue(value);
                 Notify(this);
             }
@@ -41,17 +41,10 @@ namespace CavesEtVarans.character.resource
 
         public int Increment(int qty)
 		{
-			int newValue = gauge.Increment(qty);
+			int newValue = gauge.Increase(qty);
 			Notify(this);
 			return newValue;
 		}
-
-        public static void InitSetterCallback(ResourceManager resourceManager) {
-            resourceManager.SetterCallback = SetterCallback;
-        }
-        private static void SetterCallback(Resource resource, int value) {
-            resource.Value = value;
-        }
 	}
 }
 

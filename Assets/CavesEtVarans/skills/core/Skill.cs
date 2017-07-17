@@ -67,7 +67,11 @@ namespace CavesEtVarans.skills.core {
             if (source.CanPay(Cost)) { 
 				PayCosts ();
                 if (!Flags[SkillFlag.NoEvent])
-				    new SkillUseEvent(this, source).Trigger();
+                    new SkillUseEvent(
+                        this, 
+                        source,
+                        (TargetGroup)ReadContext(ContextKeys.TARGETS)
+                    ).Trigger();
 				ApplyEffects ();
 			} else {
 				UnityEngine.Debug.Log("Cost couldn't be paid, skill use cancelled.");
@@ -111,5 +115,10 @@ namespace CavesEtVarans.skills.core {
 				effect.Apply();
 			}
 		}
+
+        public void Cancel() {
+            GUIEventHandler.Get().Reset();
+            EndContext();
+        }
     }
 }

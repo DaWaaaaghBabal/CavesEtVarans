@@ -4,7 +4,6 @@ using CavesEtVarans.character.statistics;
 using CavesEtVarans.skills.core;
 using CavesEtVarans.skills.effects;
 using System;
-using CavesEtVarans.skills.targets;
 using System.Collections.Generic;
 
 namespace CavesEtVarans.gui {
@@ -44,8 +43,9 @@ namespace CavesEtVarans.gui {
 					movementSkill.Cost = cost;
                     Dictionary<string, object> skillData = new Dictionary<string, object>();
                     skillData[ContextKeys.SOURCE] = source;
-                    skillData[ContextKeys.START_TILE] = sourceTile;
-                    skillData[ContextKeys.TILE] = targetTile;
+                    skillData[ContextKeys.MOVEMENT_TARGET] = new TargetGroup(source);
+                    skillData[ContextKeys.START_TILE] = new TargetGroup(sourceTile);
+                    skillData[ContextKeys.TILE] = new TargetGroup(targetTile);
 
                     movementSkill.InitSkill(skillData);
 				}
@@ -54,10 +54,18 @@ namespace CavesEtVarans.gui {
 
 		public void Activate() {
 			GUIEventHandler.Get().ActivePicker = this;
-		}
+        }
 
         public void Cancel() {
-            // Nothing to do.
+            //Nothing to do.
+        }
+
+        public void Terminate() {
+            //Nothing to do.
+        }
+
+        public void Activate(ICoordinates center, int centerheight, int suffix) {
+            //Nothing to do.
         }
     }
 }

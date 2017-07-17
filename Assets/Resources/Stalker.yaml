@@ -25,7 +25,7 @@ Skills:
   Cost:
     Elements:
       AP: 30
-  TargetPickers:
+  TargetSelectors:
   - TargetKey: movementTarget
     MinRange: !skills.values.FixedValue
       Val: 1
@@ -38,7 +38,7 @@ Skills:
     PlayerChoice: PlayerChoice
     
   - TargetKey: attackTarget
-    CenterKey: targets/movementTarget
+    CenterKey: movementTarget
     MinRange: !skills.values.FixedValue
       Val: 1
     MaxRange: !skills.values.FixedValue
@@ -85,7 +85,7 @@ TriggeredSkills:
       Description : "Coût de déplacement réduit de 5 PA."
     Cost:
       Elements: {}
-    TargetPickers:
+    TargetSelectors:
     - TargetKey: target1
       CenterKey: triggeringCharacter
       TargetFilters: []

@@ -22,7 +22,7 @@ Skills:
   Cost:
     Elements:
       AP: 25
-  TargetPickers:
+  TargetSelectors:
   - !CavesEtVarans.skills.core.target.RangedDiscreteTargetPicker,%20Assembly-CSharp,%20Version=0.0.0.0,%20Culture=neutral,%20PublicKeyToken=null
     Range: 1
     TargetNumber: 1
@@ -49,7 +49,7 @@ Skills:
   Cost:
     Elements:
       AP: 25
-  TargetPickers:
+  TargetSelectors:
   - !CavesEtVarans.skills.core.target.RangedDiscreteTargetPicker,%20Assembly-CSharp,%20Version=0.0.0.0,%20Culture=neutral,%20PublicKeyToken=null
     Range: 6
     TargetNumber: 2

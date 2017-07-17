@@ -11,7 +11,6 @@ namespace CavesEtVarans.character.resource
      * character's data is parsed
      */
 	public class ResourceManager {
-        public Action<Resource, int> SetterCallback;
 		protected Dictionary<string, Resource> resources;
 		public void Add (string key, Resource res)
 		{
@@ -19,7 +18,6 @@ namespace CavesEtVarans.character.resource
 		}
 		public ResourceManager() {
 			resources = new Dictionary<string, Resource>();
-            Resource.InitSetterCallback(this);
 		}
 
 		public int GetAmount (string key)
@@ -32,15 +30,15 @@ namespace CavesEtVarans.character.resource
 		}
 		public void Set (string key, int newValue) {
 			if (resources.ContainsKey(key)) {
-				SetterCallback(resources[key], newValue);
+				resources[key].Value = newValue;
 			} else {
 				throw new Exception("The wanted ressource (" + key + ") does not exist.");
 			}
 		}
 
-		public void Increment(string key, int amount) {
+		public int Increment(string key, int amount) {
 			if (resources.ContainsKey(key)) {
-				resources[key].Increment(amount);
+				return resources[key].Increment(amount);
 			} else {
 				throw new Exception("The wanted ressource (" + key + ") does not exist.");
 			}

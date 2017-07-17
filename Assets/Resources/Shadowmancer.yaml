@@ -25,7 +25,7 @@ Skills:
   Cost:
     Elements:
       AP: 25
-  TargetPickers:
+  TargetSelectors:
   - TargetKey: target1
     CenterKey: source
     MinRange: !skills.values.FixedValue
@@ -75,6 +75,53 @@ Skills:
     TargetKey: target1
   Flags: [Ranged, Offensive, SingleTarget]
 
+- Attributes:
+    Name: Marche des ombres
+    Icon: firingStance
+    Animation: Attack
+    Description: "Tous les personnages à 1-3 cases sont déplacés d'une case dans une direction au choix."
+  Cost:
+    Elements:
+      AP: 25
+  TargetSelectors:
+  - TargetKey: target
+    CenterKey: source
+    MinRange: !skills.values.FixedValue
+      Val: 1
+    MaxRange: !skills.values.FixedValue
+      Val: 3
+    NumberOfTargets: 1
+    TargetFilters: []
+    TargetGround: false
+    Optional : false
+    PlayerChoice: PlayerValidation
+    LineOfSight: true
+    AoELineOfSight: true
+  - TargetKey: tile
+    CenterKey: target
+    MinRange: !skills.values.FixedValue
+      Val: 1
+    MaxRange: !skills.values.FixedValue
+      Val: 1
+    NumberOfTargets: 1
+    TargetFilters:
+    - !skills.filters.EmptyTile
+      TargetKey: filterTarget
+    TargetGround: true
+    Optional : true
+    PlayerChoice: PlayerChoice
+    LineOfSight: true
+    AoELineOfSight: true
+  Effects:
+  - !skills.effects.OrientationEffect
+    TargetKey: target
+    OrientationTargetKey: tile
+  - !skills.effects.MovementEffect
+    TargetKey: target
+    TileTargetKey: tile
+  Flags: []
+
+
 TriggeredSkills:
 - TriggerType: StartTurn
   Skill:
@@ -83,7 +130,7 @@ TriggeredSkills:
       Description : "Au début du tour, retire 5 PA à tous les ennemis au contact."
     Cost:
       Elements: {}
-    TargetPickers:
+    TargetSelectors:
     - TargetKey: target1
       CenterKey: triggeringCharacter
       MinRange: !skills.values.FixedValue

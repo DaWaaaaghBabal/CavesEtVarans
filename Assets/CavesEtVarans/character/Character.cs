@@ -18,7 +18,7 @@ namespace CavesEtVarans.character
         public Faction Faction { get; set; }
         public int Level { get; set; }
         public String CharacterClass {
-            get { return clazz.Name; }
+            get { return characterClass.Name; }
             set {
                 InitClass(value);
             }
@@ -35,7 +35,7 @@ namespace CavesEtVarans.character
         public Orientation Orientation { get; set; }
         public int Size { get; set; }
 
-        private CharacterClass clazz;
+        private CharacterClass characterClass;
         private StatisticsManager statisticsManager;
         private ResourceManager resourceManager;
         private SkillManager skillManager;
@@ -59,14 +59,14 @@ namespace CavesEtVarans.character
         // Methods
 
 		private void InitClass(string value) {
-            clazz = ClassManager.Instance.ClassByName(value);
-            statisticsManager.InitClassStats(clazz);
-            skillManager.InitClassSkills(clazz);
+            characterClass = ClassManager.Instance.ClassByName(value);
+            statisticsManager.InitClassStats(characterClass);
+            skillManager.InitClassSkills(characterClass);
 
             int maxHealth = GetStatValue(Statistic.HEALTH);
             resourceManager.Add(Resource.HP, new Resource(0, maxHealth));
             resourceManager.Set(Resource.HP, maxHealth);
-            foreach (KeyValuePair<string, int> KV in clazz.HiddenResources) {
+            foreach (KeyValuePair<string, int> KV in characterClass.HiddenResources) {
                 resourceManager.Add(KV.Key, new Resource(0, KV.Value));
             }
         }
@@ -79,6 +79,7 @@ namespace CavesEtVarans.character
         }
 
         public void EndTurn() {
+            new EndTurnEvent(this).Trigger();
             buffManager.HalfTick();
             AP = AP / 2;
         }
@@ -87,8 +88,15 @@ namespace CavesEtVarans.character
             cost.Pay(resourceManager);
         }
 
-        public void TakeDamage(int amount) {
-            resourceManager.Increment(Resource.HP, - amount);
+        public int TakeDamage(int amount) {
+            int result = resourceManager.Increment(Resource.HP, - amount);
+            if (resourceManager.GetAmount(Resource.HP) <= 0)
+                Collapse();
+            return result;
+        }
+
+        private void Collapse() {
+            throw new NotImplementedException();
         }
 
         public void ApplyBuff(BuffInstance buff) {
@@ -139,12 +147,22 @@ namespace CavesEtVarans.character
 			statisticsManager.RemoveModifier(key, modifier);
 		}
 
-        public void IncrementResource(string resourceKey, int amount) {
-            resourceManager.Increment(resourceKey, amount);
+        public int IncrementResource(string resourceKey, int amount) {
+            return resourceManager.Increment(resourceKey, amount);
         }
 
         public Resource GetResource(string resourceKey) {
             return resourceManager.Get(resourceKey);
+        }
+
+        public EffectResult DispatchEffect(IEffect effect, int suffix) {
+            return effect.Apply(this, suffix);
+        }
+        public void DispatchActivation(ITargetSelector selector, int suffix) {
+            selector.Activate(Tile, Size, suffix);
+        }
+        public void DispatchTermination(ITargetSelector selector, int suffix) {
+            selector.Terminate();
         }
     }
 

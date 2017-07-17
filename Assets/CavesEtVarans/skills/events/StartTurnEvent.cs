@@ -3,11 +3,9 @@ using CavesEtVarans.skills.core;
 
 namespace CavesEtVarans.skills.events {
     public class StartTurnEvent : GameEvent<StartTurnEvent> {
-
-        public Character Source { get; private set; }
-
-        public StartTurnEvent (Character character) {
-            Source = character;
+        
+        public StartTurnEvent (Character character) : base() {
+            EventData[ContextKeys.TRIGGERING_CHARACTER] = character;
         }
 
         public override TriggerType TriggerType() {

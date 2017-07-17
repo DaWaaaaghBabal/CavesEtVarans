@@ -102,7 +102,5 @@ namespace CavesEtVarans.skills.core {
         protected void EndContext() {
             Context.Current().EndLayer();
         }
-
-
 	}
 }

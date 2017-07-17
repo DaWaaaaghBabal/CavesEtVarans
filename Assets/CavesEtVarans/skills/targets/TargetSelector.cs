@@ -99,6 +99,8 @@ namespace CavesEtVarans.skills.targets {
 
         private TargetGroup targets;
         private int count;
+        private int keySuffix;
+        private ITargetable center;
 
         public TargetSelector() {
             NumberOfTargets = 1;
@@ -108,16 +110,23 @@ namespace CavesEtVarans.skills.targets {
         }
 
         public void Activate() {
+            center = ReadContext(CenterKey) as ITargetable;
+            if (center == null) center = ReadContext(CenterKey) as ITargetable;
+            center.DispatchActivation(this, 0);
+        }
+
+        public void Activate(ICoordinates areaCenter, int centerheight, int suffix)
+        {
             count = 0;
+            keySuffix = suffix;
             GUIEventHandler.Get().ActivePicker = this;
-            int minRange = (int) MinRange.Value();
-            int maxRange = (int) MaxRange.Value();
-            aoeMin = (int) AoEMinRadius.Value();
-            aoeMax = (int) AoEMaxRadius.Value();
-            ITargetable center = ExtractCenter();
+            int minRange = (int)MinRange.Value();
+            int maxRange = (int)MaxRange.Value();
+            aoeMin = (int)AoEMinRadius.Value();
+            aoeMax = (int)AoEMaxRadius.Value();
             targets = new TargetGroup();
             playerChoiceStrategy.Activate(
-                GetArea(center, LoSFilter, minRange, maxRange)
+                GetArea(areaCenter, centerheight, LoSFilter, minRange, maxRange)
             );
         }
 
@@ -129,11 +138,11 @@ namespace CavesEtVarans.skills.targets {
             playerChoiceStrategy.TargetTile(tile);
         }
 
-        private HashSet<Tile> GetArea(ITargetable center, LineOfSightCalculator LoSFilter, int minRange, int maxRange) {
+        private HashSet<Tile> GetArea(ICoordinates areaCenter, int centerHeight, LineOfSightCalculator LoSFilter, int minRange, int maxRange) {
             HashSet<Tile> result = new HashSet<Tile>();
-            HashSet<Tile> area = Battlefield.GetArea(center.Tile, minRange, maxRange);
+            HashSet<Tile> area = Battlefield.GetArea(areaCenter, minRange, maxRange);
             foreach (Tile t in area) {
-                if (LoSFilter.LoS(center.Tile, center.Size, t, TargetGround)) {
+                if (LoSFilter.LoS(areaCenter, centerHeight, t, TargetGround)) {
                     result.Add(t);
                 }
             }
@@ -150,10 +159,12 @@ namespace CavesEtVarans.skills.targets {
 
         private void SelectTile(Tile tile) {
             ITargetable center = tile;
+            int size = 1;
             if (!TargetGround && tile.Character != null) { 
-                    center = tile.Character;
+                center = tile.Character;
+                size = center.Size;
             }
-            HashSet<Tile> aoe = GetArea (center, AoELoSFilter, aoeMin, aoeMax);
+            HashSet<Tile> aoe = GetArea (center.Tile, size, AoELoSFilter, aoeMin, aoeMax);
             SelectArea(aoe);
         }
 
@@ -184,30 +195,23 @@ namespace CavesEtVarans.skills.targets {
             }
         }
 
-        private ITargetable ExtractCenter() {
-            object obj = ReadContext(CenterKey);
-            ITargetable center = obj as ITargetable;
-            if (center == null) {
-                TargetGroup group = obj as TargetGroup;
-                center = group.PickOne; 
-            }
-                
-            return center;
-        }
-
         private void EndPicking() {
-            SetContext(TargetKey, targets);
+            SetContext(keySuffix == 0 ? TargetKey : TargetKey + keySuffix, targets);
             ((TargetGroup)ReadContext(ContextKeys.TARGETS)).Add(targets);
             //@TODO decouple from graphics (use events);
             GraphicBattlefield.ClearHighlightedArea();
-            ((Skill) ReadContext(ContextKeys.SKILL)).NextTargetPicker();
+            center.DispatchTermination(this, keySuffix);
+        }
+
+        public void Terminate() {
+            ((Skill)ReadContext(ContextKeys.SKILL)).NextTargetPicker();
         }
 
         public void Cancel() {
             if (Optional)
                 EndPicking();
             else
-                GUIEventHandler.Get().Reset();
+                ((Skill)ReadContext(ContextKeys.SKILL)).Cancel();
         }
     }
 }

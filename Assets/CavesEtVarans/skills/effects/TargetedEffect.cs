@@ -1,4 +1,5 @@
-﻿using CavesEtVarans.character;
+﻿using CavesEtVarans.battlefield;
+using CavesEtVarans.character;
 using CavesEtVarans.skills.core;
 using CavesEtVarans.skills.filters;
 
@@ -15,26 +16,17 @@ namespace CavesEtVarans.skills.effects {
 				}
 				return filter;
 			}
-		}
-		public string TargetKey { set; get; }
+        }
+        public string TargetKey { set; get; }
+        public string ResultKey { set; get; }
 
-		public void Apply() {
-			object targets = ReadContext(TargetKey);
-            if (targets.GetType().Equals(typeof(Character)))
-                ApplyOn(targets as Character);
-            else if (targets != null) {
-                foreach (Character target in targets as TargetGroup) {
-                    ApplyOn(target);
-                }
-            }
-		}
-
-        private void ApplyOn(Character target) {
-            SetContext(ContextKeys.CURRENT_TARGET, target);
-            if (Filter.Filter())
-                Apply(target);
+        public void Apply() {
+            ITargetable target = ReadContext(TargetKey) as ITargetable;
+            EffectResult result = target.DispatchEffect(this, 0);
+            if (ResultKey != null) SetContext(ResultKey, result);
         }
 
-        public abstract void Apply(Character target);
-	}
+        public abstract EffectResult Apply(Character character, int suffix);
+        public abstract EffectResult Apply(Tile tile, int suffix);
+    }
 }

@@ -1,4 +1,5 @@
-﻿using CavesEtVarans.character;
+﻿
+using CavesEtVarans.character;
 using CavesEtVarans.character.statistics;
 using CavesEtVarans.skills.core;
 using CavesEtVarans.utils;
@@ -45,5 +46,15 @@ namespace CavesEtVarans.battlefield {
 		public override  string ToString () {
 			return "Tile (" + Row + ", " + Column + ", " + Layer + ")";
 		}
-	}
+
+        public EffectResult DispatchEffect(IEffect effect, int suffix) {
+            return effect.Apply(this, suffix);
+        }
+        public void DispatchActivation(ITargetSelector selector, int suffix) {
+            selector.Activate(this, 1, suffix);
+        }
+        public void DispatchTermination(ITargetSelector selector, int suffix) {
+            selector.Terminate();
+        }
+    }
 }

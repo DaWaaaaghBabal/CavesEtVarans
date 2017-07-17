@@ -4,16 +4,13 @@ using CavesEtVarans.skills.core;
 
 namespace CavesEtVarans.skills.events {
 	public class MovementEvent : GameEvent<MovementEvent> {
-        public Character Source { private set; get; }
-		public Tile StartTile { private set; get; }
-		public Tile EndTile { private set; get; }
-		public MovementEvent(Character source, Tile start, Tile end) {
-			Source = source;
-			StartTile = start;
-			EndTile = end;
+		public MovementEvent(Character source, Tile start, Tile end) : base() {
+			EventData[ContextKeys.TRIGGERING_CHARACTER] = source;
+            EventData[ContextKeys.START_TILE] = start;
+            EventData[ContextKeys.END_TILE] = end;
 		}
 
-		public override TriggerType TriggerType() {
+		public override TriggerType TriggerType(){
 			return events.TriggerType.Movement;
 		}
 	}

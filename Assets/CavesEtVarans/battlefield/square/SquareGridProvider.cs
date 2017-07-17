@@ -11,10 +11,6 @@ namespace CavesEtVarans.battlefield {
 			return new SquareGrid<T>();
 		}
 
-		protected override GenerationStrategy InitGridGenerator() {
-			return new SquareGenerator();
-		}
-
 		protected override HighlightStrategy InitHighlight() {
 			return new SquareHighlighter(EdgePrefab);
 		}
@@ -32,7 +28,7 @@ namespace CavesEtVarans.battlefield {
 			return new SquarePlacement();
 		}
 
-        protected override IEnumerable<int[]> InitRingDirections() {
+        protected override int[][] InitRingDirections() {
             return new int[][] {
                 new int[] { -1, -1 }, //clockwise from 3 o'clock
 				new int[] { 1, -1 },

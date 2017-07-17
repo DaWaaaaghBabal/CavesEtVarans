@@ -26,7 +26,7 @@ Skills:
   Cost:
     Elements:
       AP: 25
-  TargetPickers:
+  TargetSelectors:
   - TargetKey: target1
     CenterKey: source
     MinRange: !skills.values.FixedValue
@@ -48,7 +48,6 @@ Skills:
     TargetKey: source
     OrientationTargetKey: target1
   - !skills.effects.DamageEffect
-    Filter: !skills.effects.conditions.NoCondition
     Amount: !skills.values.ValueMultiplier
       Base: !skills.values.StatReader
         Source: source
@@ -73,7 +72,7 @@ TriggeredSkills:
       Description : "Quand le personnage utilise une attaque de mêlée à cible unique, il inflige [30% DMG] dégâts physiques aux ennemis au contact de sa cible."
     Cost:
       Elements: {}
-    TargetPickers:
+    TargetSelectors:
     - TargetKey: target1
       CenterKey: triggeringTarget
       MinRange: !skills.values.FixedValue
@@ -125,7 +124,7 @@ TriggeredSkills:
     Cost:
       Elements:
         StrikeBackCharges: 1
-    TargetPickers:
+    TargetSelectors:
     - TargetKey: target1
       CenterKey: triggeringCharacter
       NumberOfTargets: 1
@@ -143,7 +142,6 @@ TriggeredSkills:
       TargetKey: source
       OrientationTargetKey: target1
     - !skills.effects.DamageEffect
-      Filter: !skills.effects.conditions.NoCondition
       Amount: !skills.values.ValueMultiplier
         Base: !skills.values.StatReader
           Source: source
@@ -177,7 +175,7 @@ TriggeredSkills:
       Description : "Le personnage récupère 15% des PV maximum au début de son tour."
     Cost:
       Elements: {}
-    TargetPickers:
+    TargetSelectors:
     - TargetKey: target1
       CenterKey: triggeringCharacter
       NumberOfTargets: 1
